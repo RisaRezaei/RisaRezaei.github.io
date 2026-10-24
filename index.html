@@ -7,7 +7,7 @@
 <meta name="description" content="Environmental engineer working at the interface of hydrology, satellite remote sensing and machine learning.">
 <link rel="icon" href="favicon.ico">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#070b14; --bg2:#0c1220; --card:#111a2b; --line:#1e2a40; --ink:#e7edf7; --muted:#8d9bb3;
@@ -80,7 +80,32 @@ li{margin-bottom:6px}
 .pub em{color:var(--ink)}
 footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-size:14px}
 
+/* Earth-observation / hydrology touches */
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;
+  background:repeating-linear-gradient(0deg,rgba(255,255,255,.014) 0 1px,transparent 1px 3px)}
+.waves{position:absolute;left:0;right:0;bottom:0;height:96px;z-index:1;pointer-events:none;overflow:hidden}
+.waves svg{position:absolute;bottom:0;left:0;width:200%;height:100%}
+.waves .w1{animation:drift 22s linear infinite}
+.waves .w2{animation:drift 14s linear infinite reverse}
+@keyframes drift{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.hud{display:inline-block;margin-top:30px;font:500 11.5px/1.75 "JetBrains Mono",ui-monospace,monospace;color:var(--muted);
+  background:rgba(12,18,32,.72);border:1px solid var(--line);border-radius:10px;padding:10px 14px;backdrop-filter:blur(6px);min-width:224px}
+.hud b{color:var(--accent);font-weight:600}
+.hud .live{display:inline-block;width:7px;height:7px;border-radius:50%;background:#34d399;margin-right:7px;box-shadow:0 0 8px #34d399;animation:blink 1.6s infinite}
+@keyframes blink{50%{opacity:.3}}
+h2[data-n]::before{content:attr(data-n);display:block;font:600 12px/1 "JetBrains Mono",ui-monospace,monospace;letter-spacing:.2em;color:var(--accent2);margin-bottom:12px}
+.kicker{font-family:"JetBrains Mono",ui-monospace,monospace;letter-spacing:.08em}
+.card{position:relative;overflow:hidden}
+.card::after{content:"";position:absolute;left:0;right:0;top:-45%;height:45%;pointer-events:none;opacity:0;
+  background:linear-gradient(180deg,transparent,rgba(79,209,197,.09),transparent)}
+.card:hover::after{opacity:1;animation:scan 1.3s ease-in-out}
+@keyframes scan{from{top:-45%}to{top:100%}}
+.stat{position:relative;overflow:hidden}
+.stat::before{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:.7}
+
 @media (max-width:760px){
+  .hud{display:none}
+  .waves{height:64px}
   #globe{right:-30%;width:120%;opacity:.35}
   .hero{min-height:84vh}
   .lead{font-size:16.5px}
@@ -106,7 +131,16 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
         <a class="btn" href="https://orcid.org/0009-0009-5708-7673" target="_blank" rel="noopener">ORCID</a>
         <a class="btn" href="https://github.com/RisaRezaei" target="_blank" rel="noopener">GitHub</a>
       </div>
+      <div class="hud" aria-hidden="true">
+        <div><span class="live"></span><b>EO-SAT</b> · nadir scan</div>
+        <div>LAT <span id="hlat">--</span>  LON <span id="hlon">--</span></div>
+        <div>Bands B03 · B08 · B11 · NDWI</div>
+      </div>
     </div>
+  </div>
+  <div class="waves" aria-hidden="true">
+    <svg class="w1" viewBox="0 0 1440 96" preserveAspectRatio="none"><path d="M0 56 Q90 30 180 56 T360 56 T540 56 T720 56 T900 56 T1080 56 T1260 56 T1440 56 V96 H0Z" fill="rgba(79,209,197,.07)"/></svg>
+    <svg class="w2" viewBox="0 0 1440 96" preserveAspectRatio="none"><path d="M0 70 Q60 52 120 70 T240 70 T360 70 T480 70 T600 70 T720 70 T840 70 T960 70 T1080 70 T1200 70 T1320 70 T1440 70 V96 H0Z" fill="rgba(96,165,250,.07)"/></svg>
   </div>
   <div class="scroll">SCROLL ↓</div>
 </header>
@@ -127,7 +161,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
 
   <!-- ABOUT -->
   <section id="about" role="tabpanel">
-    <h2>About</h2>
+    <h2 data-n="01 / 07">About</h2>
     <p class="sub">Water, satellites and data.</p>
     <p>I'm an environmental engineer (MSc, Sharif University of Technology) working at the interface of <strong>hydrology</strong>, <strong>satellite remote sensing</strong> and <strong>machine learning</strong>. I build Earth-observation workflows in Google Earth Engine and Python, model surface water and groundwater with WEAP, MODFLOW and MIKE, and turn model results into decision support for water management.</p>
     <p>My work on a decision-support system for the Lake Urmia basin, carried out with the University of Delaware, is published in the <em>Journal of Hydrology</em> and was presented at AGU24. I also have hands-on experience in water-quality laboratory analysis and review regularly for Elsevier journals.</p>
@@ -141,7 +175,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
 
   <!-- PROJECTS -->
   <section id="projects" role="tabpanel">
-    <h2>Projects</h2>
+    <h2 data-n="02 / 07">Projects</h2>
     <p class="sub">Research and engineering projects across water resources and Earth observation.</p>
     <div class="grid">
       <article class="card">
@@ -198,7 +232,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
 
   <!-- PUBLICATIONS -->
   <section id="publications" role="tabpanel">
-    <h2>Publications &amp; Peer Review</h2>
+    <h2 data-n="03 / 07">Publications &amp; Peer Review</h2>
     <p class="sub">Selected outputs.</p>
     <div class="card pub">
       <div class="kicker">Journal article · 2026</div>
@@ -217,7 +251,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
 
   <!-- EXPERIENCE -->
   <section id="experience" role="tabpanel">
-    <h2>Experience</h2>
+    <h2 data-n="04 / 07">Experience</h2>
     <p class="sub">Research and teaching.</p>
     <div class="timeline">
       <div class="titem">
@@ -247,7 +281,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
 
   <!-- EDUCATION -->
   <section id="education" role="tabpanel">
-    <h2>Education</h2>
+    <h2 data-n="05 / 07">Education</h2>
     <p class="sub">Degrees, distinctions and training.</p>
     <div class="timeline">
       <div class="titem">
@@ -281,7 +315,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
 
   <!-- SKILLS -->
   <section id="skills" role="tabpanel">
-    <h2>Skills</h2>
+    <h2 data-n="06 / 07">Skills</h2>
     <p class="sub">Tools and methods.</p>
     <div class="grid">
       <div class="card"><h3>Remote sensing</h3>
@@ -301,7 +335,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
 
   <!-- CONTACT -->
   <section id="contact" role="tabpanel">
-    <h2>Contact</h2>
+    <h2 data-n="07 / 07">Contact</h2>
     <p class="sub">Open to research, data and engineering roles and collaborations across Europe.</p>
     <div class="grid">
       <a class="card" href="mailto:risarezaei@gmail.com"><div class="kicker">Email</div><h3>risarezaei@gmail.com</h3></a>
@@ -334,6 +368,19 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
   document.getElementById('yr').textContent=new Date().getFullYear();
 })();
 
+/* Topographic contours behind the content */
+(function(){
+  var seed=7;function rnd(){seed=(seed*16807)%2147483647;return seed/2147483647}
+  var d='';
+  [[250,260,9],[650,640,7]].forEach(function(o){var p=[rnd()*6,rnd()*6,rnd()*6];
+    for(var k=1;k<=o[2];k++){var r0=k*26;
+      for(var i=0;i<=48;i++){var t=i/48*6.2832,r=r0*(1+.16*Math.sin(3*t+p[0])+.09*Math.sin(5*t+p[1])+.05*Math.sin(7*t+p[2]+k*.3));
+        d+=(i?'L':'M')+Math.round(o[0]+r*Math.cos(t))+' '+Math.round(o[1]+r*Math.sin(t)*.82)}d+='Z'}});
+  var svg="<svg xmlns='http://www.w3.org/2000/svg' width='900' height='900'><path d='"+d+"' fill='none' stroke='rgba(79,209,197,0.05)'/></svg>";
+  document.body.style.backgroundImage='url("data:image/svg+xml,'+encodeURIComponent(svg)+'")';
+  document.body.style.backgroundAttachment='fixed';
+})();
+
 /* Stars */
 (function(){
   var c=document.getElementById('stars'),x=c.getContext('2d'),s=[];
@@ -351,7 +398,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
   var N=4200,P=[],g=Math.PI*(3-Math.sqrt(5));
   for(var i=0;i<N;i++){var y=1-2*(i+.5)/N,r=Math.sqrt(1-y*y),t=g*i;
     var px=Math.cos(t)*r,pz=Math.sin(t)*r;
-    P.push([px,y,pz,Math.asin(y)*180/Math.PI,Math.atan2(-pz,px)*180/Math.PI,0]);}
+    P.push([px,y,pz,Math.asin(y)*180/Math.PI,Math.atan2(-pz,px)*180/Math.PI,0,0]);}
   // Build a land lookup by rasterising the land polygons onto a small equirectangular canvas
   function loadLand(){
     if(!window.topojson) return;
@@ -371,6 +418,16 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
   }
   var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js';s.onload=loadLand;document.head.appendChild(s);
 
+  var D2R=Math.PI/180;
+  function geo(la,lo){la*=D2R;lo*=D2R;return [Math.cos(la)*Math.cos(lo),Math.sin(la),-Math.cos(la)*Math.sin(lo)]}
+  var SITES=[{n:'Lake Urmia',p:geo(37.7,45.3),l:1},{n:'Tehran',p:geo(35.7,51.4),l:0},{n:'Delaware',p:geo(39.7,-75.75),l:1}];
+  var th=1.0,inc=32*D2R,SW=Math.cos(9*D2R),hlat=document.getElementById('hlat'),hlon=document.getElementById('hlon'),fn=0;
+  function sat(t){var b=Math.sin(t);return [Math.cos(t),b*Math.sin(inc),b*Math.cos(inc)]}
+  function drawSat(s){var k=1.22,sx=cx+s[0]*R*k,sy=cy-s[1]*R*k,s2=sat(th+.03),ang=Math.atan2(-(s2[1]-s[1]),s2[0]-s[0]);
+    x.save();x.translate(sx,sy);x.rotate(ang+Math.PI/2);x.globalAlpha=s[2]<0?.45:1;
+    x.fillStyle='rgba(96,165,250,.95)';x.fillRect(-16,-2.5,11,5);x.fillRect(5,-2.5,11,5);
+    x.fillStyle='#e7edf7';x.fillRect(-3.5,-4.5,7,9);x.restore();x.globalAlpha=1}
+  function fmt(v,a,b){return Math.abs(v).toFixed(2)+'\u00b0'+(v>=0?a:b)}
   var W,H,R,cx,cy,tilt=0.38,rot=2.0,reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   function size(){var d=devicePixelRatio||1;W=c.offsetWidth;H=c.offsetHeight;c.width=W*d;c.height=H*d;x.setTransform(d,0,0,d,0,0);
     R=Math.min(W,H)*0.40;cx=W*0.5;cy=H*0.5;}
@@ -380,6 +437,8 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
     var glow=x.createRadialGradient(cx,cy,R*.6,cx,cy,R*1.35);
     glow.addColorStop(0,'rgba(79,209,197,.10)');glow.addColorStop(1,'rgba(79,209,197,0)');
     x.fillStyle=glow;x.beginPath();x.arc(cx,cy,R*1.35,0,7);x.fill();
+    var s=sat(th);
+    if(s[2]<0)drawSat(s);
     var body=x.createRadialGradient(cx-R*.35,cy-R*.35,R*.1,cx,cy,R);
     body.addColorStop(0,'#13233c');body.addColorStop(1,'#070d18');
     x.fillStyle=body;x.beginPath();x.arc(cx,cy,R,0,7);x.fill();
@@ -393,11 +452,26 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
         if(first){x.moveTo(cx+q[0]*R,cy-q[1]*R);first=false}else x.lineTo(cx+q[0]*R,cy-q[1]*R);}
       x.stroke();}
     for(var k=0;k<P.length;k++){var p=P[k],q=proj(p[0],p[1],p[2],cr,sr,ct,st);
-      if(q[2]<0)continue;var a=.2+.8*q[2];
-      if(p[5]){x.fillStyle='rgba(79,209,197,'+a+')';x.fillRect(cx+q[0]*R-1.1,cy-q[1]*R-1.1,2.2,2.2);}
-      else{x.fillStyle='rgba(96,165,250,'+(a*.18)+')';x.fillRect(cx+q[0]*R-.6,cy-q[1]*R-.6,1.2,1.2);}
+      if(q[0]*s[0]+q[1]*s[1]+q[2]*s[2]>SW)p[6]=1;else if(p[6]>0)p[6]*=.997;
+      if(q[2]<0)continue;var a=.2+.8*q[2],X=cx+q[0]*R,Y=cy-q[1]*R;
+      if(p[5]){x.fillStyle='rgba(79,209,197,'+a+')';x.fillRect(X-1.1,Y-1.1,2.2,2.2);}
+      else{x.fillStyle='rgba(96,165,250,'+(a*.18)+')';x.fillRect(X-.6,Y-.6,1.2,1.2);}
+      if(p[6]>.03){x.fillStyle=p[5]?'rgba(209,250,229,'+Math.min(1,p[6]*a*1.2)+')':'rgba(125,211,252,'+Math.min(1,p[6]*a*1.1)+')';x.fillRect(X-1.6,Y-1.6,3.2,3.2);}
     }
-    if(!reduce)rot+=0.0018;
+    var ph=(performance.now()/1600)%1;
+    x.font='500 11px "JetBrains Mono",ui-monospace,monospace';
+    SITES.forEach(function(m){var q=proj(m.p[0],m.p[1],m.p[2],cr,sr,ct,st);if(q[2]<.08)return;
+      var X=cx+q[0]*R,Y=cy-q[1]*R;
+      x.strokeStyle='rgba(251,191,36,'+((1-ph)*q[2])+')';x.lineWidth=1.2;x.beginPath();x.arc(X,Y,3+ph*15,0,7);x.stroke();
+      x.fillStyle='#fbbf24';x.beginPath();x.arc(X,Y,2.8,0,7);x.fill();
+      if(m.l){x.fillStyle='rgba(231,237,247,'+(.9*q[2])+')';x.fillText(m.n,X+9,Y-7);}});
+    if(s[2]>=0){var sx=cx+s[0]*R*1.22,sy=cy-s[1]*R*1.22,fx=cx+s[0]*R,fy=cy-s[1]*R,dx=fx-sx,dy=fy-sy,L=Math.hypot(dx,dy)||1,w=R*.15*(.35+.65*s[2]);
+      var gb=x.createLinearGradient(sx,sy,fx,fy);gb.addColorStop(0,'rgba(79,209,197,.38)');gb.addColorStop(1,'rgba(79,209,197,.03)');
+      x.fillStyle=gb;x.beginPath();x.moveTo(sx,sy);x.lineTo(fx-dy/L*w,fy+dx/L*w);x.lineTo(fx+dy/L*w,fy-dx/L*w);x.closePath();x.fill();
+      drawSat(s);}
+    if(hlat&&fn++%8===0){var Yg=s[1]*ct+s[2]*st,Z1=-s[1]*st+s[2]*ct,Xg=s[0]*cr+Z1*sr,Zg=-s[0]*sr+Z1*cr;
+      hlat.textContent=fmt(Math.asin(Math.max(-1,Math.min(1,Yg)))/D2R,'N','S');hlon.textContent=fmt(Math.atan2(-Zg,Xg)/D2R,'E','W');}
+    if(!reduce){rot+=0.0018;th+=0.0042;}
     requestAnimationFrame(frame);
   }
   addEventListener('resize',size);size();requestAnimationFrame(frame);
