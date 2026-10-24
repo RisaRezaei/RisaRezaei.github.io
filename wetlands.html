@@ -6,6 +6,7 @@
 <title>Global Wetland Trends | Parisa Abbasalizadehrezaei</title>
 <meta name="description" content="Interactive map of 40-year surface-water trends in nearly 600 lakes and wetlands worldwide, derived from Landsat (1984–2025).">
 <link rel="icon" href="favicon.ico">
+<script>if(/[?&]embed/.test(location.search))document.documentElement.classList.add('embed')</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
@@ -56,6 +57,8 @@ ol li .v{font:600 12px "JetBrains Mono",monospace}
 .leaflet-control-attribution{background:rgba(7,11,20,.75)!important;color:#8d9bb3!important}
 .leaflet-control-attribution a{color:#8d9bb3!important}
 .leaflet-bar a{background:#111a2b;color:#e7edf7;border-color:#1e2a40}
+.embed header,.embed aside{display:none}
+.embed #map{min-height:0}
 @media (max-width:820px){
   .wrap{flex-direction:column}
   aside{width:auto;border-right:0;border-bottom:1px solid var(--line);order:2}
@@ -109,7 +112,7 @@ var SERIES=["69,115,..Xskvz1948B1umhnIDbdnjVsnVw+5svurt28+/87","66,110,...5Vyk+0
 (function(){
   /* row: [lat, lon, name, dir(1|0|-1), pct per decade, significant, r2, mean area, years, continent] */
   var D=DATA,SER=SERIES,B64='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';D.forEach(function(r,i){r.push(i)});
-  var map=L.map('map',{worldCopyJump:true,minZoom:2,zoomControl:true}).setView([30,10],2);
+  var map=L.map('map',{worldCopyJump:true,minZoom:2,zoomControl:true,scrollWheelZoom:!document.documentElement.classList.contains('embed')}).setView([30,10],2);
   L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',{maxZoom:12,
     attribution:'Basemap &copy; Esri, HERE, Garmin, &copy; OpenStreetMap contributors'}).addTo(map);
   function lerp(a,b,t){return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t]}
