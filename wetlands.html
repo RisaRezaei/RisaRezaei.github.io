@@ -110,8 +110,8 @@ var SERIES=["69,115,..Xskvz1948B1umhnIDbdnjVsnVw+5svurt28+/87","66,110,...5Vyk+0
   /* row: [lat, lon, name, dir(1|0|-1), pct per decade, significant, r2, mean area, years, continent] */
   var D=DATA,SER=SERIES,B64='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';D.forEach(function(r,i){r.push(i)});
   var map=L.map('map',{worldCopyJump:true,minZoom:2,zoomControl:true}).setView([30,10],2);
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{subdomains:'abcd',maxZoom:12,
-    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'}).addTo(map);
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',{maxZoom:12,
+    attribution:'Basemap &copy; Esri, HERE, Garmin, &copy; OpenStreetMap contributors'}).addTo(map);
   function lerp(a,b,t){return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t]}
   var NEG=[[185,28,28],[248,113,113],[148,163,184]],POS=[[148,163,184],[56,189,248],[29,78,216]];
   function col(p,dir){if(dir===0)return 'rgb(148,163,184)';var t=Math.max(-1,Math.min(1,p/20)),c;
