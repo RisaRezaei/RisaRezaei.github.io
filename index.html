@@ -18,15 +18,15 @@ html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 a{color:var(--accent);text-decoration:none}
 a:hover{text-decoration:underline}
-.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
 h1,h2,h3{font-family:"Space Grotesk",Inter,sans-serif}
 
+/* Fixed animated stage behind the whole page */
+#stage{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.hero,nav,main,footer{position:relative;z-index:1}
+
 /* HERO */
-.hero{position:relative;min-height:92vh;display:flex;align-items:center;overflow:hidden;
-  background:radial-gradient(1200px 600px at 75% 40%,rgba(96,165,250,.10),transparent 60%),var(--bg)}
-#stars,#globe{position:absolute;inset:0;width:100%;height:100%}
-#globe{left:auto;right:-6%;width:62%;max-width:760px}
-.hero .wrap{position:relative;z-index:2;width:100%}
+.hero{min-height:92vh;display:flex;align-items:center;overflow:hidden}
 .hero-text{max-width:600px}
 .eyebrow{display:inline-block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
   border:1px solid rgba(79,209,197,.35);padding:5px 12px;border-radius:999px;margin-bottom:22px}
@@ -40,50 +40,7 @@ h1 span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-b
 .btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent2));border:0;color:#04121a;font-weight:600}
 .btn.primary:hover{color:#04121a;opacity:.92}
 .scroll{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:2;color:var(--muted);font-size:13px;letter-spacing:.1em}
-
-/* TABS */
-nav{position:sticky;top:0;z-index:10;background:rgba(7,11,20,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
-.tabs::-webkit-scrollbar{display:none}
-.tab{flex:none;padding:16px 16px 14px;border:0;background:none;color:var(--muted);font:500 15px Inter,sans-serif;
-  border-bottom:2px solid transparent;cursor:pointer}
-.tab:hover{color:var(--ink)}
-.tab[aria-selected="true"]{color:var(--accent);border-bottom-color:var(--accent)}
-
-main{padding:48px 0 80px;min-height:60vh}
-section[role=tabpanel]{display:none}
-section[role=tabpanel].active{display:block;animation:fade .35s ease}
-@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-h2{font-size:30px;margin:0 0 8px}
-.sub{color:var(--muted);margin:0 0 28px}
-h3{font-size:18px;margin:0 0 4px;line-height:1.35}
-p{margin:0 0 14px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin-bottom:16px;transition:border-color .2s,transform .2s}
-.card:hover{border-color:rgba(79,209,197,.4)}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px}
-.grid .card{margin:0}
-.meta{font-size:14px;color:var(--muted);margin-bottom:10px}
-.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
-.tag{font-size:12.5px;padding:3px 10px;border-radius:999px;background:var(--soft);color:var(--accent);font-weight:500}
-.kicker{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:8px;font-weight:600}
-ul{padding-left:20px;margin:8px 0 0}
-li{margin-bottom:6px}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-top:28px}
-.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
-.stat b{display:block;font:700 28px "Space Grotesk",sans-serif;color:var(--accent)}
-.stat span{font-size:13.5px;color:var(--muted)}
-.timeline{border-left:2px solid var(--line);padding-left:26px;margin-left:6px}
-.titem{position:relative;margin-bottom:30px}
-.titem::before{content:"";position:absolute;left:-34px;top:7px;width:12px;height:12px;border-radius:50%;
-  background:var(--bg);border:2px solid var(--accent);box-shadow:0 0 0 4px rgba(79,209,197,.12)}
-.pub{border-left:3px solid var(--accent)}
-.pub em{color:var(--ink)}
-footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-size:14px}
-
-/* Earth-observation / hydrology touches */
-.hero::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;
-  background:repeating-linear-gradient(0deg,rgba(255,255,255,.014) 0 1px,transparent 1px 3px)}
-.waves{position:absolute;left:0;right:0;bottom:0;height:96px;z-index:1;pointer-events:none;overflow:hidden}
+.waves{position:absolute;left:0;right:0;bottom:0;height:96px;pointer-events:none;overflow:hidden}
 .waves svg{position:absolute;bottom:0;left:0;width:200%;height:100%}
 .waves .w1{animation:drift 22s linear infinite}
 .waves .w2{animation:drift 14s linear infinite reverse}
@@ -93,40 +50,84 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
 .hud b{color:var(--accent);font-weight:600}
 .hud .live{display:inline-block;width:7px;height:7px;border-radius:50%;background:#34d399;margin-right:7px;box-shadow:0 0 8px #34d399;animation:blink 1.6s infinite}
 @keyframes blink{50%{opacity:.3}}
-h2[data-n]::before{content:attr(data-n);display:block;font:600 12px/1 "JetBrains Mono",ui-monospace,monospace;letter-spacing:.2em;color:var(--accent2);margin-bottom:12px}
-.kicker{font-family:"JetBrains Mono",ui-monospace,monospace;letter-spacing:.08em}
-.card{position:relative;overflow:hidden}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:10;background:rgba(7,11,20,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;padding:16px 16px 14px;color:var(--muted);font:500 15px Inter,sans-serif;border-bottom:2px solid transparent}
+.tab:hover{color:var(--ink);text-decoration:none}
+.tab.on{color:var(--accent);border-bottom-color:var(--accent)}
+
+/* STORY SECTIONS */
+section{min-height:100vh;padding:16vh 0 12vh;scroll-margin-top:40px}
+.col{width:50%;max-width:580px}
+h2{font-size:32px;margin:0 0 8px}
+h2[data-n]::before{content:attr(data-n);display:block;font:600 12px/1 "JetBrains Mono",ui-monospace,monospace;letter-spacing:.2em;color:var(--accent2);margin-bottom:14px}
+.sub{color:var(--muted);margin:0 0 28px}
+h3{font-size:18px;margin:0 0 4px;line-height:1.35}
+p{margin:0 0 14px}
+.card{position:relative;overflow:hidden;background:rgba(17,26,43,.88);backdrop-filter:blur(6px);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin-bottom:16px;transition:border-color .2s}
+.card:hover{border-color:rgba(79,209,197,.4)}
 .card::after{content:"";position:absolute;left:0;right:0;top:-45%;height:45%;pointer-events:none;opacity:0;
   background:linear-gradient(180deg,transparent,rgba(79,209,197,.09),transparent)}
 .card:hover::after{opacity:1;animation:scan 1.3s ease-in-out}
 @keyframes scan{from{top:-45%}to{top:100%}}
-.stat{position:relative;overflow:hidden}
+a.card{display:block;color:var(--ink)}
+a.card:hover{text-decoration:none}
+.meta{font-size:14px;color:var(--muted);margin-bottom:10px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.tag{font-size:12.5px;padding:3px 10px;border-radius:999px;background:var(--soft);color:var(--accent);font-weight:500}
+.kicker{font:600 12px "JetBrains Mono",ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--accent2);margin-bottom:8px}
+ul{padding-left:20px;margin:8px 0 0}
+li{margin-bottom:6px}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:26px}
+.stat{position:relative;overflow:hidden;background:rgba(17,26,43,.88);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
 .stat::before{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:.7}
+.stat b{display:block;font:700 26px "Space Grotesk",sans-serif;color:var(--accent)}
+.stat span{font-size:13.5px;color:var(--muted)}
+.timeline{border-left:2px solid var(--line);padding-left:26px;margin-left:6px}
+.titem{position:relative;margin-bottom:18px}
+.titem::before{content:"";position:absolute;left:-34px;top:28px;width:12px;height:12px;border-radius:50%;
+  background:var(--bg);border:2px solid var(--accent);box-shadow:0 0 0 4px rgba(79,209,197,.12)}
+.pub{border-left:3px solid var(--accent)}
+.pub em{color:var(--ink)}
+.mapcard{position:relative;margin:4px 0 30px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#111a2b}
+.maphead{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;padding:18px 22px}
+.maphead p{margin:4px 0 0;color:var(--muted);font-size:14.5px;max-width:720px}
+.mapcard iframe{display:block;width:100%;height:min(72vh,560px);border:0;border-top:1px solid var(--line);background:#05080f}
+footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-size:14px;background:rgba(7,11,20,.85)}
 
-@media (max-width:760px){
+/* Reveal on scroll */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:none}
+
+@media (max-width:900px){
+  #stage{opacity:.38}
+  .col{width:auto;max-width:none}
   .hud{display:none}
   .waves{height:64px}
-  #globe{right:-30%;width:120%;opacity:.35}
   .hero{min-height:84vh}
   .lead{font-size:16.5px}
-  h2{font-size:26px}
+  h2{font-size:27px}
+  section{padding:12vh 0 8vh;min-height:auto}
+  #contact{min-height:80vh}
 }
-@media (prefers-reduced-motion:reduce){section[role=tabpanel].active{animation:none}}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
 </style>
 </head>
 <body>
+<canvas id="stage" aria-hidden="true"></canvas>
 
 <header class="hero" id="top">
-  <canvas id="stars"></canvas>
-  <canvas id="globe"></canvas>
-  <div class="wrap">
+  <div class="wrap" style="width:100%">
     <div class="hero-text">
       <div class="eyebrow">Hydrology · Remote Sensing · Machine Learning</div>
       <h1>Parisa <span>Abbasalizadehrezaei</span></h1>
       <p class="lead">Environmental engineer turning satellite data and water models into decisions for water management.</p>
       <div class="links">
-        <a class="btn primary" href="#projects" data-go="projects">View projects</a>
-        <a class="btn" href="wetlands.html">Live demo: wetland trend map</a>
+        <a class="btn primary" href="#projects">View projects</a>
+        <a class="btn" href="#wetland-map">Live demo: wetland trend map</a>
         <a class="btn" href="mailto:risarezaei@gmail.com">Email</a>
         <a class="btn" href="https://www.linkedin.com/in/risarezaei" target="_blank" rel="noopener">LinkedIn</a>
         <a class="btn" href="https://orcid.org/0009-0009-5708-7673" target="_blank" rel="noopener">ORCID</a>
@@ -134,7 +135,7 @@ h2[data-n]::before{content:attr(data-n);display:block;font:600 12px/1 "JetBrains
       </div>
       <div class="hud" aria-hidden="true">
         <div><span class="live"></span><b>EO-SAT</b> · nadir scan</div>
-        <div>LAT <span id="hlat">--</span>  LON <span id="hlon">--</span></div>
+        <div>LAT <span id="hlat">--</span>  LON <span id="hlon">--</span></div>
         <div>Bands B03 · B08 · B11 · NDWI</div>
       </div>
     </div>
@@ -147,89 +148,112 @@ h2[data-n]::before{content:attr(data-n);display:block;font:600 12px/1 "JetBrains
 </header>
 
 <nav aria-label="Sections">
-  <div class="wrap tabs" role="tablist">
-    <button class="tab" role="tab" data-tab="about">About</button>
-    <button class="tab" role="tab" data-tab="projects">Projects</button>
-    <button class="tab" role="tab" data-tab="publications">Publications</button>
-    <button class="tab" role="tab" data-tab="experience">Experience</button>
-    <button class="tab" role="tab" data-tab="education">Education</button>
-    <button class="tab" role="tab" data-tab="skills">Skills</button>
-    <button class="tab" role="tab" data-tab="contact">Contact</button>
+  <div class="wrap tabs">
+    <a class="tab" href="#about">About</a>
+    <a class="tab" href="#skills">Skills</a>
+    <a class="tab" href="#projects">Projects</a>
+    <a class="tab" href="#publications">Publications</a>
+    <a class="tab" href="#experience">Experience</a>
+    <a class="tab" href="#education">Education</a>
+    <a class="tab" href="#contact">Contact</a>
   </div>
 </nav>
 
-<main class="wrap">
+<main>
 
-  <!-- ABOUT -->
-  <section id="about" role="tabpanel">
-    <h2 data-n="01 / 07">About</h2>
-    <p class="sub">Water, satellites and data.</p>
-    <p>I'm an environmental engineer (MSc, Sharif University of Technology) working at the interface of <strong>hydrology</strong>, <strong>satellite remote sensing</strong> and <strong>machine learning</strong>. I build Earth-observation workflows in Google Earth Engine and Python, model surface water and groundwater with WEAP, MODFLOW and MIKE, and turn model results into decision support for water management.</p>
-    <p>My work on a decision-support system for the Lake Urmia basin, carried out with the University of Delaware, is published in the <em>Journal of Hydrology</em> and was presented at AGU24. I also have hands-on experience in water-quality laboratory analysis and review regularly for Elsevier journals.</p>
-    <div class="stats">
+  <!-- 01 ACQUISITION -->
+  <section id="about"><div class="wrap"><div class="col">
+    <h2 class="rv" data-n="01 · ACQUISITION">About</h2>
+    <p class="sub rv">Water, satellites and data.</p>
+    <p class="rv">I'm an environmental engineer (MSc, Sharif University of Technology) working at the interface of <strong>hydrology</strong>, <strong>satellite remote sensing</strong> and <strong>machine learning</strong>. I build Earth-observation workflows in Google Earth Engine and Python, model surface water and groundwater with WEAP, MODFLOW and MIKE, and turn model results into decision support for water management.</p>
+    <p class="rv">My work on a decision-support system for the Lake Urmia basin, carried out with the University of Delaware, is published in the <em>Journal of Hydrology</em> and was presented at AGU24. I also have hands-on experience in water-quality laboratory analysis and review regularly for Elsevier journals.</p>
+    <div class="stats rv">
       <div class="stat"><b>44</b><span>Peer reviews for Elsevier journals</span></div>
       <div class="stat"><b>+31%</b><span>Environmental water supply in optimized allocation scenarios</span></div>
       <div class="stat"><b>17.71/20</b><span>MSc GPA, Sharif University</span></div>
       <div class="stat"><b>AGU24</b><span>Conference presentation, Washington, D.C.</span></div>
     </div>
-  </section>
+  </div></div></section>
 
-  <!-- PROJECTS -->
-  <section id="projects" role="tabpanel">
-    <h2 data-n="02 / 07">Projects</h2>
-    <p class="sub">Research and engineering projects across water resources and Earth observation.</p>
-    <div class="grid">
-      <article class="card">
-        <div class="kicker">Live demo · Earth observation</div>
-        <h3>Global Wetland Water-Area Trends</h3>
-        <p class="meta">Interactive map · Landsat 1984–2025</p>
-        <p>Forty years of monthly surface-water area for nearly 600 lakes and wetlands worldwide. Each water body is coloured by its long-term trend; click any point to see its annual water-area curve and fitted trend.</p>
-        <div class="tags"><span class="tag">Landsat</span><span class="tag">Trend analysis</span><span class="tag">Leaflet</span></div>
-        <p style="margin:14px 0 0"><a class="btn primary" href="wetlands.html">Open the map →</a></p>
-      </article>
-      <article class="card">
+  <!-- 02 SPECTRAL BANDS -->
+  <section id="skills"><div class="wrap"><div class="col">
+    <h2 class="rv" data-n="02 · SPECTRAL BANDS">Skills</h2>
+    <p class="sub rv">Tools and methods.</p>
+    <div class="card rv"><h3>Remote sensing</h3>
+      <div class="tags"><span class="tag">Google Earth Engine (JS &amp; Python)</span><span class="tag">Landsat</span><span class="tag">Sentinel-2</span><span class="tag">Spectral &amp; water indices</span><span class="tag">Land-cover classification</span><span class="tag">Change detection</span><span class="tag">Accuracy assessment</span><span class="tag">ENVI</span></div></div>
+    <div class="card rv"><h3>Machine learning &amp; data</h3>
+      <div class="tags"><span class="tag">Python</span><span class="tag">pandas</span><span class="tag">NumPy</span><span class="tag">SciPy</span><span class="tag">scikit-learn</span><span class="tag">Matplotlib</span><span class="tag">Random Forest</span><span class="tag">Gradient Boosting</span><span class="tag">K-means</span><span class="tag">Time-series analysis</span><span class="tag">R (basic)</span></div></div>
+    <div class="card rv"><h3>Hydrology &amp; groundwater</h3>
+      <div class="tags"><span class="tag">WEAP</span><span class="tag">MODFLOW</span><span class="tag">MIKE</span><span class="tag">Water balance</span><span class="tag">Scenario analysis</span><span class="tag">Multi-objective optimization</span></div></div>
+    <div class="card rv"><h3>GIS &amp; data management</h3>
+      <div class="tags"><span class="tag">ArcGIS / ArcGIS Pro</span><span class="tag">QGIS</span><span class="tag">Map production</span><span class="tag">Reproducible workflows</span><span class="tag">Git / GitHub</span><span class="tag">HPC (basic)</span></div></div>
+    <div class="card rv"><h3>Water quality</h3>
+      <div class="tags"><span class="tag">Nutrients</span><span class="tag">BOD / COD</span><span class="tag">Alkalinity</span><span class="tag">Hardness</span><span class="tag">Coliforms</span></div></div>
+    <div class="card rv"><h3>Languages</h3>
+      <div class="tags"><span class="tag">English – fluent (TOEFL iBT 90)</span><span class="tag">Persian – native</span><span class="tag">German – basic</span></div></div>
+  </div></div></section>
+
+  <!-- 03 CLASSIFICATION -->
+  <section id="projects"><div class="wrap">
+    <div class="col">
+      <h2 class="rv" data-n="03 · CLASSIFICATION">Projects</h2>
+      <p class="sub rv">Research and engineering projects across water resources and Earth observation.</p>
+    </div>
+    <div class="mapcard rv" id="wetland-map">
+      <div class="maphead">
+        <div>
+          <div class="kicker">Live demo · Earth observation</div>
+          <h3>Global Wetland Water-Area Trends, 1984–2025</h3>
+          <p>Forty years of Landsat surface-water area for nearly 600 lakes and wetlands. Colour shows each water body's long-term trend; click a point to see its annual water-area curve and fitted trend.</p>
+        </div>
+        <a class="btn" href="wetlands.html">Open full screen →</a>
+      </div>
+      <iframe src="wetlands.html?embed=1" title="Global wetland water-area trend map" loading="lazy"></iframe>
+    </div>
+    <div class="col">
+      <article class="card rv">
         <div class="kicker">Water resources · Decision support</div>
         <h3>Decision Support System for the Lake Urmia Basin</h3>
         <p class="meta">University of Delaware (remote) · 2023–2024</p>
         <p>A forecast-informed decision support system for real-time water allocation, coupling a daily WEAP water-balance model with inflow forecasts. Multi-objective evolutionary optimization and AHP were used to compare scenarios; optimized strategies raised environmental water supply by 31% and agricultural profit by 26%.</p>
         <div class="tags"><span class="tag">WEAP</span><span class="tag">Optimization</span><span class="tag">AHP</span><span class="tag">Forecasting</span></div>
       </article>
-      <article class="card">
+      <article class="card rv">
         <div class="kicker">Earth observation · Machine learning</div>
         <h3>Wetlands Monitoring System</h3>
         <p class="meta">Sharif University of Technology · 3-year funded grant · 2021–2023</p>
         <p>Multi-year satellite monitoring workflows (Landsat, Sentinel-2) for surface water and land cover in Google Earth Engine and Python, using Random Forest and K-means for classification and change detection, with full accuracy assessment.</p>
         <div class="tags"><span class="tag">Google Earth Engine</span><span class="tag">Sentinel-2</span><span class="tag">Landsat</span><span class="tag">Random Forest</span></div>
       </article>
-      <article class="card">
+      <article class="card rv">
         <div class="kicker">Remote sensing · MSc thesis</div>
         <h3>Satellite-Based Surface Water Assessment</h3>
         <p class="meta">MSc thesis · Sharif University of Technology</p>
         <p>Surface-water mapping combining Random Forest classification, K-means clustering and spectral water indices in Google Earth Engine.</p>
         <div class="tags"><span class="tag">GEE</span><span class="tag">K-means</span><span class="tag">Spectral indices</span></div>
       </article>
-      <article class="card">
+      <article class="card rv">
         <div class="kicker">Groundwater</div>
         <h3>Dam Leakage &amp; Aquifer Response</h3>
         <p class="meta">MSc project</p>
         <p>MODFLOW simulation of dam leakage and aquifer response to an adjacent river, with analytical and numerical solutions implemented in Python.</p>
         <div class="tags"><span class="tag">MODFLOW</span><span class="tag">Python</span></div>
       </article>
-      <article class="card">
+      <article class="card rv">
         <div class="kicker">Hydrology</div>
         <h3>Fallat-e-Markazi Sub-Basin Water Balance</h3>
         <p class="meta">MSc project</p>
         <p>Water balance of the sub-basin in ArcGIS and Python, with a chloride (salinity) time series modelled in Python.</p>
         <div class="tags"><span class="tag">ArcGIS</span><span class="tag">Time series</span><span class="tag">Salinity</span></div>
       </article>
-      <article class="card">
+      <article class="card rv">
         <div class="kicker">Hydrodynamics</div>
         <h3>Oil-Slick Transport in the Karkheh Reservoir</h3>
         <p class="meta">MSc project</p>
         <p>Hydrodynamic modelling of oil-slick transport in the Karkheh reservoir using MIKE.</p>
         <div class="tags"><span class="tag">MIKE</span><span class="tag">Transport modelling</span></div>
       </article>
-      <article class="card">
+      <article class="card rv">
         <div class="kicker">Remote sensing &amp; GIS</div>
         <h3>Land Cover &amp; Watershed Mapping</h3>
         <p class="meta">MSc project</p>
@@ -237,33 +261,33 @@ h2[data-n]::before{content:attr(data-n);display:block;font:600 12px/1 "JetBrains
         <div class="tags"><span class="tag">ENVI</span><span class="tag">ArcGIS</span><span class="tag">Classification</span></div>
       </article>
     </div>
-  </section>
+  </div></section>
 
-  <!-- PUBLICATIONS -->
-  <section id="publications" role="tabpanel">
-    <h2 data-n="03 / 07">Publications &amp; Peer Review</h2>
-    <p class="sub">Selected outputs.</p>
-    <div class="card pub">
+  <!-- 04 CHANGE DETECTION -->
+  <section id="publications"><div class="wrap"><div class="col">
+    <h2 class="rv" data-n="04 · CHANGE DETECTION">Publications &amp; Peer Review</h2>
+    <p class="sub rv">Selected outputs.</p>
+    <div class="card pub rv">
       <div class="kicker">Journal article · 2026</div>
       <p>Meydani, A., <strong>Abbasalizadehrezaei, P.</strong>, Javadian, M., Khodaei, H., Tajrishy, M., Levia, D.F. (2026). Scenario-driven decision support system for assessing water balance to support agricultural and ecosystem sustainability. <em>Journal of Hydrology</em>, 665, 134679.</p>
       <a href="https://doi.org/10.1016/j.jhydrol.2025.134679" target="_blank" rel="noopener">doi:10.1016/j.jhydrol.2025.134679 →</a>
     </div>
-    <div class="card pub">
+    <div class="card pub rv">
       <div class="kicker">Conference · 2024</div>
       <p><strong>Abbasalizadehrezaei, P.</strong>, Meydani, A., Khodaei, H., Tajrishy, M., Levia, D.F. (2024). An integrated decision support system for balancing agricultural and environmental water use in the Urmia Lake Basin. <em>AGU24 Annual Meeting</em>, Washington, D.C.</p>
     </div>
-    <div class="card pub">
+    <div class="card pub rv">
       <div class="kicker">Peer review · 12/2024 – present</div>
       <p>44 reviews for Elsevier: <em>Journal of Environmental Management</em> (35), <em>Agricultural Water Management</em> (8) and <em>Journal of Hydrology</em> (1), covering hydrology, remote sensing and water management.</p>
     </div>
-  </section>
+  </div></div></section>
 
-  <!-- EXPERIENCE -->
-  <section id="experience" role="tabpanel">
-    <h2 data-n="04 / 07">Experience</h2>
-    <p class="sub">Research and teaching.</p>
+  <!-- 05 DECISION SUPPORT -->
+  <section id="experience"><div class="wrap"><div class="col">
+    <h2 class="rv" data-n="05 · DECISION SUPPORT">Experience</h2>
+    <p class="sub rv">Research and teaching.</p>
     <div class="timeline">
-      <div class="titem">
+      <div class="titem card rv">
         <h3>Research Collaborator, University of Delaware, USA (remote)</h3>
         <p class="meta">09/2023 – 12/2024 · Prof. Delphis F. Levia, Prof. Massoud Tajrishy</p>
         <ul>
@@ -272,12 +296,12 @@ h2[data-n]::before{content:attr(data-n);display:block;font:600 12px/1 "JetBrains
           <li>Results published in the <em>Journal of Hydrology</em> and presented at AGU24.</li>
         </ul>
       </div>
-      <div class="titem">
+      <div class="titem card rv">
         <h3>Teaching Assistant, Water Environment Analysis Laboratory</h3>
         <p class="meta">Sharif University of Technology · 02/2023 – 04/2023</p>
         <ul><li>Guided students through water-quality and hydrochemical experiments and assessed their lab reports.</li></ul>
       </div>
-      <div class="titem">
+      <div class="titem card rv">
         <h3>Research Assistant, Sharif University of Technology</h3>
         <p class="meta">04/2021 – 04/2023 · Development of a Wetlands Monitoring System (3-year funded grant)</p>
         <ul>
@@ -286,192 +310,301 @@ h2[data-n]::before{content:attr(data-n);display:block;font:600 12px/1 "JetBrains
         </ul>
       </div>
     </div>
-  </section>
+  </div></div></section>
 
-  <!-- EDUCATION -->
-  <section id="education" role="tabpanel">
-    <h2 data-n="05 / 07">Education</h2>
-    <p class="sub">Degrees, distinctions and training.</p>
+  <!-- 06 GROUND TRUTH -->
+  <section id="education"><div class="wrap"><div class="col">
+    <h2 class="rv" data-n="06 · GROUND TRUTH">Education</h2>
+    <p class="sub rv">Degrees, distinctions and training.</p>
     <div class="timeline">
-      <div class="titem">
+      <div class="titem card rv">
         <h3>MSc, Environmental Engineering</h3>
         <p class="meta">Sharif University of Technology, Tehran · 09/2020 – 04/2023 · GPA 17.71/20</p>
-        <p>Thesis: satellite-based assessment of surface water using Random Forest classification, K-means clustering and spectral indices in Google Earth Engine.</p>
+        <p style="margin:0">Thesis: satellite-based assessment of surface water using Random Forest classification, K-means clustering and spectral indices in Google Earth Engine.</p>
       </div>
-      <div class="titem">
+      <div class="titem card rv">
         <h3>BSc, Civil Engineering</h3>
-        <p class="meta">Kharazmi University, Tehran · 09/2016 – 07/2020</p>
+        <p class="meta" style="margin:0">Kharazmi University, Tehran · 09/2016 – 07/2020</p>
       </div>
     </div>
-    <div class="grid" style="margin-top:8px">
-      <div class="card">
-        <div class="kicker">Distinctions</div>
-        <ul>
-          <li>Member of the winning team for the 3-year grant "Development of a Wetlands Monitoring System", Sharif.</li>
-          <li>Ranked 1st in Groundwater Contamination, Advanced Hydrology and Water Environment Analysis Laboratory (MSc).</li>
-          <li>Elsevier reviewer recognition: <em>J. Environmental Management</em>, <em>Agricultural Water Management</em>, <em>J. Hydrology</em>.</li>
-        </ul>
-      </div>
-      <div class="card">
-        <div class="kicker">Workshops</div>
-        <ul>
-          <li>Remote Sensing for Water Accounting Plus (WA+), IHE Delft (2021)</li>
-          <li>Remote sensing with Google Earth Engine, UNESCO Chair workshop (2020)</li>
-        </ul>
-      </div>
+    <div class="card rv">
+      <div class="kicker">Distinctions</div>
+      <ul>
+        <li>Member of the winning team for the 3-year grant "Development of a Wetlands Monitoring System", Sharif.</li>
+        <li>Ranked 1st in Groundwater Contamination, Advanced Hydrology and Water Environment Analysis Laboratory (MSc).</li>
+        <li>Elsevier reviewer recognition: <em>J. Environmental Management</em>, <em>Agricultural Water Management</em>, <em>J. Hydrology</em>.</li>
+      </ul>
     </div>
-  </section>
+    <div class="card rv">
+      <div class="kicker">Workshops</div>
+      <ul>
+        <li>Remote Sensing for Water Accounting Plus (WA+), IHE Delft (2021)</li>
+        <li>Remote sensing with Google Earth Engine, UNESCO Chair workshop (2020)</li>
+      </ul>
+    </div>
+  </div></div></section>
 
-  <!-- SKILLS -->
-  <section id="skills" role="tabpanel">
-    <h2 data-n="06 / 07">Skills</h2>
-    <p class="sub">Tools and methods.</p>
-    <div class="grid">
-      <div class="card"><h3>Remote sensing</h3>
-        <div class="tags"><span class="tag">Google Earth Engine (JS &amp; Python)</span><span class="tag">Landsat</span><span class="tag">Sentinel-2</span><span class="tag">Spectral &amp; water indices</span><span class="tag">Land-cover classification</span><span class="tag">Change detection</span><span class="tag">Accuracy assessment</span><span class="tag">ENVI</span></div></div>
-      <div class="card"><h3>Machine learning &amp; data</h3>
-        <div class="tags"><span class="tag">Python</span><span class="tag">pandas</span><span class="tag">NumPy</span><span class="tag">SciPy</span><span class="tag">scikit-learn</span><span class="tag">Matplotlib</span><span class="tag">Random Forest</span><span class="tag">Gradient Boosting</span><span class="tag">K-means</span><span class="tag">Time-series analysis</span><span class="tag">R (basic)</span></div></div>
-      <div class="card"><h3>Hydrology &amp; groundwater</h3>
-        <div class="tags"><span class="tag">WEAP</span><span class="tag">MODFLOW</span><span class="tag">MIKE</span><span class="tag">Water balance</span><span class="tag">Scenario analysis</span><span class="tag">Multi-objective optimization</span></div></div>
-      <div class="card"><h3>GIS &amp; data management</h3>
-        <div class="tags"><span class="tag">ArcGIS / ArcGIS Pro</span><span class="tag">QGIS</span><span class="tag">Map production</span><span class="tag">Reproducible workflows</span><span class="tag">Git / GitHub</span><span class="tag">HPC (basic)</span></div></div>
-      <div class="card"><h3>Water quality</h3>
-        <div class="tags"><span class="tag">Nutrients</span><span class="tag">BOD / COD</span><span class="tag">Alkalinity</span><span class="tag">Hardness</span><span class="tag">Coliforms</span></div></div>
-      <div class="card"><h3>Languages</h3>
-        <div class="tags"><span class="tag">English – fluent (TOEFL iBT 90)</span><span class="tag">Persian – native</span><span class="tag">German – basic</span></div></div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact" role="tabpanel">
-    <h2 data-n="07 / 07">Contact</h2>
-    <p class="sub">Open to research, data and engineering roles and collaborations across Europe.</p>
-    <div class="grid">
-      <a class="card" href="mailto:risarezaei@gmail.com"><div class="kicker">Email</div><h3>risarezaei@gmail.com</h3></a>
-      <a class="card" href="https://www.linkedin.com/in/risarezaei" target="_blank" rel="noopener"><div class="kicker">LinkedIn</div><h3>linkedin.com/in/risarezaei</h3></a>
-      <a class="card" href="https://orcid.org/0009-0009-5708-7673" target="_blank" rel="noopener"><div class="kicker">ORCID</div><h3>0009-0009-5708-7673</h3></a>
-      <a class="card" href="https://github.com/RisaRezaei" target="_blank" rel="noopener"><div class="kicker">GitHub</div><h3>github.com/RisaRezaei</h3></a>
-    </div>
-  </section>
+  <!-- 07 DOWNLINK -->
+  <section id="contact"><div class="wrap"><div class="col">
+    <h2 class="rv" data-n="07 · DOWNLINK">Contact</h2>
+    <p class="sub rv">Open to research, data and engineering roles and collaborations across Europe.</p>
+    <a class="card rv" href="mailto:risarezaei@gmail.com"><div class="kicker">Email</div><h3>risarezaei@gmail.com</h3></a>
+    <a class="card rv" href="https://www.linkedin.com/in/risarezaei" target="_blank" rel="noopener"><div class="kicker">LinkedIn</div><h3>linkedin.com/in/risarezaei</h3></a>
+    <a class="card rv" href="https://orcid.org/0009-0009-5708-7673" target="_blank" rel="noopener"><div class="kicker">ORCID</div><h3>0009-0009-5708-7673</h3></a>
+    <a class="card rv" href="https://github.com/RisaRezaei" target="_blank" rel="noopener"><div class="kicker">GitHub</div><h3>github.com/RisaRezaei</h3></a>
+  </div></div></section>
 
 </main>
 
 <footer><div class="wrap">© <span id="yr"></span> Parisa Abbasalizadehrezaei</div></footer>
 
 <script>
-/* Tabs */
+document.getElementById('yr').textContent=new Date().getFullYear();
+
+/* Reveal content blocks as they enter the viewport */
 (function(){
+  var els=[].slice.call(document.querySelectorAll('.rv'));
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});
+  els.forEach(function(e){io.observe(e)});
+})();
+
+/* Scroll story: one fixed canvas, each section's scene morphs into the next.
+   0 orbit -> 1 acquisition -> 2 spectral bands -> 3 classification -> 4 change detection
+   -> 5 decision support -> 6 ground truth -> 7 downlink */
+(function(){
+  var c=document.getElementById('stage'),x=c.getContext('2d');
+  var IDS=['top','about','skills','projects','publications','experience','education','contact'];
+  var secs=IDS.map(function(id){return document.getElementById(id)});
   var tabs=[].slice.call(document.querySelectorAll('.tab'));
-  var panels=[].slice.call(document.querySelectorAll('[role=tabpanel]'));
-  var nav=document.querySelector('nav');
-  function show(id,scroll){
-    if(!document.getElementById(id)||!document.getElementById(id).matches('[role=tabpanel]')) id='about';
-    tabs.forEach(function(t){t.setAttribute('aria-selected',t.dataset.tab===id)});
-    panels.forEach(function(p){p.classList.toggle('active',p.id===id)});
-    if(scroll){history.replaceState(null,'','#'+id);}
-    if(scroll) window.scrollTo({top:nav.offsetTop,behavior:'smooth'});
-  }
-  tabs.forEach(function(t){t.addEventListener('click',function(){show(t.dataset.tab,true)})});
-  document.querySelectorAll('[data-go]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();show(a.dataset.go,true)})});
-  var h=location.hash.slice(1); show(h||'about',!!h);
-  document.getElementById('yr').textContent=new Date().getFullYear();
-})();
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W,H,mob,P=0,Pt=0,T0=performance.now();
+  var D2R=Math.PI/180;
+  function cl(v,a,b){return v<(a||0)?(a||0):v>(b===undefined?1:b)?(b===undefined?1:b):v}
+  function ez(t){t=cl(t);return t*t*(3-2*t)}
+  function lerp(a,b,t){return a+(b-a)*t}
+  function rgba(c,a){return 'rgba('+Math.round(c[0])+','+Math.round(c[1])+','+Math.round(c[2])+','+a+')'}
+  function mixc(a,b,t){return [lerp(a[0],b[0],t),lerp(a[1],b[1],t),lerp(a[2],b[2],t)]}
+  var seed=11;function rnd(){seed=(seed*16807)%2147483647;return seed/2147483647}
 
-/* Topographic contours behind the content */
-(function(){
-  var seed=7;function rnd(){seed=(seed*16807)%2147483647;return seed/2147483647}
-  var d='';
-  [[250,260,9],[650,640,7]].forEach(function(o){var p=[rnd()*6,rnd()*6,rnd()*6];
-    for(var k=1;k<=o[2];k++){var r0=k*26;
-      for(var i=0;i<=48;i++){var t=i/48*6.2832,r=r0*(1+.16*Math.sin(3*t+p[0])+.09*Math.sin(5*t+p[1])+.05*Math.sin(7*t+p[2]+k*.3));
-        d+=(i?'L':'M')+Math.round(o[0]+r*Math.cos(t))+' '+Math.round(o[1]+r*Math.sin(t)*.82)}d+='Z'}});
-  var svg="<svg xmlns='http://www.w3.org/2000/svg' width='900' height='900'><path d='"+d+"' fill='none' stroke='rgba(79,209,197,0.05)'/></svg>";
-  document.body.style.backgroundImage='url("data:image/svg+xml,'+encodeURIComponent(svg)+'")';
-  document.body.style.backgroundAttachment='fixed';
-})();
+  /* ---------- stars ---------- */
+  var ST=[];for(var i=0;i<170;i++)ST.push([rnd(),rnd(),rnd()*1.2+.2,rnd()*6]);
 
-/* Stars */
-(function(){
-  var c=document.getElementById('stars'),x=c.getContext('2d'),s=[];
-  function size(){var r=devicePixelRatio||1;c.width=c.offsetWidth*r;c.height=c.offsetHeight*r;x.setTransform(r,0,0,r,0,0);
-    s=[];for(var i=0;i<160;i++)s.push([Math.random()*c.offsetWidth,Math.random()*c.offsetHeight,Math.random()*1.2+.2,Math.random()*6]);}
-  function draw(t){x.clearRect(0,0,c.width,c.height);
-    s.forEach(function(p){x.globalAlpha=.25+.35*Math.abs(Math.sin(t/1800+p[3]));x.fillStyle='#cfe3ff';x.beginPath();x.arc(p[0],p[1],p[2],0,7);x.fill()});
-    requestAnimationFrame(draw);}
-  addEventListener('resize',size);size();requestAnimationFrame(draw);
-})();
-
-/* Globe: dotted sphere; land from Natural Earth (world-atlas, 110m) */
-(function(){
-  var c=document.getElementById('globe'),x=c.getContext('2d');
-  var N=4200,P=[],g=Math.PI*(3-Math.sqrt(5));
-  for(var i=0;i<N;i++){var y=1-2*(i+.5)/N,r=Math.sqrt(1-y*y),t=g*i;
-    var px=Math.cos(t)*r,pz=Math.sin(t)*r;
-    P.push([px,y,pz,Math.asin(y)*180/Math.PI,Math.atan2(-pz,px)*180/Math.PI,0,0]);}
-  // Build a land lookup by rasterising the land polygons onto a small equirectangular canvas
+  /* ---------- globe (Natural Earth land dots) ---------- */
+  var N=4200,G=[],gold=Math.PI*(3-Math.sqrt(5));
+  for(i=0;i<N;i++){var gy=1-2*(i+.5)/N,gr=Math.sqrt(1-gy*gy),gt=gold*i,px=Math.cos(gt)*gr,pz=Math.sin(gt)*gr;
+    G.push([px,gy,pz,Math.asin(gy)/D2R,Math.atan2(-pz,px)/D2R,0,0]);}
   function loadLand(){
-    if(!window.topojson) return;
+    if(!window.topojson)return;
     fetch('https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/land-110m.json').then(function(r){return r.json()}).then(function(topo){
-      var land=topojson.feature(topo,topo.objects.land),W=720,H=360;
-      var m=document.createElement('canvas');m.width=W;m.height=H;var mx=m.getContext('2d');
+      var land=topojson.feature(topo,topo.objects.land),MW=720,MH=360,m=document.createElement('canvas');m.width=MW;m.height=MH;var mx=m.getContext('2d');
       mx.fillStyle='#fff';
-      (land.features||[land]).forEach(function(f){
-        var geom=f.geometry,polys=geom.type==='Polygon'?[geom.coordinates]:geom.coordinates;
-        polys.forEach(function(poly){mx.beginPath();
-          poly.forEach(function(ring){ring.forEach(function(pt,j){var X=(pt[0]+180)/360*W,Y=(90-pt[1])/180*H;j?mx.lineTo(X,Y):mx.moveTo(X,Y)});mx.closePath()});
-          mx.fill('evenodd');});
-      });
-      var d=mx.getImageData(0,0,W,H).data;
-      P.forEach(function(p){var X=Math.min(W-1,Math.floor((p[4]+180)/360*W)),Y=Math.min(H-1,Math.floor((90-p[3])/180*H));p[5]=d[(Y*W+X)*4+3]>128?1:0});
+      (land.features||[land]).forEach(function(f){var g=f.geometry,polys=g.type==='Polygon'?[g.coordinates]:g.coordinates;
+        polys.forEach(function(poly){mx.beginPath();poly.forEach(function(ring){ring.forEach(function(pt,j){var X=(pt[0]+180)/360*MW,Y=(90-pt[1])/180*MH;j?mx.lineTo(X,Y):mx.moveTo(X,Y)});mx.closePath()});mx.fill('evenodd')})});
+      var d=mx.getImageData(0,0,MW,MH).data;
+      G.forEach(function(p){var X=Math.min(MW-1,Math.floor((p[4]+180)/360*MW)),Y=Math.min(MH-1,Math.floor((90-p[3])/180*MH));p[5]=d[(Y*MW+X)*4+3]>128?1:0});
     }).catch(function(){});
   }
-  var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js';s.onload=loadLand;document.head.appendChild(s);
-
-  var D2R=Math.PI/180;
-  function geo(la,lo){la*=D2R;lo*=D2R;return [Math.cos(la)*Math.cos(lo),Math.sin(la),-Math.cos(la)*Math.sin(lo)]}
-  var th=1.0,inc=32*D2R,SW=Math.cos(9*D2R),hlat=document.getElementById('hlat'),hlon=document.getElementById('hlon'),fn=0;
+  var sc=document.createElement('script');sc.src='https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js';sc.onload=loadLand;document.head.appendChild(sc);
+  var th=1.0,inc=32*D2R,SW=Math.cos(9*D2R),tilt=0.38,rot=2.0,fn=0,hlat=document.getElementById('hlat'),hlon=document.getElementById('hlon');
   function sat(t){var b=Math.sin(t);return [Math.cos(t),b*Math.sin(inc),b*Math.cos(inc)]}
-  function drawSat(s){var k=1.22,sx=cx+s[0]*R*k,sy=cy-s[1]*R*k,s2=sat(th+.03),ang=Math.atan2(-(s2[1]-s[1]),s2[0]-s[0]);
-    x.save();x.translate(sx,sy);x.rotate(ang+Math.PI/2);x.globalAlpha=s[2]<0?.45:1;
+  function proj(X,Y,Z,cr,sr,ct,st){var X1=X*cr-Z*sr,Z1=X*sr+Z*cr;return [X1,Y*ct-Z1*st,Y*st+Z1*ct]}
+  function satIcon(sx,sy,ang,al){x.save();x.translate(sx,sy);x.rotate(ang);x.globalAlpha=al;
     x.fillStyle='rgba(96,165,250,.95)';x.fillRect(-16,-2.5,11,5);x.fillRect(5,-2.5,11,5);
     x.fillStyle='#e7edf7';x.fillRect(-3.5,-4.5,7,9);x.restore();x.globalAlpha=1}
-  function fmt(v,a,b){return Math.abs(v).toFixed(2)+'\u00b0'+(v>=0?a:b)}
-  var W,H,R,cx,cy,tilt=0.38,rot=2.0,reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function size(){var d=devicePixelRatio||1;W=c.offsetWidth;H=c.offsetHeight;c.width=W*d;c.height=H*d;x.setTransform(d,0,0,d,0,0);
-    R=Math.min(W,H)*0.40;cx=W*0.5;cy=H*0.5;}
-  function proj(X,Y,Z,cr,sr,ct,st){var X1=X*cr-Z*sr,Z1=X*sr+Z*cr;return [X1,Y*ct-Z1*st,Y*st+Z1*ct]}
-  function frame(){
-    x.clearRect(0,0,W,H);
-    var glow=x.createRadialGradient(cx,cy,R*.6,cx,cy,R*1.35);
-    glow.addColorStop(0,'rgba(79,209,197,.10)');glow.addColorStop(1,'rgba(79,209,197,0)');
+  function fmt(v,a,b){return Math.abs(v).toFixed(2)+'°'+(v>=0?a:b)}
+  function globe(cx,cy,R,al,station){
+    if(al<=.003)return;
+    var s=sat(th),k=1.22,cr=Math.cos(rot),sr=Math.sin(rot),ct=Math.cos(tilt),st=Math.sin(tilt);
+    x.globalAlpha=al;
+    var glow=x.createRadialGradient(cx,cy,R*.6,cx,cy,R*1.35);glow.addColorStop(0,'rgba(79,209,197,.10)');glow.addColorStop(1,'rgba(79,209,197,0)');
     x.fillStyle=glow;x.beginPath();x.arc(cx,cy,R*1.35,0,7);x.fill();
-    var s=sat(th);
-    if(s[2]<0)drawSat(s);
-    var body=x.createRadialGradient(cx-R*.35,cy-R*.35,R*.1,cx,cy,R);
-    body.addColorStop(0,'#13233c');body.addColorStop(1,'#070d18');
-    x.fillStyle=body;x.beginPath();x.arc(cx,cy,R,0,7);x.fill();
-    x.strokeStyle='rgba(96,165,250,.35)';x.lineWidth=1;x.stroke();
-    var cr=Math.cos(rot),sr=Math.sin(rot),ct=Math.cos(tilt),st=Math.sin(tilt);
+    var sx=cx+s[0]*R*k,sy=cy-s[1]*R*k,s2=sat(th+.03),ang=Math.atan2(-(s2[1]-s[1]),s2[0]-s[0])+Math.PI/2;
+    if(s[2]<0)satIcon(sx,sy,ang,al*.45);
+    x.globalAlpha=al;
+    var body=x.createRadialGradient(cx-R*.35,cy-R*.35,R*.1,cx,cy,R);body.addColorStop(0,'#13233c');body.addColorStop(1,'#070d18');
+    x.fillStyle=body;x.beginPath();x.arc(cx,cy,R,0,7);x.fill();x.strokeStyle='rgba(96,165,250,.35)';x.lineWidth=1;x.stroke();
     x.strokeStyle='rgba(96,165,250,.10)';
     for(var la=-60;la<=60;la+=30){x.beginPath();var first=true;
-      for(var lo=0;lo<=360;lo+=6){var a=la*Math.PI/180,b=lo*Math.PI/180;
-        var q=proj(Math.cos(a)*Math.cos(b),Math.sin(a),Math.cos(a)*Math.sin(b),cr,sr,ct,st);
-        if(q[2]<0){first=true;continue}
-        if(first){x.moveTo(cx+q[0]*R,cy-q[1]*R);first=false}else x.lineTo(cx+q[0]*R,cy-q[1]*R);}
+      for(var lo=0;lo<=360;lo+=6){var a=la*D2R,b=lo*D2R,q=proj(Math.cos(a)*Math.cos(b),Math.sin(a),Math.cos(a)*Math.sin(b),cr,sr,ct,st);
+        if(q[2]<0){first=true;continue}if(first){x.moveTo(cx+q[0]*R,cy-q[1]*R);first=false}else x.lineTo(cx+q[0]*R,cy-q[1]*R);}
       x.stroke();}
-    for(var k=0;k<P.length;k++){var p=P[k],q=proj(p[0],p[1],p[2],cr,sr,ct,st);
+    var dz=Math.min(1.9,Math.max(1.1,R/170));
+    for(var j=0;j<G.length;j++){var p=G[j],q=proj(p[0],p[1],p[2],cr,sr,ct,st);
       if(q[0]*s[0]+q[1]*s[1]+q[2]*s[2]>SW)p[6]=1;else if(p[6]>0)p[6]*=.997;
-      if(q[2]<0)continue;var a=.2+.8*q[2],X=cx+q[0]*R,Y=cy-q[1]*R;
-      if(p[5]){x.fillStyle='rgba(79,209,197,'+a+')';x.fillRect(X-1.1,Y-1.1,2.2,2.2);}
-      else{x.fillStyle='rgba(96,165,250,'+(a*.18)+')';x.fillRect(X-.6,Y-.6,1.2,1.2);}
-      if(p[6]>.03){x.fillStyle=p[5]?'rgba(209,250,229,'+Math.min(1,p[6]*a*1.2)+')':'rgba(125,211,252,'+Math.min(1,p[6]*a*1.1)+')';x.fillRect(X-1.6,Y-1.6,3.2,3.2);}
+      if(q[2]<0)continue;var aa=.2+.8*q[2],X=cx+q[0]*R,Y=cy-q[1]*R;
+      if(p[5]){x.fillStyle='rgba(79,209,197,'+aa+')';x.fillRect(X-dz,Y-dz,2*dz,2*dz);}
+      else{x.fillStyle='rgba(96,165,250,'+(aa*.18)+')';x.fillRect(X-dz*.55,Y-dz*.55,dz*1.1,dz*1.1);}
+      if(p[6]>.03){x.fillStyle=p[5]?'rgba(209,250,229,'+Math.min(1,p[6]*aa*1.2)+')':'rgba(125,211,252,'+Math.min(1,p[6]*aa*1.1)+')';x.fillRect(X-dz*1.45,Y-dz*1.45,dz*2.9,dz*2.9);}
     }
-    if(s[2]>=0){var sx=cx+s[0]*R*1.22,sy=cy-s[1]*R*1.22,fx=cx+s[0]*R,fy=cy-s[1]*R,dx=fx-sx,dy=fy-sy,L=Math.hypot(dx,dy)||1,w=R*.15*(.35+.65*s[2]);
+    if(s[2]>=0){var fx=cx+s[0]*R,fy=cy-s[1]*R,dx=fx-sx,dy=fy-sy,L=Math.hypot(dx,dy)||1,w=R*.15*(.35+.65*s[2]);
       var gb=x.createLinearGradient(sx,sy,fx,fy);gb.addColorStop(0,'rgba(79,209,197,.38)');gb.addColorStop(1,'rgba(79,209,197,.03)');
       x.fillStyle=gb;x.beginPath();x.moveTo(sx,sy);x.lineTo(fx-dy/L*w,fy+dx/L*w);x.lineTo(fx+dy/L*w,fy-dx/L*w);x.closePath();x.fill();
-      drawSat(s);}
+      satIcon(sx,sy,ang,al);}
+    if(station>0){ /* ground station receiving the downlink */
+      var gx=cx-R*.34,gy2=cy+R*.62,now=performance.now();
+      x.globalAlpha=al*station;
+      x.strokeStyle='rgba(231,237,247,.9)';x.lineWidth=1.5;x.beginPath();x.arc(gx,gy2,7,Math.PI*1.1,Math.PI*1.9);x.stroke();
+      x.beginPath();x.moveTo(gx,gy2);x.lineTo(gx,gy2+9);x.moveTo(gx-5,gy2+9);x.lineTo(gx+5,gy2+9);x.stroke();
+      for(var r=0;r<3;r++){var ph=((now/1400)+r/3)%1;x.strokeStyle='rgba(79,209,197,'+(.6*(1-ph))+')';x.beginPath();x.arc(gx,gy2-3,8+ph*26,Math.PI*1.15,Math.PI*1.85);x.stroke();}
+      if(s[2]>=0){x.setLineDash([3,5]);x.lineDashOffset=-now/40;x.strokeStyle='rgba(79,209,197,.55)';x.beginPath();x.moveTo(sx,sy);x.lineTo(gx,gy2-4);x.stroke();x.setLineDash([]);
+        var u=(now/900)%1;x.fillStyle='#d1fae5';x.beginPath();x.arc(lerp(sx,gx,u),lerp(sy,gy2-4,u),2.2,0,7);x.fill();}
+      x.lineWidth=1;
+    }
+    x.globalAlpha=1;
     if(hlat&&fn++%8===0){var Yg=s[1]*ct+s[2]*st,Z1=-s[1]*st+s[2]*ct,Xg=s[0]*cr+Z1*sr,Zg=-s[0]*sr+Z1*cr;
-      hlat.textContent=fmt(Math.asin(Math.max(-1,Math.min(1,Yg)))/D2R,'N','S');hlon.textContent=fmt(Math.atan2(-Zg,Xg)/D2R,'E','W');}
+      hlat.textContent=fmt(Math.asin(cl(Yg,-1,1))/D2R,'N','S');hlon.textContent=fmt(Math.atan2(-Zg,Xg)/D2R,'E','W');}
+  }
+
+  /* ---------- the scene tile: a 28x28 grid of 30 m "pixels" around a wetland ---------- */
+  var n=28,CELL=[];
+  function hsh(a,b,s){var v=Math.sin(a*127.1+b*311.7+s*74.7)*43758.5453;return v-Math.floor(v)}
+  function vn(a,b,s){var ia=Math.floor(a),ib=Math.floor(b),fa=a-ia,fb=b-ib;fa=fa*fa*(3-2*fa);fb=fb*fb*(3-2*fb);
+    var p=hsh(ia,ib,s),q=hsh(ia+1,ib,s),r=hsh(ia,ib+1,s),t=hsh(ia+1,ib+1,s);return p+(q-p)*fa+(r-p)*fb+(p-q-r+t)*fa*fb}
+  for(var a=0;a<n;a++)for(var b=0;b<n;b++){var u=(a+.5)/n-.5,v=(b+.5)/n-.5;
+    var f=Math.pow((u+.04)/.31,2)+Math.pow((v-.02)/.23,2)+.55*(vn(a*.28,b*.28,3)-.5);
+    CELL.push({a:a,b:b,f:f,g:vn(a*.35,b*.35,9),j:hsh(a,b,5)});}
+  function klass(cc,r){return cc.f<r?0:(cc.f<r+.85||cc.g>.64)?1:2}
+  var RGB=[[22,56,92],[46,88,58],[118,104,84]],CLS=[[56,189,248],[52,211,153],[71,85,105]];
+  var BAND=[[.35,.3,.5],[.05,.78,.45],[.03,.3,.72]];       /* B03, B08, B11 reflectance for water/veg/land */
+  var BT=[[79,209,197],[96,165,250],[196,181,253]],BN=['B03 · Green','B08 · NIR','B11 · SWIR'];
+  /* corner position of grid point (i,j) for a tile centred at (cx,cy), size S, tilt t */
+  function cpt(i,j,cx,cy,S,t){var u=i/n-.5,v=j/n-.5;return [cx+S*lerp(u,(u-v)*.8,t),cy+S*lerp(v,(u+v)*.42,t)]}
+  function quad(i,j,cx,cy,S,t,g){var p1=cpt(i+g,j+g,cx,cy,S,t),p2=cpt(i+1-g,j+g,cx,cy,S,t),p3=cpt(i+1-g,j+1-g,cx,cy,S,t),p4=cpt(i+g,j+1-g,cx,cy,S,t);
+    x.beginPath();x.moveTo(p1[0],p1[1]);x.lineTo(p2[0],p2[1]);x.lineTo(p3[0],p3[1]);x.lineTo(p4[0],p4[1]);x.closePath();x.fill()}
+  /* layer: -1 = colour image (RGB->classes by k), 0..2 = band */
+  function tile(cx,cy,S,t,layer,k,r,al,reveal){
+    if(al<=.003||S<2)return;
+    var gap=S/n>5?.06:0;
+    for(var q=0;q<CELL.length;q++){var cc=CELL[q],cls=klass(cc,r),col,A=al;
+      if(layer<0){
+        if(reveal!==undefined&&(cc.b+.5)/n>reveal){x.fillStyle='rgba(30,42,64,'+(.55*al)+')';quad(cc.a,cc.b,cx,cy,S,t,.42);continue}
+        col=mixc(RGB[cls].map(function(v){return v*(.82+.36*cc.j)}),CLS[cls],k);A=al*lerp(.95,.9,k);
+      }else{var bv=BAND[layer][cls]*(.8+.4*cc.j);col=BT[layer].map(function(v){return 14+v*bv});}
+      x.fillStyle=rgba(col,A);quad(cc.a,cc.b,cx,cy,S,t,gap);
+    }
+    x.strokeStyle='rgba(96,165,250,'+(.35*al)+')';x.lineWidth=1;
+    var p1=cpt(0,0,cx,cy,S,t),p2=cpt(n,0,cx,cy,S,t),p3=cpt(n,n,cx,cy,S,t),p4=cpt(0,n,cx,cy,S,t);
+    x.beginPath();x.moveTo(p1[0],p1[1]);x.lineTo(p2[0],p2[1]);x.lineTo(p3[0],p3[1]);x.lineTo(p4[0],p4[1]);x.closePath();x.stroke();
+  }
+  function txt(s,X,Y,al,align,col,size){if(al<=.01||mob)return;x.globalAlpha=al;x.fillStyle=col||'#8d9bb3';x.font='600 '+(size||10.5)+'px "JetBrains Mono",monospace';x.textAlign=align||'left';x.fillText(s,X,Y);x.globalAlpha=1}
+
+  /* time series used for the change-detection and river scenes (illustrative) */
+  var YRS=[],VAL=[];for(i=0;i<=40;i++){YRS.push(1984+i);VAL.push(1-.4*i/40+.07*Math.sin(i*1.3)+.045*Math.sin(i*.55+1)+.03*Math.sin(i*2.7));}
+  var SL=[[0,1.05],[10,.78],[20,.56],[30,.38],[40,.22]];          /* five annual snapshots: year index, lake extent */
+  /* ground-truth samples */
+  var GT=[];seed=29;for(i=0;i<16;i++){var cc0=CELL[Math.floor(rnd()*CELL.length)];GT.push({c:cc0,ok:i!==5&&i!==12})}
+
+  function size(){var d=Math.min(2,devicePixelRatio||1);W=innerWidth;H=innerHeight;c.width=W*d;c.height=H*d;x.setTransform(d,0,0,d,0,0);mob=W<=900;}
+  function progress(){
+    var vh=innerHeight,p=0;
+    for(var k=1;k<secs.length;k++){var top=secs[k].getBoundingClientRect().top,t=cl((vh*.92-top)/(vh*.62));p=k-1+t;if(t<1)break;}
+    return p;
+  }
+
+  function frame(now){
+    var tm=reduce?0:(now-T0);
+    Pt=progress();P+=(Pt-P)*(reduce?1:.12);if(Math.abs(Pt-P)<.0005)P=Pt;
+    var p=P,ai=Math.round(Pt);
+    tabs.forEach(function(tb,k){tb.classList.toggle('on',ai>=1&&k===ai-1)});
+    x.clearRect(0,0,W,H);
+    /* layout: visual on the right on desktop, centred behind the text on phones */
+    var vx=mob?W*.5:W*.75,vy=mob?H*.5:H*.55,S=mob?Math.min(W*.82,H*.5):Math.min(W*.32,H*.56);
+    var gx=mob?W*.7:W*.74,gyy=mob?H*.42:H*.46,R0=mob?Math.min(W*1.2,H)*.4:Math.min(W*.62,H*.92,760)*.4;
+    var e1=ez(p),e2=ez(p-1),e3=ez(p-2),e4=ez(p-3),e5=ez(p-4),e6=ez(p-5),e7=ez(p-6);
+
+    /* stars */
+    var sa=lerp(1,.45,e1);
+    for(var k=0;k<ST.length;k++){var s0=ST[k];x.globalAlpha=sa*(.25+.35*Math.abs(Math.sin(tm/1800+s0[3])));x.fillStyle='#cfe3ff';x.beginPath();x.arc(s0[0]*W,s0[1]*H,s0[2],0,7);x.fill();}
+    x.globalAlpha=1;
+
+    /* 0 -> 1 : dive from orbit into one scene;  6 -> 7 : pull back out to orbit */
+    if(p<1.001){var zg=1+Math.pow(e1,1.6)*4;globe(lerp(gx,vx,e1),lerp(gyy,vy,e1),R0*zg,1-ez(p*1.7),0);}
+    if(p>6){var zb=1+Math.pow(1-e7,1.6)*4;globe(vx,vy,S*.46*zb,ez((p-6)*1.7-.7),e7);}
+
+    /* the scene tile (stages 1-3), then five annual snapshots (stage 4) */
+    if(p>0&&p<5){
+      var tilt=ez(e2*1.5)*(1-ez(e3*1.5)),sep=ez(e2*1.7-.7)*(1-ez(e3*1.7));
+      var dive=lerp(.1,1,e1),Sz=S*dive*lerp(1,.62,tilt),ta=p<1?ez(p*1.6-.3):1;
+      var reveal=p<1?cl(e1*1.25-.1):undefined,dS=S*.19*sep;
+      if(sep>.005){ /* spectral layers fan out beneath the colour image */
+        for(var bi=2;bi>=0;bi--){var by=vy+(bi-.5)*dS;
+          tile(vx,by,Sz,tilt,bi,0,1,ta*sep,undefined);
+          var lp=cpt(0,n,vx,by,Sz,tilt);txt(BN[bi],lp[0]-14,lp[1]+4,sep,'right',rgba(BT[bi],.95));}
+      }
+      if(p<4){var ry=vy-1.5*dS;
+        tile(vx,ry,Sz,tilt,-1,e3,1,ta,reveal);
+        if(sep>.05){var lp2=cpt(0,n,vx,ry,Sz,tilt);txt('RGB COMPOSITE',lp2[0]-14,lp2[1]+4,sep,'right','#e7edf7');}
+      }
+      if(p>3){ /* snapshots spread into a row of years */
+        var rs=S*.19,rowy=vy-S*.34;
+        for(var q=4;q>=0;q--){var tx=lerp(vx,vx+(q-2)*S*.235,e4),tyy=lerp(vy,rowy,e4),ts=lerp(S,rs,e4);
+          tile(tx,tyy,ts,0,-1,1,lerp(1,SL[q][1],e4),(1-e5)*(q===0?1:ez(e4*2.2-.8)),undefined);
+          txt(String(YRS[SL[q][0]]),tx,tyy+ts/2+14,e4*(1-e5),'center');}
+      }
+      if(p<1.4&&p>.05){ /* satellite imaging the scene */
+        var sa2=ez(p*2-.6)*(1-ez((p-1)*2.5)),stx=vx,sty=vy-Sz/2-46,sw=(tm/3600)%1,rowY=vy-Sz/2+Sz*sw;
+        x.globalAlpha=sa2*.9;var gb2=x.createLinearGradient(stx,sty,stx,rowY);gb2.addColorStop(0,'rgba(79,209,197,.32)');gb2.addColorStop(1,'rgba(79,209,197,.05)');
+        x.fillStyle=gb2;x.beginPath();x.moveTo(stx,sty);x.lineTo(vx+Sz/2,rowY);x.lineTo(vx-Sz/2,rowY);x.closePath();x.fill();
+        x.fillStyle='rgba(209,250,229,.5)';x.fillRect(vx-Sz/2,rowY-1,Sz,2);x.globalAlpha=1;
+        satIcon(stx,sty,0,sa2);
+      }
+    }
+
+    /* 4 -> 5 : the time series is drawn, then becomes a river */
+    if(p>3&&p<6){
+      var X0=vx-S*.5,X1=vx+S*.5,Y0=vy-S*.02,Y1=vy+S*.42,pts=[],m=e5,ca=e4*(1-e5);
+      var rs0=[vx-S*.52,vy-S*.42],rs1=[vx+S*.36,vy+S*.38],dx0=rs1[0]-rs0[0],dy0=rs1[1]-rs0[1],ll=Math.hypot(dx0,dy0),nx=-dy0/ll,ny=dx0/ll;
+      for(var ii=0;ii<=40;ii++){var cx0=X0+ii/40*(X1-X0),cy0=Y1-(VAL[ii]-.5)/.62*(Y1-Y0),s1=ii/40,off=S*.075*Math.sin(s1*9.5)+S*.03*Math.sin(s1*23);
+        pts.push([lerp(cx0,rs0[0]+dx0*s1+nx*off,m),lerp(cy0,rs0[1]+dy0*s1+ny*off,m)]);}
+      var shown=Math.max(2,Math.round(41*cl(e4*1.15)));
+      if(ca>.01){x.strokeStyle='rgba(30,42,64,'+ca+')';x.beginPath();x.moveTo(X0,Y1);x.lineTo(X1,Y1);x.moveTo(X0,Y0);x.lineTo(X0,Y1);x.stroke();
+        txt('1984',X0,Y1+14,ca,'left');txt('2024',X1,Y1+14,ca,'right');txt('WATER AREA',X0,Y0-10,ca,'left');
+        /* fitted trend */
+        var tb=e4;x.setLineDash([5,4]);x.strokeStyle='rgba(248,113,113,'+(ca*.9)+')';x.lineWidth=1.6;x.beginPath();
+        x.moveTo(X0,Y1-(1.005-.5)/.62*(Y1-Y0));x.lineTo(lerp(X0,X1,tb),Y1-(lerp(1.005,.605,tb)-.5)/.62*(Y1-Y0));x.stroke();x.setLineDash([]);}
+      var la=p<5?1:1-e6;
+      x.strokeStyle='rgba(125,211,252,'+(.95*la)+')';x.lineWidth=lerp(1.5,3.2,m);x.lineJoin='round';x.beginPath();
+      for(ii=0;ii<(m>0?41:shown);ii++){ii?x.lineTo(pts[ii][0],pts[ii][1]):x.moveTo(pts[ii][0],pts[ii][1])}x.stroke();x.lineWidth=1;
+      if(m>.02&&la>.01){ /* water-allocation network */
+        var na=m*la,pt=function(s1){var fi=s1*40,i0=Math.min(39,Math.floor(fi)),fr=fi-i0;return [lerp(pts[i0][0],pts[i0+1][0],fr),lerp(pts[i0][1],pts[i0+1][1],fr)]};
+        var res=pt(.3),ag=pt(.55),en=pt(.8),wl=pts[40],agN=[ag[0]+S*.26,ag[1]-S*.1],ciN=[pt(.42)[0]-S*.24,pt(.42)[1]+S*.12];
+        x.globalAlpha=na;x.strokeStyle='rgba(96,165,250,.6)';x.setLineDash([4,4]);x.beginPath();x.moveTo(ag[0],ag[1]);x.lineTo(agN[0],agN[1]);var ci0=pt(.42);x.moveTo(ci0[0],ci0[1]);x.lineTo(ciN[0],ciN[1]);x.stroke();x.setLineDash([]);
+        x.fillStyle='#4fd1c5';x.beginPath();x.moveTo(res[0],res[1]-9);x.lineTo(res[0]+9,res[1]+7);x.lineTo(res[0]-9,res[1]+7);x.closePath();x.fill();
+        x.fillStyle='#34d399';x.fillRect(agN[0]-7,agN[1]-7,14,14);x.fillStyle='#60a5fa';x.fillRect(ciN[0]-7,ciN[1]-7,14,14);
+        x.fillStyle='rgba(56,189,248,.55)';x.beginPath();x.ellipse(wl[0],wl[1],22,12,.5,0,7);x.fill();x.strokeStyle='#7dd3fc';x.stroke();
+        x.fillStyle='#e7edf7';x.beginPath();x.arc(pts[0][0],pts[0][1],4,0,7);x.fill();x.globalAlpha=1;
+        txt('INFLOW FORECAST',pts[0][0]+10,pts[0][1]-8,na);txt('RESERVOIR',res[0]+14,res[1]+4,na);txt('AGRICULTURE',agN[0]+12,agN[1]+4,na);
+        txt('URBAN',ciN[0]-12,ciN[1]+4,na,'right');txt('WETLAND',wl[0],wl[1]+28,na,'center');
+        /* flow particles */
+        x.fillStyle='#d1fae5';
+        for(var fpi=0;fpi<22;fpi++){var fs=((tm/9000)+fpi/22)%1,fp=pt(fs);x.globalAlpha=na*(.4+.6*Math.sin(fs*Math.PI));x.beginPath();x.arc(fp[0],fp[1],1.8,0,7);x.fill();}
+        for(fpi=0;fpi<5;fpi++){var fb=((tm/3000)+fpi/5)%1;x.globalAlpha=na*.8;x.beginPath();x.arc(lerp(ag[0],agN[0],fb),lerp(ag[1],agN[1],fb),1.5,0,7);x.arc(lerp(ci0[0],ciN[0],fb),lerp(ci0[1],ciN[1],fb),1.5,0,7);x.fill();}
+        x.globalAlpha=1;
+      }
+    }
+
+    /* 5 -> 6 : ground truth on the classified map; 6 -> 7 it shrinks back to a point on Earth */
+    if(p>5){
+      var gS=S*.74*(1-ez(e7*1.1)*.92),gxx=lerp(vx-S*.12,vx,e7),ga=e6*(1-ez(e7*1.3));
+      tile(gxx,vy,gS,0,-1,1,.8,ga*.85,undefined);
+      for(var gi=0;gi<GT.length;gi++){var g=GT[gi],gp=cpt(g.c.a+.5,g.c.b+.5,gxx,vy,gS,0),gal=ga*ez(e6*2.2-gi/GT.length*1.2);
+        if(gal<.01)continue;x.globalAlpha=gal;x.strokeStyle=g.ok?'#e7edf7':'#f87171';x.lineWidth=1.3;
+        x.beginPath();x.arc(gp[0],gp[1],5.5,0,7);x.moveTo(gp[0]-9,gp[1]);x.lineTo(gp[0]-3,gp[1]);x.moveTo(gp[0]+3,gp[1]);x.lineTo(gp[0]+9,gp[1]);
+        x.moveTo(gp[0],gp[1]-9);x.lineTo(gp[0],gp[1]-3);x.moveTo(gp[0],gp[1]+3);x.lineTo(gp[0],gp[1]+9);x.stroke();}
+      x.globalAlpha=1;x.lineWidth=1;
+      var mx0=gxx+gS/2+22,my0=vy-30,cs=18,ma=ga*ez(e6*1.6-.5);
+      if(ma>.01){txt('ACCURACY',mx0,my0-10,ma);
+        for(var mi=0;mi<3;mi++)for(var mj=0;mj<3;mj++){x.globalAlpha=ma;x.fillStyle=mi===mj?'rgba(79,209,197,'+(.55+.15*mi)+')':'rgba(96,165,250,'+((mi+mj)%3===1?.12:.06)+')';x.fillRect(mx0+mj*cs,my0+mi*cs,cs-2,cs-2);}
+        x.globalAlpha=1;['W','V','L'].forEach(function(lb,li){txt(lb,mx0+li*cs+cs/2-1,my0+3*cs+11,ma,'center');txt(lb,mx0-6,my0+li*cs+cs/2+3,ma,'right')});}
+    }
+
+    /* stage caption */
+    var CAP=['','ACQUISITION · Landsat / Sentinel-2 · 30 m pixels','SPECTRAL BANDS · green · near-infrared · shortwave-infrared',
+      'CLASSIFICATION · water indices + Random Forest · water / vegetation / land','CHANGE DETECTION · annual water extent → trend',
+      'DECISION SUPPORT · water-allocation network','GROUND TRUTH · validation samples · accuracy assessment','DOWNLINK · data to the ground station'];
+    if(!mob){var ci=Math.round(p),cap=CAP[ci]||'',caa=cl(1-Math.abs(p-ci)*3.2);txt(cap,vx,vy+S*.5+(ci===7?S*.12:0)+46,caa*.95,'center','#8d9bb3',11);}
+
     if(!reduce){rot+=0.0018;th+=0.0042;}
     requestAnimationFrame(frame);
   }
