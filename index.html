@@ -280,46 +280,46 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
       <div class="codehead rv"><h3>Code on GitHub</h3><a href="https://github.com/RisaRezaei?tab=repositories" target="_blank" rel="noopener">All repositories →</a></div>
       <p class="sub rv" style="margin-bottom:16px">Open-source scripts for Earth-observation, terrain and climate-data workflows.</p>
       <div class="repos">
-        <a class="card repo rv" href="https://github.com/RisaRezaei/StationNO-Track" target="_blank" rel="noopener">
+        <a class="card repo rv" href="https://github.com/RisaRezaei/gee-no2-station-tracker" target="_blank" rel="noopener">
           <div class="kicker">Earth Engine · JavaScript</div>
           <h3>NO₂ Tracking at Air-Quality Stations</h3>
-          <p>Sentinel-5P TROPOMI NO₂ column density at monitoring-station locations, with a time-series chart of pollution trends.</p>
+          <p>Daily or monthly tropospheric NO₂ from Sentinel-5P TROPOMI at many monitoring stations, with a multi-station chart, a mean NO₂ map and a tidy CSV export.</p>
           <div class="tags"><span class="tag">Sentinel-5P</span><span class="tag">Air quality</span><span class="tag">Time series</span></div>
           <div class="go">View code →</div>
         </a>
-        <a class="card repo rv" href="https://github.com/RisaRezaei/Cropland-Dynamics-Mapping-2003-2019-using-Google-Earth-Engine" target="_blank" rel="noopener">
+        <a class="card repo rv" href="https://github.com/RisaRezaei/gee-cropland-dynamics" target="_blank" rel="noopener">
           <div class="kicker">Earth Engine · JavaScript</div>
           <h3>Global Cropland Dynamics, 2003–2019</h3>
-          <p>Maps stable cropland, gains and losses from global cropland datasets (Potapov et al.) and exports the result as a GeoTIFF.</p>
+          <p>Maps stable cropland, gains and losses at 30 m from the GLAD global cropland maps, reports the area of each class and exports GeoTIFFs.</p>
           <div class="tags"><span class="tag">Land-cover change</span><span class="tag">Global</span><span class="tag">GeoTIFF</span></div>
           <div class="go">View code →</div>
         </a>
-        <a class="card repo rv" href="https://github.com/RisaRezaei/Daily-Temperature-Time-Series-from-Earth-Engine-for-Multiple-Locations-Extraction" target="_blank" rel="noopener">
+        <a class="card repo rv" href="https://github.com/RisaRezaei/gee-station-temperature-timeseries" target="_blank" rel="noopener">
           <div class="kicker">Earth Engine · JavaScript</div>
           <h3>Daily Temperature at Multiple Stations</h3>
-          <p>Aggregates gridded temperature to daily values at station points, merges overlapping records and exports a CSV.</p>
-          <div class="tags"><span class="tag">Climate</span><span class="tag">Time series</span><span class="tag">CSV</span></div>
+          <p>Daily mean, minimum and maximum 2 m temperature from ERA5-Land at any number of stations, exported as one tidy CSV in °C.</p>
+          <div class="tags"><span class="tag">ERA5-Land</span><span class="tag">Climate</span><span class="tag">Time series</span></div>
           <div class="go">View code →</div>
         </a>
-        <a class="card repo rv" href="https://github.com/RisaRezaei/Extracting-Elevation-Along-a-Cross-Section-Using-Google-Earth-Engine" target="_blank" rel="noopener">
+        <a class="card repo rv" href="https://github.com/RisaRezaei/gee-elevation-cross-section" target="_blank" rel="noopener">
           <div class="kicker">Earth Engine · JavaScript</div>
           <h3>Elevation Along a Cross-Section</h3>
-          <p>Samples SRTM 90 m elevation at equal intervals along a drawn line and charts the terrain profile.</p>
-          <div class="tags"><span class="tag">SRTM DEM</span><span class="tag">Terrain profile</span></div>
+          <p>Samples SRTM or Copernicus DEM every n metres along any line or polyline, charts the terrain profile and exports it as CSV.</p>
+          <div class="tags"><span class="tag">SRTM</span><span class="tag">Copernicus DEM</span><span class="tag">Terrain profile</span></div>
           <div class="go">View code →</div>
         </a>
-        <a class="card repo rv" href="https://github.com/RisaRezaei/Extracting-ERA5-Pressure-Level-Data-Using-CDS-API" target="_blank" rel="noopener">
-          <div class="kicker">Python</div>
+        <a class="card repo rv" href="https://github.com/RisaRezaei/era5-pressure-level-downloader" target="_blank" rel="noopener">
+          <div class="kicker">Python · command-line tool</div>
           <h3>ERA5 Pressure-Level Downloads via CDS API</h3>
-          <p>Retrieves monthly ERA5 humidity and wind components at 1000–300 hPa from the Climate Data Store as NetCDF files.</p>
+          <p>Command-line tool for ERA5 monthly-mean humidity, winds and other pressure-level variables from the Climate Data Store, with config files, sub-regions and resumable downloads.</p>
           <div class="tags"><span class="tag">ERA5</span><span class="tag">CDS API</span><span class="tag">NetCDF</span></div>
           <div class="go">View code →</div>
         </a>
-        <a class="card repo rv" href="https://github.com/RisaRezaei/Extracting-Raster-Values-at-Point-Locations-and-Exporting-to-Excel" target="_blank" rel="noopener">
-          <div class="kicker">Python</div>
+        <a class="card repo rv" href="https://github.com/RisaRezaei/raster-point-sampler" target="_blank" rel="noopener">
+          <div class="kicker">Python · command-line tool</div>
           <h3>Raster Values at Point Locations</h3>
-          <p>Reads points from a shapefile, samples a directory of rasters at each location and exports the table to Excel.</p>
-          <div class="tags"><span class="tag">Raster sampling</span><span class="tag">Shapefile</span><span class="tag">Excel</span></div>
+          <p>Command-line tool that samples a stack of rasters at points, with automatic reprojection and nodata handling, into one Excel, CSV or GeoPackage table.</p>
+          <div class="tags"><span class="tag">rasterio</span><span class="tag">GeoPandas</span><span class="tag">Excel / CSV</span></div>
           <div class="go">View code →</div>
         </a>
       </div>
