@@ -100,6 +100,15 @@ li{margin-bottom:6px}
   background:var(--bg);border:2px solid var(--accent);box-shadow:0 0 0 4px rgba(79,209,197,.12)}
 .pub{border-left:3px solid var(--accent)}
 .pub em{color:var(--ink)}
+.repos{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px}
+.repo{margin:0;padding:18px 20px;display:flex;flex-direction:column}
+.repo h3{font-size:16px;margin:0 0 6px}
+.repo p{font-size:14px;color:var(--muted);margin:0;flex:1}
+.repo .tags{margin-top:12px}
+.repo .go{margin-top:12px;font:600 12px "JetBrains Mono",ui-monospace,monospace;color:var(--accent)}
+.codehead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:38px 0 4px}
+.codehead h3{font-size:22px;margin:0}
+@media (max-width:640px){.repos{grid-template-columns:1fr}}
 .mapcard{position:relative;margin:4px 0 30px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#111a2b}
 .maphead{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;padding:18px 22px}
 .maphead p{margin:4px 0 0;color:var(--muted);font-size:14.5px;max-width:720px}
@@ -268,6 +277,52 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
         <p>Land-cover classification in ENVI and Python, surface-water mapping with K-means in Google Earth Engine, and watershed delineation in ArcGIS.</p>
         <div class="tags"><span class="tag">ENVI</span><span class="tag">ArcGIS</span><span class="tag">Classification</span></div>
       </article>
+      <div class="codehead rv"><h3>Code on GitHub</h3><a href="https://github.com/RisaRezaei?tab=repositories" target="_blank" rel="noopener">All repositories →</a></div>
+      <p class="sub rv" style="margin-bottom:16px">Open-source scripts for Earth-observation, terrain and climate-data workflows.</p>
+      <div class="repos">
+        <a class="card repo rv" href="https://github.com/RisaRezaei/StationNO-Track" target="_blank" rel="noopener">
+          <div class="kicker">Earth Engine · JavaScript</div>
+          <h3>NO₂ Tracking at Air-Quality Stations</h3>
+          <p>Sentinel-5P TROPOMI NO₂ column density at monitoring-station locations, with a time-series chart of pollution trends.</p>
+          <div class="tags"><span class="tag">Sentinel-5P</span><span class="tag">Air quality</span><span class="tag">Time series</span></div>
+          <div class="go">View code →</div>
+        </a>
+        <a class="card repo rv" href="https://github.com/RisaRezaei/Cropland-Dynamics-Mapping-2003-2019-using-Google-Earth-Engine" target="_blank" rel="noopener">
+          <div class="kicker">Earth Engine · JavaScript</div>
+          <h3>Global Cropland Dynamics, 2003–2019</h3>
+          <p>Maps stable cropland, gains and losses from global cropland datasets (Potapov et al.) and exports the result as a GeoTIFF.</p>
+          <div class="tags"><span class="tag">Land-cover change</span><span class="tag">Global</span><span class="tag">GeoTIFF</span></div>
+          <div class="go">View code →</div>
+        </a>
+        <a class="card repo rv" href="https://github.com/RisaRezaei/Daily-Temperature-Time-Series-from-Earth-Engine-for-Multiple-Locations-Extraction" target="_blank" rel="noopener">
+          <div class="kicker">Earth Engine · JavaScript</div>
+          <h3>Daily Temperature at Multiple Stations</h3>
+          <p>Aggregates gridded temperature to daily values at station points, merges overlapping records and exports a CSV.</p>
+          <div class="tags"><span class="tag">Climate</span><span class="tag">Time series</span><span class="tag">CSV</span></div>
+          <div class="go">View code →</div>
+        </a>
+        <a class="card repo rv" href="https://github.com/RisaRezaei/Extracting-Elevation-Along-a-Cross-Section-Using-Google-Earth-Engine" target="_blank" rel="noopener">
+          <div class="kicker">Earth Engine · JavaScript</div>
+          <h3>Elevation Along a Cross-Section</h3>
+          <p>Samples SRTM 90 m elevation at equal intervals along a drawn line and charts the terrain profile.</p>
+          <div class="tags"><span class="tag">SRTM DEM</span><span class="tag">Terrain profile</span></div>
+          <div class="go">View code →</div>
+        </a>
+        <a class="card repo rv" href="https://github.com/RisaRezaei/Extracting-ERA5-Pressure-Level-Data-Using-CDS-API" target="_blank" rel="noopener">
+          <div class="kicker">Python</div>
+          <h3>ERA5 Pressure-Level Downloads via CDS API</h3>
+          <p>Retrieves monthly ERA5 humidity and wind components at 1000–300 hPa from the Climate Data Store as NetCDF files.</p>
+          <div class="tags"><span class="tag">ERA5</span><span class="tag">CDS API</span><span class="tag">NetCDF</span></div>
+          <div class="go">View code →</div>
+        </a>
+        <a class="card repo rv" href="https://github.com/RisaRezaei/Extracting-Raster-Values-at-Point-Locations-and-Exporting-to-Excel" target="_blank" rel="noopener">
+          <div class="kicker">Python</div>
+          <h3>Raster Values at Point Locations</h3>
+          <p>Reads points from a shapefile, samples a directory of rasters at each location and exports the table to Excel.</p>
+          <div class="tags"><span class="tag">Raster sampling</span><span class="tag">Shapefile</span><span class="tag">Excel</span></div>
+          <div class="go">View code →</div>
+        </a>
+      </div>
     </div>
   </div></section>
 
