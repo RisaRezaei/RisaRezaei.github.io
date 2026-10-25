@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Code tutorial | Parisa Abbasalizadehrezaei</title>
+<meta name="description" content="Step-by-step tutorials for open-source Google Earth Engine and Python tools for water, air-quality and climate data by Parisa Abbasalizadehrezaei.">
+<link rel="icon" href="favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070b14;--bg2:#0c1220;--card:#111a2b;--line:#1e2a40;--ink:#e7edf7;--muted:#8d9bb3;--accent:#4fd1c5;--accent2:#60a5fa;--soft:rgba(79,209,197,.12);--code:#0a101c}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(900px 500px at 85% -10%,rgba(96,165,250,.10),transparent 60%),radial-gradient(700px 420px at -10% 20%,rgba(79,209,197,.08),transparent 60%)}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+h1,h2,h3{font-family:"Space Grotesk",Inter,sans-serif;line-height:1.2}
+code{font:500 .88em "JetBrains Mono",ui-monospace,monospace;background:rgba(96,165,250,.10);color:#cfe0ff;padding:1px 5px;border-radius:5px}
+.wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 24px}
+.top{position:sticky;top:0;z-index:20;background:rgba(7,11,20,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:14px;height:58px}
+.top .home{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.top .home{color:var(--ink);font:600 15px "Space Grotesk",sans-serif;white-space:nowrap}
+.top .home span{color:var(--muted);font-weight:500}
+.top select{margin-left:auto;min-width:0;width:auto;max-width:46vw;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:8px 10px;font:500 13.5px Inter,sans-serif}
+.kicker{font:600 12px "JetBrains Mono",ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--accent2)}
+.hero{padding:54px 0 26px}
+.hero h1{font-size:clamp(28px,4.4vw,46px);margin:10px 0 12px;overflow-wrap:break-word}
+.hero .lead{color:var(--muted);font-size:18px;max-width:780px;margin:0 0 22px}
+.hl{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:0 0 24px}
+.hl div{background:rgba(17,26,43,.85);border:1px solid var(--line);border-radius:12px;padding:12px 14px;position:relative;overflow:hidden}
+.hl div::before{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:.7}
+.hl b{display:block;font:700 21px "Space Grotesk",sans-serif;color:var(--accent);line-height:1.25}
+.hl span{font-size:13px;color:var(--muted)}
+.btns{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 16px;border-radius:10px;border:1px solid var(--line);color:var(--ink);font:500 14.5px Inter,sans-serif;background:rgba(17,26,43,.8);cursor:pointer}
+.btn:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent2));border:0;color:#04121a;font-weight:600}
+.btn.primary:hover{color:#04121a;opacity:.92}
+.meta{margin-top:14px;font:500 12.5px "JetBrains Mono",monospace;color:var(--muted)}
+.meta b{color:var(--ink);font-weight:500}
+section{padding:26px 0}
+h2{font-size:26px;margin:0 0 6px}
+.sub{color:var(--muted);margin:0 0 20px}
+.demo{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#0b1120}
+.demo .bar{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);font:500 12.5px "JetBrains Mono",monospace;color:var(--muted)}
+.demo .bar .dot{width:9px;height:9px;border-radius:50%;background:#34d399;box-shadow:0 0 8px #34d399}
+.demo .bar .tg{margin-left:auto;display:flex;gap:6px}
+.demo .bar button{background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:7px;padding:4px 10px;font:500 12px Inter,sans-serif;cursor:pointer}
+.demo .bar button.on{color:#04121a;background:var(--accent);border-color:var(--accent)}
+.demo img{display:block;width:100%;height:auto;cursor:zoom-in;background:#0b1120}
+.demo .gifbox{display:none;padding:18px;text-align:center;background:#05080f}
+.demo .gifbox img{width:auto;max-width:100%;max-height:70vh;margin:0 auto;border-radius:8px}
+.cap{color:var(--muted);font-size:14px;margin:10px 2px 0}
+.term{font:13px/1.6 "JetBrains Mono",ui-monospace,monospace;padding:18px 20px;color:#cbd5e1;white-space:pre-wrap;overflow-x:auto;min-height:200px}
+.term .ps{color:var(--accent)}
+.term .cmd{color:#fff}
+.term .inf{color:#93c5fd}
+.term .cur{display:inline-block;width:8px;height:15px;background:var(--accent);vertical-align:-2px;animation:bl 1s steps(1) infinite}
+@keyframes bl{50%{opacity:0}}
+.ttable{width:100%;border-collapse:collapse;font:12.5px "JetBrains Mono",monospace;margin:0}
+.ttable th,.ttable td{border-top:1px solid var(--line);padding:7px 12px;text-align:right}
+.ttable th:first-child,.ttable td:first-child{text-align:left}
+.ttable th{color:var(--accent2);font-weight:600}
+.ttable td:empty::after{content:"·";color:#475569}
+.grid4{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr);gap:16px}
+.box{background:rgba(17,26,43,.88);border:1px solid var(--line);border-radius:14px;padding:20px 22px}
+.box h3{font-size:16px;margin:0 0 10px;color:var(--ink)}
+.box p{margin:0;color:#c8d3e6}
+.box ol{margin:0;padding-left:22px;color:#c8d3e6}
+.box ol li{margin-bottom:7px}
+.box ul{margin:0;padding-left:18px;color:#c8d3e6}
+.box ul li{margin-bottom:5px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:12.5px;padding:3px 10px;border-radius:999px;background:var(--soft);color:var(--accent);font-weight:500}
+.stack{display:grid;gap:16px}
+/* walkthrough */
+.files{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 18px}
+.files button{background:var(--card);color:var(--muted);border:1px solid var(--line);border-radius:9px;padding:7px 12px;font:500 13px Inter,sans-serif;cursor:pointer}
+.files button.on{color:#04121a;background:var(--accent);border-color:var(--accent)}
+.toc{display:flex;flex-wrap:wrap;gap:6px 14px;margin:0 0 18px;font-size:13.5px}
+.toc a{color:var(--muted)}
+.toc a:hover{color:var(--accent)}
+.toc b{font:600 11px "JetBrains Mono",monospace;color:var(--accent2);margin-right:5px}
+.step{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.5fr);gap:20px;margin-bottom:22px;scroll-margin-top:76px}
+.step .ex{position:sticky;top:78px;align-self:start}
+.num{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#04121a;font:700 14px "Space Grotesk",sans-serif;margin-bottom:10px}
+.step h3{font-size:19px;margin:0 0 8px}
+.step p{color:#c8d3e6;margin:0 0 10px;font-size:15.5px}
+.step .ln{font:500 12px "JetBrains Mono",monospace;color:var(--muted)}
+.code{background:var(--code);border:1px solid var(--line);border-radius:12px;overflow:hidden;position:relative}
+.code .h{display:flex;justify-content:space-between;align-items:center;padding:7px 12px;border-bottom:1px solid var(--line);font:500 12px "JetBrains Mono",monospace;color:var(--muted);background:#0d1424}
+.code pre{margin:0;padding:10px 0;overflow-x:auto;font:12.8px/1.6 "JetBrains Mono",ui-monospace,monospace;color:#d6deeb;counter-reset:none}
+.code pre .l{display:block;padding:0 14px 0 0;white-space:pre}
+.code pre .l::before{content:attr(data-n);display:inline-block;width:46px;padding-right:14px;text-align:right;color:#3d4b66;user-select:none}
+.code.fold pre{max-height:520px;overflow:hidden}
+.code.fold::after{content:"";position:absolute;left:0;right:0;bottom:0;height:90px;background:linear-gradient(transparent,var(--code));pointer-events:none}
+.more{display:block;margin:-4px auto 0;position:relative;z-index:2}
+.c{color:#6b7f9e;font-style:italic}.s{color:#a5e3b5}.n{color:#f6c177}.k{color:#c4a7ff}.f{color:#7dd3fc}
+.skel{color:var(--muted);font-size:14px;padding:22px;border:1px dashed var(--line);border-radius:12px}
+.run{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.run .box b{display:block;font:700 13px "JetBrains Mono",monospace;color:var(--accent2);margin-bottom:6px}
+pre.inst{margin:10px 0 0;background:var(--code);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font:12.5px/1.6 "JetBrains Mono",monospace;color:#d6deeb;overflow-x:auto}
+.others{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.other{display:block;background:rgba(17,26,43,.88);border:1px solid var(--line);border-radius:12px;overflow:hidden;color:var(--ink)}
+.other:hover{border-color:rgba(79,209,197,.5);text-decoration:none}
+.other .im{aspect-ratio:16/10;background:#0b1120 center/cover no-repeat;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:center;font:600 13px "JetBrains Mono",monospace;color:var(--accent)}
+.other div.t{padding:10px 12px;font:600 14px/1.35 "Space Grotesk",sans-serif}
+.pager{display:flex;justify-content:space-between;gap:12px;margin-top:22px}
+footer{position:relative;z-index:1;border-top:1px solid var(--line);margin-top:30px;padding:24px 0;color:var(--muted);font-size:14px}
+#lb{position:fixed;inset:0;z-index:50;background:rgba(3,6,12,.92);display:none;align-items:center;justify-content:center;padding:20px;cursor:zoom-out}
+#lb img{max-width:100%;max-height:100%;border-radius:8px}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--accent);color:#04121a;font-weight:600;padding:9px 16px;border-radius:9px;z-index:60;opacity:0;transition:opacity .2s;pointer-events:none}
+@media (max-width:900px){
+  .hl{grid-template-columns:repeat(2,1fr)}
+  .grid4,.run{grid-template-columns:minmax(0,1fr)}
+  .step{grid-template-columns:minmax(0,1fr);gap:10px}
+  .step .ex{position:static}
+  .others{grid-template-columns:repeat(2,1fr)}
+  .top .home span{display:none}
+}
+@media (max-width:520px){.wrap{padding:0 16px}.hero .lead{font-size:16.5px}.code pre .l::before{width:36px;padding-right:10px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="home" href="index.html#code">← Parisa Abbasalizadehrezaei <span>/ open-source tools</span></a>
+  <select id="pick" aria-label="Choose a tool"></select>
+</div></header>
+
+<main id="app" class="wrap">
+  <div class="hero">
+    <div class="kicker" id="kick"></div>
+    <h1 id="ttl">Loading…</h1>
+    <p class="lead" id="lead"></p>
+    <div class="hl" id="hl"></div>
+    <div class="btns" id="btns"></div>
+    <div class="meta" id="meta"></div>
+  </div>
+
+  <section id="demo-sec">
+    <h2>Demo output</h2>
+    <p class="sub" id="demosub">What the tool produces with its default settings.</p>
+    <div id="demo"></div>
+  </section>
+
+  <section>
+    <h2>The problem and the method</h2>
+    <p class="sub">Why the tool exists and how it works.</p>
+    <div class="grid4">
+      <div class="stack">
+        <div class="box"><h3>The problem</h3><p id="prob"></p></div>
+        <div class="box"><h3>Skills shown</h3><div class="chips" id="skills"></div></div>
+      </div>
+      <div class="stack">
+        <div class="box"><h3>Method</h3><ol id="meth"></ol></div>
+        <div class="box"><h3>Data &amp; outputs</h3><ul id="data"></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="walk">
+    <h2>Code walkthrough</h2>
+    <p class="sub">The full source, loaded live from GitHub and explained section by section.</p>
+    <div class="files" id="files"></div>
+    <div class="toc" id="toc"></div>
+    <div id="steps"><div class="skel">Loading the code from GitHub…</div></div>
+  </section>
+
+  <section>
+    <h2>Run it yourself</h2>
+    <p class="sub">Free, open source, MIT licence.</p>
+    <div class="run" id="run"></div>
+  </section>
+
+  <section>
+    <h2>More tools</h2>
+    <div class="others" id="others"></div>
+    <div class="pager" id="pager"></div>
+  </section>
+</main>
+
+<footer><div class="wrap">© <span id="yr"></span> Parisa Abbasalizadehrezaei · <a href="index.html">risarezaei.github.io</a> · <a href="https://github.com/RisaRezaei" target="_blank" rel="noopener">github.com/RisaRezaei</a></div></footer>
+<div id="lb"><img alt=""></div>
+<div class="toast" id="toast">Copied</div>
+
+<script src="tools-data.js"></script>
+<script>
+(function(){
+  var USER='RisaRezaei', RAW='https://raw.githubusercontent.com/'+USER+'/', GH='https://github.com/'+USER+'/';
+  var T=window.TOOLS||[], q=new URLSearchParams(location.search).get('r');
+  var idx=Math.max(0,T.findIndex(function(t){return t.id===q})), tool=T[idx];
+  var $=function(id){return document.getElementById(id)};
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+  function strip(s){return String(s).replace(/<[^>]+>/g,'')}
+  function el(tag,cls,html){var e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e}
+  function toast(m){var t=$('toast');t.textContent=m;t.style.opacity=1;setTimeout(function(){t.style.opacity=0},1400)}
+  $('yr').textContent=new Date().getFullYear();
+
+  /* picker */
+  T.forEach(function(t,i){var o=document.createElement('option');o.value=t.id;o.textContent=strip(t.title);if(i===idx)o.selected=true;$('pick').appendChild(o)});
+  $('pick').onchange=function(){location.search='?r='+this.value};
+
+  /* hero */
+  document.title=strip(tool.title)+' · tutorial | Parisa Abbasalizadehrezaei';
+  var md=document.querySelector('meta[name=description]');md.setAttribute('content',strip(tool.short));
+  $('kick').textContent=tool.kicker;$('ttl').innerHTML=tool.title;$('lead').innerHTML=tool.short;
+  $('hl').innerHTML=(tool.highlights||[]).map(function(h){return '<div><b>'+h[0]+'</b><span>'+h[1]+'</span></div>'}).join('');
+  var repo=GH+tool.id, main=tool.files[0].path;
+  var b=[['primary',repo,'View on GitHub ↗',1],['','#walk','Read the walkthrough ↓',0]];
+  if(tool.lang==='js')b.push(['','https://code.earthengine.google.com/','Open the Code Editor ↗',1]);
+  b.push(['',repo+'/archive/refs/heads/main.zip','Download .zip',0]);
+  $('btns').innerHTML=b.map(function(x){return '<a class="btn '+x[0]+'" href="'+x[1]+'"'+(x[3]?' target="_blank" rel="noopener"':'')+'>'+x[2]+'</a>'}).join('')+
+    '<button class="btn" id="cpall">Copy '+(tool.files.length>1?'lesson':'full script')+'</button>';
+  $('meta').innerHTML='<b>'+(tool.lang==='py'?'Python 3':'Earth Engine JavaScript API')+'</b> · repo <a href="'+repo+'" target="_blank" rel="noopener">'+USER+'/'+tool.id+'</a> · MIT licence<span id="live"></span>';
+
+  /* live GitHub metadata */
+  fetch('https://api.github.com/repos/'+USER+'/'+tool.id).then(function(r){return r.ok?r.json():null}).then(function(j){
+    if(!j)return;var d=new Date(j.pushed_at);
+    $('live').innerHTML=' · last commit <b>'+d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})+'</b>'+(j.stargazers_count?' · ★ <b>'+j.stargazers_count+'</b>':'')+(j.forks_count?' · forks <b>'+j.forks_count+'</b>':'');
+  }).catch(function(){});
+
+  /* demo */
+  var demo=$('demo');
+  if(tool.demo){
+    $('demosub').textContent=tool.demo.title+'.';
+    var box=el('div','demo');box.innerHTML='<div class="bar"><span class="dot"></span>terminal · '+esc(tool.files[0].path)+'<span class="tg"><button id="replay">Replay</button></span></div><div class="term" id="term"></div>'+
+      (tool.demo.table?'<div style="overflow-x:auto"><table class="ttable">'+tool.demo.table.map(function(r,i){return '<tr>'+r.map(function(c){return i?'<td>'+esc(c)+'</td>':'<th>'+esc(c)+'</th>'}).join('')+'</tr>'}).join('')+'</table></div>':'');
+    demo.appendChild(box);
+    if(tool.demo.note)demo.appendChild(el('p','cap',esc(tool.demo.note)));
+    var playing=0;
+    function play(){var id=++playing,t=$('term'),cmd=tool.demo.cmd,i=0;t.innerHTML='<span class="ps">$ </span><span class="cmd"></span><span class="cur"></span>';var c=t.querySelector('.cmd');
+      (function type(){if(id!==playing)return;if(i<=cmd.length){c.textContent=cmd.slice(0,i);i+=2;setTimeout(type,18)}else{
+        var lines=tool.demo.out.split('\n'),k=0;t.querySelector('.cur').remove();
+        (function out(){if(id!==playing)return;if(k<lines.length){var L=lines[k++];t.appendChild(el('div',/^(INFO|WARN)/.test(L)?'inf':'',esc(L)));setTimeout(out,k<8?160:40)}else t.appendChild(el('span','cur'))})();}})();}
+    var io=new IntersectionObserver(function(es){if(es[0].isIntersecting){play();io.disconnect()}});io.observe(box);
+    $('replay').onclick=play;
+  } else {
+    var src=RAW+tool.id+'/main/docs/preview.png';
+    var d=el('div','demo');
+    d.innerHTML='<div class="bar"><span class="dot"></span>'+esc(tool.id)+' · example output'+(tool.gif?'<span class="tg"><button class="on" data-v="img">Overview</button><button data-v="gif">Animation</button></span>':'')+'</div>'+
+      '<img loading="lazy" alt="Example output of '+esc(strip(tool.title))+'" src="'+src+'">'+(tool.gif?'<div class="gifbox"><img alt="Animated timelapse" data-src="'+RAW+tool.id+'/main/'+tool.gif+'"></div>':'');
+    demo.appendChild(d);demo.appendChild(el('p','cap',tool.caption||''));
+    d.querySelector('img').onclick=function(){lb(src)};
+    if(tool.gif){[].forEach.call(d.querySelectorAll('.tg button'),function(btn){btn.onclick=function(){
+      [].forEach.call(d.querySelectorAll('.tg button'),function(x){x.classList.toggle('on',x===btn)});
+      var g=btn.dataset.v==='gif',gi=d.querySelector('.gifbox img');if(g&&!gi.src)gi.src=gi.dataset.src;
+      d.querySelector(':scope > img').style.display=g?'none':'block';d.querySelector('.gifbox').style.display=g?'block':'none';}})}
+  }
+  function lb(s){var l=$('lb');l.querySelector('img').src=s;l.style.display='flex'}
+  $('lb').onclick=function(){this.style.display='none'};
+
+  /* overview */
+  $('prob').innerHTML=tool.problem;
+  $('meth').innerHTML=tool.approach.map(function(a){return '<li>'+a+'</li>'}).join('');
+  $('skills').innerHTML=tool.skills.map(function(s){return '<span class="chip">'+s+'</span>'}).join('');
+  $('data').innerHTML=tool.data.map(function(d){return '<li><a href="'+d[1]+'" target="_blank" rel="noopener">'+d[0]+'</a></li>'}).join('')+
+    tool.outputs.map(function(o){return '<li>Output: '+o+'</li>'}).join('');
+
+  /* highlighter */
+  var RX={js:/(\/\*[\s\S]*?\*\/|\/\/[^\n]*)|('(?:\\.|[^'\\\n])*'|"(?:\\.|[^"\\\n])*")|(\b\d+(?:\.\d+)?(?:e[+-]?\d+)?\b)|(\b(?:var|function|return|if|else|for|while|new|true|false|null|typeof|undefined|this)\b)|(\bee\.[A-Za-z_.]+|\b(?:Map|Export|ui|print)\b)/g,
+          py:/(#[^\n]*)|([rbfu]{0,2}"""[\s\S]*?"""|[rbfu]{0,2}'''[\s\S]*?'''|[rbfu]{0,2}"(?:\\.|[^"\\\n])*"|[rbfu]{0,2}'(?:\\.|[^'\\\n])*')|(\b\d+(?:\.\d+)?\b)|(\b(?:def|return|if|elif|else|for|in|import|from|as|with|try|except|raise|not|and|or|None|True|False|class|lambda|while|break|continue|pass|is)\b)|(\b(?:print|len|range|list|dict|set|int|float|str|sorted|zip|enumerate|open|Path|any|all)\b(?=\())/g};
+  var CL=['c','s','n','k','f'];
+  function highlight(code,lang){var rx=RX[lang],toks=[],last=0,m;rx.lastIndex=0;
+    while((m=rx.exec(code))){if(m.index>last)toks.push(['',code.slice(last,m.index)]);for(var g=1;g<=5;g++)if(m[g]!=null){toks.push([CL[g-1],m[0]]);break}last=rx.lastIndex}
+    if(last<code.length)toks.push(['',code.slice(last)]);
+    var lines=[''];toks.forEach(function(t){t[1].split('\n').forEach(function(p,i){if(i)lines.push('');if(p)lines[lines.length-1]+=t[0]?'<span class="'+t[0]+'">'+esc(p)+'</span>':esc(p)})});
+    return lines;}
+  function split(L,steps){var starts=[],from=0;
+    steps.forEach(function(s,i){if(i===0||!s.at){starts.push(i===0?0:-1);return}var k=-1;for(var j=from;j<L.length;j++)if(L[j].indexOf(s.at)>=0){k=j;break}
+      if(k>0&&/^\s*(#|\/\/)\s?-{4,}\s*$/.test(L[k-1])&&k-1>from-1)k--;
+      starts.push(k);if(k>=0)from=k+1});
+    var v=[];starts.forEach(function(a,i){if(a>=0)v.push([a,i])});
+    return v.map(function(p,n){return {i:p[1],a:p[0],b:n+1<v.length?v[n+1][0]:L.length}})}
+
+  /* walkthrough */
+  var cache={},cur=0;
+  if(tool.files.length>1){tool.files.forEach(function(f,i){var bt=el('button',i?'':'on',esc(f.label||f.path));bt.onclick=function(){cur=i;[].forEach.call($('files').children,function(x,k){x.classList.toggle('on',k===i)});show(i)};$('files').appendChild(bt)})}
+  else $('files').style.display='none';
+  function load(i){var f=tool.files[i];if(cache[f.path])return Promise.resolve(cache[f.path]);
+    return fetch(RAW+tool.id+'/main/'+f.path).then(function(r){if(!r.ok)throw 0;return r.text()}).then(function(t){cache[f.path]=t;return t})}
+  function show(i){var f=tool.files[i],box=$('steps');box.innerHTML='<div class="skel">Loading the code from GitHub…</div>';$('toc').innerHTML='';
+    load(i).then(function(code){
+      var raw=code.replace(/\r/g,'').replace(/\n$/,''),L=raw.split('\n'),H=highlight(raw,tool.lang),parts=split(L,f.steps);box.innerHTML='';
+      parts.forEach(function(p,n){var s=f.steps[p.i],id='s'+(n+1);
+        $('toc').appendChild(el('a','','<b>'+(n+1<10?'0':'')+(n+1)+'</b>'+esc(s.t))).href='#'+id;
+        var st=el('div','step');st.id=id;
+        var ex=el('div','ex','<div class="num">'+(n+1)+'</div><h3>'+esc(s.t)+'</h3><p>'+s.d+'</p><div class="ln">lines '+(p.a+1)+'–'+p.b+' · <a href="https://github.com/'+USER+'/'+tool.id+'/blob/main/'+f.path+'#L'+(p.a+1)+'-L'+p.b+'" target="_blank" rel="noopener">view on GitHub ↗</a></div>');
+        var cb=el('div','code');var pre='';for(var k=p.a;k<p.b;k++)pre+='<span class="l" data-n="'+(k+1)+'">'+(H[k]||' ')+'</span>';
+        cb.innerHTML='<div class="h"><span>'+esc(f.path)+'</span><span>'+(p.b-p.a)+' lines</span></div><pre>'+pre+'</pre>';
+        st.appendChild(ex);var wrapC=el('div');wrapC.appendChild(cb);st.appendChild(wrapC);box.appendChild(st);
+        if(p.b-p.a>32){cb.classList.add('fold');var mb=el('button','btn more','Show all '+(p.b-p.a)+' lines');mb.onclick=function(){cb.classList.remove('fold');mb.remove()};wrapC.appendChild(mb)}
+      });
+    }).catch(function(){box.innerHTML='<div class="skel">The code could not be loaded right now. <a href="'+GH+tool.id+'/blob/main/'+f.path+'" target="_blank" rel="noopener">Read it on GitHub ↗</a></div>'});}
+  show(0);
+  $('cpall').onclick=function(){load(cur).then(function(t){return navigator.clipboard.writeText(t)}).then(function(){toast('Copied '+tool.files[cur].path)}).catch(function(){window.open(RAW+tool.id+'/main/'+tool.files[cur].path,'_blank')})};
+
+  /* run it yourself */
+  var R=tool.lang==='js'?[
+    ['1 · Sign in','Earth Engine is free for research and education. Register at <a href="https://earthengine.google.com" target="_blank" rel="noopener">earthengine.google.com</a> and open the <a href="https://code.earthengine.google.com" target="_blank" rel="noopener">Code Editor</a>.'],
+    ['2 · Paste the script','Press <em>Copy '+(tool.files.length>1?'lesson':'full script')+'</em> above, create a new script in the Code Editor and paste it. No assets or uploads are needed.'],
+    ['3 · Edit and run',tool.files.length>1?'Change the study area at the top of the lesson and press <strong>Run</strong>. Each lesson ends with an exercise.':'Change the <code>CONFIG</code> block (area, dates, options) and press <strong>Run</strong>. Start exports from the <strong>Tasks</strong> tab.']
+  ]:[
+    ['1 · Install','<pre class="inst">'+esc(tool.install)+'</pre>'],
+    ['2 · Check the options','<pre class="inst">python '+esc(tool.files[0].path)+' --help</pre>'],
+    ['3 · Run','<pre class="inst">'+esc(tool.demo.cmd)+'</pre>']
+  ];
+  $('run').innerHTML=R.map(function(r){return '<div class="box"><b>'+r[0]+'</b>'+(r[1].indexOf('<pre')===0?r[1]:'<p>'+r[1]+'</p>')+'</div>'}).join('');
+
+  /* other tools */
+  var others=T.filter(function(t){return t!==tool});
+  $('others').innerHTML=others.map(function(t){var img=t.lang==='js'?'style="background-image:url(assets/tools/'+t.id+'.jpg)"':'';
+    return '<a class="other" href="tool.html?r='+t.id+'"><div class="im" '+img+'>'+(t.lang==='py'?'$ python '+esc(t.files[0].path):'')+'</div><div class="t">'+t.title+'</div></a>'}).join('');
+  var prev=T[(idx-1+T.length)%T.length],next=T[(idx+1)%T.length];
+  $('pager').innerHTML='<a class="btn" href="tool.html?r='+prev.id+'">← '+prev.title+'</a><a class="btn" href="tool.html?r='+next.id+'">'+next.title+' →</a>';
+})();
+</script>
+</body>
+</html>
