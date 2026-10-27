@@ -3,6 +3,41 @@
    line (after the previous step) that contains its `at` text. */
 window.TOOLS = [
 {
+  id: 'gee-gsw-lake-explorer',
+  title: 'GSW Lake Explorer: Any Lake on Earth, 1984–2021',
+  kicker: 'Earth Engine · Live app',
+  cat: ['water'],
+  lang: 'js',
+  app: 'https://risarezaei.projects.earthengine.app/view/gsw-lake-explorer',
+  short: 'A public Earth Engine app: click any lake on Earth and watch its JRC Global Surface Water history, with a yearly area chart, a decade comparison and a shareable link. No sign-up.',
+  tags: ['Earth Engine App', 'JRC Global Surface Water', 'HydroLAKES'],
+  highlights: [['1.4 M', 'lakes, one click away'], ['1984–2021', 'yearly water classes'], ['−56.5 %', 'Lake Urmia permanent water'], ['0', 'getInfo() calls']],
+  caption: 'Lake Urmia in 1998, 2008, 2015 and 2021: permanent water (dark blue), seasonal water (light blue), land (beige) and the HydroLAKES shoreline (red).',
+  gif: 'docs/timelapse.gif',
+  problem: 'The JRC Global Surface Water record is one of the best descriptions of how lakes changed since 1984, but looking at a single lake still means writing code, drawing a polygon and waiting for exports. Many early years also have gaps in the Landsat record, which quietly turn into “lost water” in naive area series.',
+  approach: [
+    'Find the lake the user clicks (or searches by name) in HydroLAKES, so nobody has to draw a boundary.',
+    'Set the analysis scale and buffer from the lake area, so a pond and the Caspian Sea both stay within about a million pixels per year.',
+    'Sum permanent, seasonal and unobserved area per year with <code>pixelArea()</code>, and keep only years where less than 5 % of the lake was unobserved for the chart and summary.',
+    'Render one labelled PNG per fully observed year and play them in the panel, instead of an animated GIF (which Earth Engine pads with a black band once it has more than a few frames).',
+    'Write the lake ID into the page URL, so every view can be shared as a link.'
+  ],
+  skills: ['Earth Engine Apps (ui.*)', 'Asynchronous evaluate() design', 'Zonal statistics', 'Data-gap handling', 'Adaptive scale', 'Web-map UX', 'Science communication'],
+  data: [['JRC Global Surface Water 1.4 (yearly)', 'https://developers.google.com/earth-engine/datasets/catalog/JRC_GSW1_4_YearlyHistory'], ['HydroLAKES v1.0', 'https://www.hydrosheds.org/products/hydrolakes']],
+  outputs: ['Public app with a shareable link per lake', 'Animated yearly water map', 'Yearly area chart (km²)', 'Decade-to-decade change in permanent and total water'],
+  files: [{ path: 'gsw_lake_explorer.js', steps: [
+    { t: 'Data and colours', d: 'Three datasets carry the whole app: HydroLAKES polygons, the GSW summary image (occurrence, transitions) and the GSW <code>YearlyHistory</code> collection, whose <code>waterClass</code> band is 0 = no observation, 1 = land, 2 = seasonal water, 3 = permanent water. The public <code>users/gena/packages:text</code> module draws the year on each frame.' },
+    { at: '// ---------------------------------------------------------------- map', t: 'Base map', d: 'Water occurrence is shown from the start, so the map already invites a click. Transitions and a single-year layer (driven by the slider) are there for anyone who wants to look closer.' },
+    { at: '// ---------------------------------------------------------------- panel', t: 'The side panel', d: 'Every result widget is created once and only refilled later. That keeps the layout stable while results arrive one by one.' },
+    { at: 'function showLake(hits)', t: 'Finding the lake without blocking the page', d: 'Clicks and searches both end up here. Only the lake’s properties travel to the browser, never its geometry, so even the Caspian Sea answers fast. A <code>requestId</code> counter drops callbacks from an older click if the user clicks again before results arrive.' },
+    { at: '// scale & buffer adapt', t: 'A scale that fits every lake', d: 'Analysis scale = max(30 m, 2·√area) and buffer = 50·√area keep every request around a million pixels: 30 m for a small reservoir, about 140 m for Lake Urmia and about 1.2 km for the Caspian. The scale is shown in the panel, so users know what they are looking at.' },
+    { at: '// ---- yearly areas', t: 'Yearly areas and honest data gaps', d: 'For every year the script sums the area of permanent water, seasonal water and <em>unobserved</em> pixels. Years where more than 5 % of the lake was unobserved are dropped from the chart and summary: otherwise the gappy 1980s and 1990s look like years of “lost” water.' },
+    { at: '// ---- animation:', t: 'An animation without gaps or black bands', d: 'Only years with less than 1 % unobserved area are animated. Each year becomes its own labelled PNG on a white, padded frame, so the shoreline is never cut. The panel then shows one <code>ui.Thumbnail</code> at a time with <code>ui.util.setTimeout</code>. An animated GIF would be simpler, but Earth Engine adds a black band at the bottom of GIFs with more than about three frames.' },
+    { at: 'var chart = ui.Chart', t: 'Chart and decade summary', d: 'The chart plots permanent, seasonal and total water for the reliable years. The summary compares the first and last decade: for Lake Urmia, permanent water fell from 4,881 to 2,122 km² (−56.5 %) while total water fell only 23.9 %, because much of the old lake bed now floods seasonally.' },
+    { at: '// ---------------------------------------------------------------- events', t: 'Click, search and share', d: 'A map click, a name search and a shared URL (<code>#lake=142</code>) all call the same <code>showLake()</code>. Search uses <code>stringContains</code> and picks the largest matching lake.' }
+  ]}]
+},
+{
   id: 'gee-wetland-water-rf',
   title: 'Wetland Water Mapping with Random Forest',
   kicker: 'Earth Engine · Machine learning',

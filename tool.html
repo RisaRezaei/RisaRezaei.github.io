@@ -210,6 +210,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--line);margin-top:3
   $('hl').innerHTML=(tool.highlights||[]).map(function(h){return '<div><b>'+h[0]+'</b><span>'+h[1]+'</span></div>'}).join('');
   var repo=GH+tool.id, main=tool.files[0].path;
   var b=[['primary',repo,'View on GitHub ↗',1],['','#walk','Read the walkthrough ↓',0]];
+  if(tool.app){b[0][0]='';b.unshift(['primary',tool.app,'Open the live app ↗',1]);}
   if(tool.lang==='js')b.push(['','https://code.earthengine.google.com/','Open the Code Editor ↗',1]);
   b.push(['',repo+'/archive/refs/heads/main.zip','Download .zip',0]);
   $('btns').innerHTML=b.map(function(x){return '<a class="btn '+x[0]+'" href="'+x[1]+'"'+(x[3]?' target="_blank" rel="noopener"':'')+'>'+x[2]+'</a>'}).join('')+
