@@ -9,7 +9,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://risarezaei.github.io/">
 <meta property="og:title" content="Parisa Abbasalizadehrezaei | Remote Sensing · Hydrology · Machine Learning">
-<meta property="og:description" content="From satellite pixels to water decisions: an interactive scroll-through of my work, with a live 40-year wetland trend map.">
+<meta property="og:description" content="From satellite pixels to water decisions: an interactive scroll-through of my work, with a live 40-year waterbody trend map.">
 <meta property="og:image" content="https://risarezaei.github.io/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="627">
@@ -198,6 +198,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
 .tourlink:hover img{transform:scale(1.04)}
 .tourbadge{position:absolute;left:12px;bottom:12px;font:600 11.5px "JetBrains Mono",ui-monospace,monospace;padding:6px 10px;border-radius:8px;background:rgba(7,11,20,.85);border:1px solid rgba(79,209,197,.6);color:var(--accent);backdrop-filter:blur(4px)}
 </style>
+<link rel="stylesheet" href="assets/fx.css">
 </head>
 <body>
 <canvas id="stage" aria-hidden="true"></canvas>
@@ -210,7 +211,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
       <p class="lead">Environmental engineer turning satellite data and water models into decisions for water management.</p>
       <div class="links">
         <a class="btn primary" href="#projects">View projects</a>
-        <a class="btn" href="#wetland-map">Live demo: wetland trend map</a>
+        <a class="btn" href="#wetland-map">Live demo: waterbody trend map</a>
         <a class="btn" href="#code">Code &amp; tutorials</a>
         <a class="btn" href="mailto:risarezaei@gmail.com">Email</a>
         <a class="btn" href="https://www.linkedin.com/in/risarezaei" target="_blank" rel="noopener">LinkedIn</a>
@@ -288,12 +289,12 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
       <div class="maphead">
         <div>
           <div class="kicker">Live demo · Earth observation</div>
-          <h3>Global Wetland Water-Area Trends, 1984–2025</h3>
+          <h3>Global Waterbody Area Trends, 1984–2025</h3>
           <p>Forty years of Landsat surface-water area for nearly 600 lakes and wetlands. Colour shows each water body's long-term trend; click a point to see its annual water-area curve and fitted trend.</p>
         </div>
         <a class="btn" href="wetlands.html">Open full screen →</a>
       </div>
-      <iframe src="wetlands.html?embed=1" title="Global wetland water-area trend map" loading="lazy"></iframe>
+      <iframe src="wetlands.html?embed=1" title="Global waterbody area trend map" loading="lazy"></iframe>
     </div>
     <div class="mapcard rv" id="lake-explorer">
       <div class="maphead">
@@ -979,5 +980,6 @@ document.getElementById('yr').textContent=new Date().getFullYear();
   }).catch(function(){});
 })();
 </script>
+<script src="assets/fx.js" data-fx="home" defer></script>
 </body>
 </html>
