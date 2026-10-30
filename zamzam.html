@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zamzam Plant Tour | Parisa Abbasalizadehrezaei</title>
+<meta name="description" content="Interactive tour of the Zamzam Tehran industrial wastewater treatment plant: annotated site photos, a live process schematic and an SV30 sludge-settling simulator.">
+<link rel="icon" href="favicon.ico">
+<meta property="og:title" content="Zamzam Tehran wastewater plant: an interactive field-visit tour">
+<meta property="og:description" content="Annotated site photos, a live process schematic and an SV30 sludge-settling simulator from my 2021 field visit.">
+<meta property="og:image" content="https://risarezaei.github.io/assets/images/zamzam-aeration-basin.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070b14;--bg2:#0a101c;--card:#111a2b;--line:#1e2a40;--ink:#e7edf7;--muted:#8d9bb3;--accent:#4fd1c5;--accent2:#60a5fa;--sludge:#8a6440;--warn:#f59e0b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15.5px/1.6 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+h1,h2,h3{font-family:"Space Grotesk",Inter,sans-serif;margin:0}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 22px;border-bottom:1px solid var(--line);background:var(--bg2);position:sticky;top:0;z-index:20}
+header .back{font-size:14px;color:var(--muted)}
+header .tag{font:600 11px "JetBrains Mono",monospace;letter-spacing:.14em;color:var(--accent2)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+.intro{padding:34px 0 8px}
+.kicker{font:600 11.5px "JetBrains Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.intro h1{font-size:clamp(26px,4vw,38px);line-height:1.15;margin:8px 0 10px}
+.intro p{color:var(--muted);max-width:760px;margin:0}
+.panel{background:rgba(17,26,43,.75);border:1px solid var(--line);border-radius:16px}
+section{padding:22px 0}
+.sh{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:0 0 12px}
+.sh h2{font-size:21px}
+.sh span{font:500 12.5px "JetBrains Mono",monospace;color:var(--muted)}
+
+/* schematic */
+#flow{display:block;width:100%;height:auto}
+#flow .u{cursor:pointer;transition:filter .2s}
+#flow .u:hover{filter:brightness(1.35)}
+#flow .u.on>.shape{stroke:var(--accent);stroke-width:2.6}
+#flow .u.on{filter:drop-shadow(0 0 8px rgba(79,209,197,.55))}
+#flow text{font-family:"JetBrains Mono",monospace;font-size:11px;fill:#cbd5e1;pointer-events:none}
+#flow .lbl{fill:var(--muted);font-size:10px;letter-spacing:.12em}
+.flowwrap{padding:14px 14px 6px;overflow-x:auto}
+.flowwrap svg{min-width:720px}
+
+/* tour */
+.tour{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:18px;align-items:start}
+.stage{padding:14px;position:relative}
+.ph{position:relative;margin:0 auto;aspect-ratio:var(--ar,4/3);width:min(100%,calc(66vh * var(--ar,1.333)));border-radius:12px;overflow:hidden;background:#05080f;touch-action:manipulation}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .35s}
+.ph img.fade{opacity:0}
+.hs{position:absolute;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;border:2px solid #fff;background:rgba(79,209,197,.9);color:#04121a;font:700 13px "JetBrains Mono",monospace;cursor:pointer;display:grid;place-items:center;padding:0;z-index:3;box-shadow:0 2px 10px rgba(0,0,0,.5)}
+.hs::after{content:"";position:absolute;inset:-8px;border-radius:50%;border:2px solid rgba(79,209,197,.85);animation:ping 2s infinite}
+.hs.on,.hs:hover{background:#fff;transform:scale(1.12)}
+@keyframes ping{0%{transform:scale(.6);opacity:1}100%{transform:scale(1.6);opacity:0}}
+.tip{position:absolute;z-index:4;max-width:260px;background:rgba(7,11,20,.93);border:1px solid var(--accent);border-radius:10px;padding:9px 12px;font-size:13.5px;line-height:1.45;pointer-events:none;opacity:0;transform:translateY(4px);transition:.18s;backdrop-filter:blur(4px)}
+.tip.show{opacity:1;transform:none}
+.tip b{display:block;color:var(--accent);font-size:13px;margin-bottom:2px}
+.loupe{position:absolute;z-index:5;width:170px;height:170px;border-radius:50%;border:2px solid rgba(255,255,255,.85);box-shadow:0 6px 24px rgba(0,0,0,.6),inset 0 0 0 1px rgba(0,0,0,.4);pointer-events:none;display:none;background-repeat:no-repeat;background-color:#000}
+.ph.zoom .loupe{display:block}
+.ph.zoom{cursor:none}
+.ph .count{position:absolute;left:12px;top:12px;z-index:3;font:600 11px "JetBrains Mono",monospace;padding:4px 9px;border-radius:7px;background:rgba(7,11,20,.8);border:1px solid var(--line);color:var(--accent)}
+.ph .miss{position:absolute;inset:0;display:none;place-items:center;text-align:center;color:var(--muted);font-size:14px;padding:20px}
+.ph.missing .miss{display:grid}
+.ctrl{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-top:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:6px;background:rgba(17,26,43,.95);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:8px 13px;font:500 13.5px Inter,sans-serif;cursor:pointer}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.on{background:var(--accent);border-color:var(--accent);color:#04121a}
+.dots{display:flex;gap:6px}
+.dots button{width:46px;height:34px;border-radius:7px;border:2px solid transparent;padding:0;cursor:pointer;background-size:cover;background-position:center;background-color:#0b1120;opacity:.55;transition:.2s}
+.dots button.on{opacity:1;border-color:var(--accent)}
+.info{padding:20px 22px}
+.info .kicker{margin-bottom:6px}
+.info h3{font-size:22px;margin-bottom:8px}
+.info p{color:#c8d3e6;margin:0 0 12px;font-size:15px}
+.obs{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.obs li{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;padding:9px 10px;border:1px solid var(--line);border-radius:10px;cursor:pointer;transition:.15s;font-size:14px;color:#c8d3e6}
+.obs li:hover,.obs li.on{border-color:var(--accent);background:rgba(79,209,197,.07)}
+.obs li i{font:700 12px "JetBrains Mono",monospace;font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:#04121a}
+.obs li b{display:block;color:var(--ink);font-weight:600}
+.hint{font-size:12.5px;color:var(--muted);margin-top:12px}
+
+/* simulator */
+.sim{display:grid;grid-template-columns:200px minmax(0,1fr) 280px;gap:18px;padding:18px;align-items:center}
+#cyl,#curve{display:block;width:100%;height:auto}
+#curve text,#cyl text{font-family:"JetBrains Mono",monospace;fill:var(--muted);font-size:10px}
+.knobs label{display:block;font-size:13px;color:var(--muted);margin:0 0 4px}
+.knobs output{float:right;color:var(--ink);font:600 13px "JetBrains Mono",monospace}
+.knobs input[type=range]{width:100%;accent-color:var(--accent);margin:0 0 14px}
+.res{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-top:4px}
+.res .big{font:700 30px "Space Grotesk",sans-serif;color:var(--accent);line-height:1.1}
+.res .big small{font:500 13px Inter,sans-serif;color:var(--muted);margin-left:6px}
+.res .verdict{font-size:13.5px;margin-top:4px}
+.bar{height:8px;border-radius:4px;margin:10px 0 4px;position:relative;background:linear-gradient(90deg,#60a5fa 0 20%,#4fd1c5 20% 50%,#f59e0b 50% 75%,#f87171 75%)}
+.bar i{position:absolute;top:-4px;width:3px;height:16px;background:#fff;border-radius:2px;transition:left .3s}
+.barlbl{display:flex;justify-content:space-between;font:500 10px "JetBrains Mono",monospace;color:var(--muted)}
+.note{font-size:12.5px;color:var(--muted);margin:10px 0 0}
+.design{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.design .panel{padding:16px 18px}
+.design h3{font-size:16px;margin:0 0 6px}
+.design p{font-size:14px;color:#c8d3e6;margin:0}
+footer{border-top:1px solid var(--line);margin-top:26px;padding:20px 0 30px;color:var(--muted);font-size:13.5px}
+@media (max-width:980px){.tour{grid-template-columns:1fr}.sim{grid-template-columns:150px minmax(0,1fr)}.sim .knobs{grid-column:1/-1}.design{grid-template-columns:1fr}}
+@media (max-width:560px){.sim{grid-template-columns:1fr}.sim>svg#cyl{max-width:110px;margin:0 auto}.dots button{width:38px;height:30px}header .tag{display:none}}
+@media (prefers-reduced-motion:reduce){.hs::after{animation:none}#flow .p{display:none}}
+</style>
+</head>
+<body>
+<header>
+  <a class="back" href="index.html#projects">← Parisa Abbasalizadehrezaei</a>
+  <span class="tag">FIELD VISIT · SUMMER 2021</span>
+</header>
+
+<div class="wrap">
+  <div class="intro">
+    <div class="kicker">Industrial wastewater · Interactive tour</div>
+    <h1>Inside the Zamzam Tehran wastewater plant</h1>
+    <p>For my final project in <em>Industrial Wastewater and Effluent Treatment</em> at Sharif University of Technology I had to design a treatment tank. To check my assumptions against a working system, I arranged a visit to the on-site treatment plant of Zamzam Tehran, a soft-drink producer. Click any unit in the schematic or any numbered marker on the photos to explore what I saw.</p>
+  </div>
+
+  <section>
+    <div class="sh"><h2>Process schematic</h2><span>simplified · click a unit</span></div>
+    <div class="panel flowwrap">
+      <svg id="flow" viewBox="0 0 960 268" role="img" aria-label="Simplified schematic: process water passes cartridge filters and reverse osmosis into production; the wastewater then flows through aeration, a secondary clarifier and out as effluent, with sludge returned to aeration and sampled for the SV30 test">
+        <defs>
+          <marker id="ar" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L8 4L0 8z" fill="#60a5fa"/></marker>
+          <marker id="ar2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L8 4L0 8z" fill="#f59e0b"/></marker>
+          <path id="pw" d="M60 58H408"/>
+          <path id="ww" d="M520 181H946"/>
+          <path id="rs" d="M835 212V248H612V214"/>
+        </defs>
+        <path d="M0 45H960M0 90H960M0 135H960M0 180H960M0 225H960M120 0V268M240 0V268M360 0V268M480 0V268M600 0V268M720 0V268M840 0V268" stroke="#121d31"/>
+        <text class="lbl" x="100" y="20">PROCESS WATER</text>
+        <text class="lbl" x="560" y="112">WASTEWATER LINE</text>
+        <g stroke="#60a5fa" stroke-width="1.6" fill="none">
+          <path d="M60 58H98" marker-end="url(#ar)"/><path d="M218 58H248" marker-end="url(#ar)"/><path d="M368 58H406" marker-end="url(#ar)"/>
+          <path d="M520 181H558" marker-end="url(#ar)"/><path d="M664 181H690" marker-end="url(#ar)"/><path d="M764 181H792" marker-end="url(#ar)"/><path d="M872 165H944" marker-end="url(#ar)"/>
+        </g>
+        <path d="M835 212V248H612V216" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#ar2)"/>
+        <path d="M728 145V130" stroke="#8d9bb3" stroke-dasharray="3 3"/>
+        <g id="particles"></g>
+        <text x="8" y="62">supply</text>
+        <text x="886" y="152">effluent</text>
+        <text x="660" y="262" fill="#f59e0b" style="fill:#f59e0b">return activated sludge</text>
+        <g class="u" data-go="4" tabindex="0" role="button" aria-label="Cartridge filters"><rect class="shape" x="100" y="34" width="118" height="48" rx="8" fill="#0f1a2e" stroke="#2a3b5a" stroke-width="1.4"/><text x="159" y="55" text-anchor="middle">cartridge</text><text x="159" y="69" text-anchor="middle">filters</text></g>
+        <g class="u" data-go="4" tabindex="0" role="button" aria-label="Reverse osmosis"><rect class="shape" x="250" y="34" width="118" height="48" rx="8" fill="#0f1a2e" stroke="#2a3b5a" stroke-width="1.4"/><text x="309" y="55" text-anchor="middle">reverse</text><text x="309" y="69" text-anchor="middle">osmosis</text></g>
+        <g><rect x="408" y="24" width="112" height="210" rx="12" fill="#0d1526" stroke="#2a3b5a" stroke-width="1.4"/><text x="464" y="122" text-anchor="middle" style="fill:#e7edf7">soft-drink</text><text x="464" y="137" text-anchor="middle" style="fill:#e7edf7">production</text><text x="464" y="160" text-anchor="middle" style="fill:#8d9bb3;font-size:9.5px">sugar-rich</text><text x="464" y="172" text-anchor="middle" style="fill:#8d9bb3;font-size:9.5px">effluent ↓</text></g>
+        <g class="u" data-go="1" tabindex="0" role="button" aria-label="Aeration tank"><rect class="shape" x="560" y="150" width="104" height="62" rx="6" fill="#0f1a2e" stroke="#2a3b5a" stroke-width="1.4"/><rect x="563" y="166" width="98" height="43" rx="3" fill="#8a6440" opacity=".8"/><g fill="none" stroke="#e7edf7" opacity=".8"><circle cx="578" cy="198" r="2"><animate attributeName="cy" values="204;170" dur="2.2s" repeatCount="indefinite"/></circle><circle cx="600" cy="190" r="1.6"><animate attributeName="cy" values="205;170" dur="1.7s" repeatCount="indefinite"/></circle><circle cx="624" cy="196" r="2"><animate attributeName="cy" values="204;170" dur="2.6s" repeatCount="indefinite"/></circle><circle cx="646" cy="186" r="1.6"><animate attributeName="cy" values="205;170" dur="1.9s" repeatCount="indefinite"/></circle></g><text x="612" y="143" text-anchor="middle">aeration tank</text></g>
+        <g class="u" data-go="0" tabindex="0" role="button" aria-label="Aeration basin"><circle class="shape" cx="728" cy="181" r="36" fill="#0f1a2e" stroke="#2a3b5a" stroke-width="1.4"/><circle cx="728" cy="181" r="31" fill="#8a6440" opacity=".8"/><g fill="none" stroke="#e7edf7" opacity=".8"><circle cx="716" cy="190" r="1.8"><animate attributeName="r" values="1;3;1" dur="1.6s" repeatCount="indefinite"/></circle><circle cx="738" cy="172" r="1.8"><animate attributeName="r" values="3;1;3" dur="1.4s" repeatCount="indefinite"/></circle><circle cx="742" cy="194" r="1.8"><animate attributeName="r" values="1;3;1" dur="1.9s" repeatCount="indefinite"/></circle></g><text x="728" y="232" text-anchor="middle">aeration basin</text></g>
+        <g class="u" data-go="3" tabindex="0" role="button" aria-label="SV30 settling test"><rect class="shape" x="716" y="72" width="24" height="58" rx="4" fill="#0f1a2e" stroke="#2a3b5a" stroke-width="1.4"/><rect x="719" y="112" width="18" height="15" rx="2" fill="#8a6440"/><text x="728" y="64" text-anchor="middle">SV30 test</text></g>
+        <g class="u" data-go="2" tabindex="0" role="button" aria-label="Secondary clarifier"><path class="shape" d="M792 150H880L860 212H812Z" fill="#0f1a2e" stroke="#2a3b5a" stroke-width="1.4"/><path d="M796 160H876L858 210H814Z" fill="#12406b" opacity=".85"/><path d="M816 200H856L854 210H818Z" fill="#8a6440"/><text x="836" y="143" text-anchor="middle">clarifier</text></g>
+      </svg>
+    </div>
+  </section>
+
+  <section>
+    <div class="sh"><h2>Annotated site photos</h2><span id="stopname" class="mono"></span></div>
+    <div class="tour">
+      <div class="panel stage">
+        <div class="ph" id="ph">
+          <img id="img" alt="">
+          <span class="count" id="count"></span>
+          <div class="loupe" id="loupe"></div>
+          <div class="tip" id="tip"></div>
+          <div class="miss">Photo is being uploaded. Please check back shortly.</div>
+        </div>
+        <div class="ctrl">
+          <div class="dots" id="dots"></div>
+          <div style="display:flex;gap:8px">
+            <button class="btn" id="zoom" title="Magnifying loupe (Z)">🔍 Loupe</button>
+            <button class="btn" id="prev" aria-label="Previous photo">←</button>
+            <button class="btn" id="next" aria-label="Next photo">→</button>
+          </div>
+        </div>
+      </div>
+      <div class="panel info">
+        <div class="kicker" id="kick"></div>
+        <h3 id="ttl"></h3>
+        <p id="desc"></p>
+        <ul class="obs" id="obs"></ul>
+        <p class="hint">Tip: use ← → to move between photos, Z to toggle the loupe.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="sv30">
+    <div class="sh"><h2>SV30 settling simulator</h2><span>the test in photo 4, in motion</span></div>
+    <div class="panel sim">
+      <svg id="cyl" viewBox="0 0 120 300" aria-label="1-litre cylinder showing the sludge interface settling">
+        <defs><linearGradient id="glass" x1="0" x2="1"><stop offset="0" stop-color="#cfe3ff" stop-opacity=".10"/><stop offset=".5" stop-color="#cfe3ff" stop-opacity=".03"/><stop offset="1" stop-color="#cfe3ff" stop-opacity=".12"/></linearGradient>
+        <linearGradient id="sl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a07a52"/><stop offset="1" stop-color="#5f4228"/></linearGradient></defs>
+        <rect id="sup" x="34" y="20" width="52" height="250" fill="#d9e6f2" opacity=".14"/>
+        <rect id="sld" x="34" y="20" width="52" height="250" fill="url(#sl)"/>
+        <rect x="34" y="20" width="52" height="250" fill="url(#glass)" stroke="#9fb3cf" stroke-width="1.4" rx="3"/>
+        <path d="M20 270H100L104 284H16Z" fill="#1a2740" stroke="#9fb3cf"/>
+        <g id="ticks"></g>
+        <text id="tlabel" x="60" y="298" text-anchor="middle" style="fill:#e7edf7;font-size:11px">t = 0 min</text>
+      </svg>
+      <div>
+        <svg id="curve" viewBox="0 0 420 250" aria-label="Interface height versus time">
+          <path d="M44 20V214H410" fill="none" stroke="#2a3b5a"/>
+          <g id="grid"></g>
+          <path id="cpath" fill="none" stroke="url(#cg)" stroke-width="2.4"/>
+          <defs><linearGradient id="cg" x1="0" x2="1"><stop offset="0" stop-color="#4fd1c5"/><stop offset="1" stop-color="#60a5fa"/></linearGradient></defs>
+          <line id="sv30line" x1="44" x2="410" stroke="#f59e0b" stroke-dasharray="4 4"/>
+          <circle id="cdot" r="5" fill="#fff" stroke="#4fd1c5" stroke-width="2"/>
+          <text x="227" y="244" text-anchor="middle">time (min)</text>
+          <text x="12" y="118" text-anchor="middle" transform="rotate(-90 12 118)">interface (mL)</text>
+        </svg>
+        <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
+          <button class="btn on" id="play">▶ Play</button>
+          <input id="t" type="range" min="0" max="30" step="0.1" value="0" style="flex:1;accent-color:var(--accent)" aria-label="Time in minutes">
+        </div>
+      </div>
+      <div class="knobs">
+        <label for="sv">Settled volume after 30 min, SV30 <output id="svo"></output></label>
+        <input id="sv" type="range" min="80" max="900" step="10" value="120">
+        <label for="mlss">MLSS (mixed-liquor suspended solids) <output id="mlsso"></output></label>
+        <input id="mlss" type="range" min="1500" max="6000" step="100" value="3000">
+        <div class="res">
+          <div class="big" id="svi">40<small>mL/g SVI</small></div>
+          <div class="bar"><i id="mark"></i></div>
+          <div class="barlbl"><span>0</span><span>80</span><span>150</span><span>250+</span></div>
+          <div class="verdict" id="verdict"></div>
+        </div>
+        <p class="note">SVI = SV30 (mL/L) × 1000 ⁄ MLSS (mg/L). The default SV30 of about 120 mL/L is my approximate reading from the cylinder in the photo. MLSS was not recorded, so it is adjustable here.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sh"><h2>What I took back to my design</h2></div>
+    <div class="design">
+      <div class="panel"><h3>Load, not just flow</h3><p>Beverage effluent is dilute in volume but heavy in dissolved sugar, so the tank had to be sized on organic load (BOD) and aeration demand, not on hydraulics alone.</p></div>
+      <div class="panel"><h3>Foam and nutrients</h3><p>The foam sprays and the phosphorus stock on site showed that sugar-rich wastewater needs foam control and nutrient balancing for healthy biomass.</p></div>
+      <div class="panel"><h3>Settling decides success</h3><p>The clarifier only works if the sludge settles. The daily SV30 check made it clear that sludge settleability belongs in the design, not just in operation.</p></div>
+    </div>
+  </section>
+
+  <footer>Photos taken by me during the visit, summer 2021. The schematic is simplified for illustration and is not the plant's official process diagram. <a href="index.html#projects">Back to projects</a></footer>
+</div>
+
+<script>
+(function(){
+var S=[
+ {f:'zamzam-aeration-basin.jpg',ar:4/3,k:'Biological treatment',t:'Circular aeration basin',d:'A large activated sludge basin in the middle of the factory site. Air keeps the brown mixed liquor, a suspension of bacteria and flocs, moving and supplied with oxygen while the microbes consume the dissolved sugar.',h:[
+  [21,44,'Foam-control sprays','Water jets around the rim knock down the foam that sugar-rich effluent produces under aeration.'],
+  [50,66,'Completely mixed liquor','Surface turbulence shows the basin is well mixed, so sludge stays in suspension and in contact with the wastewater.'],
+  [88,40,'Access walkway','A central walkway gives operators access for sampling and maintenance.'],
+  [63,12,'Production halls','The plant treats its own effluent on site, right next to production in a dense urban area.']]},
+ {f:'zamzam-aeration-tank.jpg',ar:4/3,k:'Biological treatment',t:'Rectangular aeration tank',d:'A second, rectangular aeration unit. The vigorous surface boil is air from diffusers on the floor. This is where most of the energy in an activated sludge plant is spent.',h:[
+  [48,74,'Diffused-air boil','Air rising from floor diffusers creates these boiling patches and transfers oxygen to the biomass.'],
+  [25,80,'Mixed liquor (MLSS)','The brown colour is the activated sludge itself. Its concentration (MLSS) is a key design and control variable.'],
+  [68,20,'Coating damage','Peeling coating shows how aggressive the humid, aerated environment is to steel. Material choice matters in design.'],
+  [9,14,'Air and water piping','Pipework feeding the tank from the walkway above.']]},
+ {f:'zamzam-clarifier.jpg',ar:4/3,k:'Solids separation',t:'Secondary clarifier',d:'After aeration, the mixed liquor flows into the clarifier. The sludge settles to the bottom (most of it is pumped back to aeration) and clear treated water spills over the edge.',h:[
+  [76,36,'V-notch weirs','The saw-tooth weir spreads the overflow evenly around the rim so clarified water leaves uniformly.'],
+  [45,52,'Floating flocs','Small rising flocs and scum are worth watching. They can signal poor settling or gas formation in the sludge blanket.'],
+  [42,82,'Clear supernatant','The dark, transparent water is the sign of a clarifier doing its job.'],
+  [40,5,'Aeration basin next door','The brown mixed liquor in the background feeds this clarifier.']]},
+ {f:'zamzam-sv30-test.jpg',ar:3/4,k:'Process control',t:'SV30 settleability test',d:'A one-litre sample of mixed liquor is left to settle for 30 minutes. The volume the sludge occupies (SV30) tells operators how well it will settle in the clarifier. Try it in the simulator below.',h:[
+  [52,40,'Clear supernatant','After 30 minutes the water above the sludge is clear, which points to well-formed flocs.'],
+  [52,68,'Settled sludge blanket','The sludge settled to roughly the 100–140 mL mark, a compact and healthy result.'],
+  [76,70,'Dosing stocks','Containers labelled (in Persian) waste sugar, chlorine and phosphorus fertiliser: carbon and nutrient supplements for the biomass, and chlorine for disinfection.']]},
+ {f:'zamzam-ro-unit.jpg',ar:4/3,k:'Process water',t:'Cartridge filters and reverse osmosis',d:'On the water-supply side, incoming water is polished before it goes into the drinks: stainless cartridge filters protect the reverse-osmosis membranes in the white pressure vessels.',h:[
+  [42,68,'Cartridge filter housings','Fine filtration upstream removes particles that would foul the RO membranes.'],
+  [72,14,'RO pressure vessels','Each white tube holds spiral-wound membranes that remove dissolved salts.'],
+  [34,26,'Flow direction','Arrows on the vessels mark the flow path through the membrane train.']]}
+];
+var base='assets/images/',i=0,zoom=false,act=-1;
+var ph=document.getElementById('ph'),img=document.getElementById('img'),tip=document.getElementById('tip'),lo=document.getElementById('loupe');
+var dots=document.getElementById('dots');
+S.forEach(function(s,n){var b=document.createElement('button');b.style.backgroundImage='url('+base+s.f+')';b.setAttribute('aria-label',s.t);b.onclick=function(){go(n)};dots.appendChild(b)});
+function go(n){
+  i=(n+S.length)%S.length;var s=S[i];act=-1;
+  img.classList.add('fade');
+  setTimeout(function(){
+    ph.classList.remove('missing');
+    img.onerror=function(){ph.classList.add('missing')};
+    img.src=base+s.f;img.alt=s.t+', Zamzam Tehran wastewater plant';
+    ph.style.setProperty('--ar',s.ar);
+    img.onload=function(){img.classList.remove('fade')};
+    if(img.complete)img.classList.remove('fade');
+  },180);
+  document.getElementById('count').textContent=(i+1)+' / '+S.length;
+  document.getElementById('kick').textContent=s.k;
+  document.getElementById('ttl').textContent=s.t;
+  document.getElementById('desc').textContent=s.d;
+  document.getElementById('stopname').textContent='stop '+(i+1)+' · '+s.t.toLowerCase();
+  ph.querySelectorAll('.hs').forEach(function(e){e.remove()});
+  var ul=document.getElementById('obs');ul.innerHTML='';
+  s.h.forEach(function(h,j){
+    var b=document.createElement('button');b.className='hs';b.textContent=j+1;b.style.left=h[0]+'%';b.style.top=h[1]+'%';
+    b.setAttribute('aria-label',h[2]);
+    b.onmouseenter=function(){show(j)};b.onfocus=function(){show(j)};b.onclick=function(){show(j)};
+    ph.appendChild(b);
+    var li=document.createElement('li');li.innerHTML='<i>'+(j+1)+'</i><span><b></b></span>';
+    li.querySelector('b').textContent=h[2];li.querySelector('span').appendChild(document.createTextNode(h[3]));
+    li.onmouseenter=function(){show(j)};li.onclick=function(){show(j)};ul.appendChild(li);
+  });
+  tip.classList.remove('show');
+  dots.querySelectorAll('button').forEach(function(b,k){b.classList.toggle('on',k===i)});
+  document.querySelectorAll('#flow .u').forEach(function(u){u.classList.toggle('on',+u.dataset.go===i)});
+}
+function show(j){
+  var h=S[i].h[j];act=j;
+  ph.querySelectorAll('.hs').forEach(function(e,k){e.classList.toggle('on',k===j)});
+  document.querySelectorAll('#obs li').forEach(function(e,k){e.classList.toggle('on',k===j)});
+  tip.innerHTML='<b></b>';tip.querySelector('b').textContent=h[2];tip.appendChild(document.createTextNode(h[3]));
+  var W=ph.clientWidth,H=ph.clientHeight,x=h[0]/100*W,y=h[1]/100*H;
+  tip.style.left=Math.min(Math.max(8,x-130),W-268)+'px';
+  tip.style.top=(y>H*0.55?Math.max(8,y-tip.offsetHeight-26):y+24)+'px';
+  tip.classList.add('show');
+}
+document.getElementById('prev').onclick=function(){go(i-1)};
+document.getElementById('next').onclick=function(){go(i+1)};
+var zb=document.getElementById('zoom');
+zb.onclick=function(){zoom=!zoom;zb.classList.toggle('on',zoom);if(!zoom)ph.classList.remove('zoom')};
+ph.addEventListener('mousemove',function(e){
+  if(!zoom)return;var r=ph.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top,Z=2.6;
+  ph.classList.add('zoom');
+  lo.style.left=(x-85)+'px';lo.style.top=(y-85)+'px';
+  lo.style.backgroundImage='url('+img.src+')';
+  lo.style.backgroundSize=(r.width*Z)+'px '+(r.height*Z)+'px';
+  lo.style.backgroundPosition=(-x*Z+85)+'px '+(-y*Z+85)+'px';
+});
+ph.addEventListener('mouseleave',function(){ph.classList.remove('zoom')});
+document.addEventListener('keydown',function(e){
+  if(e.target.tagName==='INPUT')return;
+  if(e.key==='ArrowRight')go(i+1);else if(e.key==='ArrowLeft')go(i-1);else if(e.key==='z'||e.key==='Z')zb.click();
+});
+document.querySelectorAll('#flow .u').forEach(function(u){
+  var f=function(){go(+u.dataset.go);document.getElementById('ph').scrollIntoView({behavior:'smooth',block:'center'})};
+  u.addEventListener('click',f);u.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();f()}});
+});
+// flow particles
+var NS='http://www.w3.org/2000/svg',pg=document.getElementById('particles');
+[['#pw','#93c5fd',5,4.5],['#ww','#c9a27a',7,6],['#rs','#f59e0b',4,6.5]].forEach(function(c){
+  for(var k=0;k<c[2];k++){var p=document.createElementNS(NS,'circle');p.setAttribute('r',2.6);p.setAttribute('fill',c[1]);p.setAttribute('class','p');
+    var m=document.createElementNS(NS,'animateMotion');m.setAttribute('dur',c[3]+'s');m.setAttribute('repeatCount','indefinite');m.setAttribute('begin',(-k*c[3]/c[2])+'s');
+    var mp=document.createElementNS(NS,'mpath');mp.setAttributeNS('http://www.w3.org/1999/xlink','href',c[0]);mp.setAttribute('href',c[0]);m.appendChild(mp);p.appendChild(m);pg.appendChild(p)}
+});
+go(0);
+
+// SV30 simulator
+var sv=document.getElementById('sv'),ml=document.getElementById('mlss'),tt=document.getElementById('t'),pb=document.getElementById('play');
+var Y0=20,Y1=270;function yv(v){return Y1-(v/1000)*(Y1-Y0)}
+var tk=document.getElementById('ticks'),gr=document.getElementById('grid'),s='';
+for(var v=100;v<=1000;v+=100){var y=yv(v);s+='<path d="M34 '+y+'h'+(v%500?7:12)+'" stroke="#9fb3cf"/>'+(v%200===0?'<text x="92" y="'+(y+3)+'">'+v+'</text>':'')}
+tk.innerHTML=s;
+function cx(t){return 44+t/30*366}function cy(v){return 214-v/1000*194}
+s='';for(var t=0;t<=30;t+=5){s+='<path d="M'+cx(t)+' 214v4" stroke="#2a3b5a"/><text x="'+cx(t)+'" y="230" text-anchor="middle">'+t+'</text>'}
+for(v=0;v<=1000;v+=250){s+='<path d="M44 '+cy(v)+'H410" stroke="#16233a"/><text x="38" y="'+(cy(v)+3)+'" text-anchor="end">'+v+'</text>'}
+gr.innerHTML=s;
+function h(t,SV){ // hindered settling then compression, pinned so h(30)=SV
+  var t50=1.6+SV/1000*14,n=2.4,g=function(x){return 1/(1+Math.pow(x/t50,n))};
+  var G=g(t),G30=g(30);
+  return SV+(1000-SV)*Math.max(0,(G-G30)/(1-G30));
+}
+function draw(){
+  var SV=+sv.value,M=+ml.value,t=+tt.value,H=h(t,SV),y=yv(H);
+  document.getElementById('sld').setAttribute('y',y);document.getElementById('sld').setAttribute('height',Y1-y);
+  document.getElementById('tlabel').textContent='t = '+t.toFixed(1)+' min';
+  var d='';for(var k=0;k<=120;k++){var x=k/4;d+=(k?'L':'M')+cx(x).toFixed(1)+' '+cy(h(x,SV)).toFixed(1)}
+  document.getElementById('cpath').setAttribute('d',d);
+  var l=document.getElementById('sv30line');l.setAttribute('y1',cy(SV));l.setAttribute('y2',cy(SV));
+  var c=document.getElementById('cdot');c.setAttribute('cx',cx(t));c.setAttribute('cy',cy(H));
+  document.getElementById('svo').textContent=SV+' mL/L';document.getElementById('mlsso').textContent=M+' mg/L';
+  var SVI=SV*1000/M;document.getElementById('svi').firstChild.nodeValue=Math.round(SVI);
+  var vd=document.getElementById('verdict'),txt,col;
+  if(SVI<80){txt='Dense, fast-settling sludge. Very good, though very low values can mean small pin floc.';col='#60a5fa'}
+  else if(SVI<=150){txt='Good settling. The clarifier should run comfortably.';col='#4fd1c5'}
+  else if(SVI<=250){txt='Poor settling. Watch the clarifier blanket.';col='#f59e0b'}
+  else{txt='Bulking sludge. Solids may wash out with the effluent.';col='#f87171'}
+  vd.textContent=txt;vd.style.color=col;
+}
+function markPos(SVI){ // piecewise map onto the 4 equal-ish bar segments (20/30/25/25 %)
+  var segs=[[0,80,0,20],[80,150,20,50],[150,250,50,75],[250,500,75,100]];
+  for(var q=0;q<segs.length;q++){var a=segs[q];if(SVI<=a[1]||q===segs.length-1){return Math.min(100,a[2]+(Math.min(SVI,a[1])-a[0])/(a[1]-a[0])*(a[3]-a[2]))}}
+}
+var _draw=draw;draw=function(){_draw();var SVI=+sv.value*1000/+ml.value;document.getElementById('mark').style.left=markPos(SVI)+'%'};
+var raf=null,last=0;
+function step(ts){if(!last)last=ts;var dt=(ts-last)/1000;last=ts;var t=+tt.value+dt*3;if(t>=30){t=30;stop()}tt.value=t;draw();if(raf)raf=requestAnimationFrame(step)}
+function stop(){cancelAnimationFrame(raf);raf=null;last=0;pb.textContent='▶ Play';pb.classList.add('on')}
+pb.onclick=function(){if(raf){stop();return}if(+tt.value>=30)tt.value=0;pb.textContent='❚❚ Pause';pb.classList.remove('on');raf=requestAnimationFrame(step)};
+[sv,ml,tt].forEach(function(e){e.addEventListener('input',function(){if(e===tt&&raf)stop();draw()})});
+draw();
+var io=new IntersectionObserver(function(en){if(en[0].isIntersecting&&!raf&&+tt.value===0){pb.click();io.disconnect()}},{threshold:.5});
+io.observe(document.getElementById('cyl'));
+})();
+</script>
+</body>
+</html>
