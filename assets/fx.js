@@ -111,7 +111,7 @@
       try{sessionStorage.setItem('fx-boot','1')}catch(_){}
       var boot=el('div','fx-boot','<div class="grid"></div><div class="scan"></div><div class="box"><div class="log"></div><div class="bar"><i></i></div><div class="row"><span>ACQUISITION</span><span class="pct">000%</span></div></div><button class="skip" type="button">SKIP ↵</button>');
       B.appendChild(boot);cur.style.display='none';
-      var lines=['<b>▸</b> LINK  ESTABLISHED · GROUND STATION HAMBURG','<b>▸</b> SENSORS  LANDSAT-8 OLI · SENTINEL-2 MSI','<b>▸</b> BANDS  B03 · B08 · B11 · NDWI','<b>▸</b> TARGET  PARISA ABBASALIZADEHREZAEI','<b>✓</b> LOCK  ACQUIRED'];
+      var lines=['<b>▸</b> LINK  ESTABLISHED · DOWNLINK ACTIVE','<b>▸</b> SENSORS  LANDSAT-8 OLI · SENTINEL-2 MSI','<b>▸</b> BANDS  B03 · B08 · B11 · NDWI','<b>▸</b> TARGET  PARISA ABBASALIZADEHREZAEI','<b>✓</b> LOCK  ACQUIRED'];
       var log=boot.querySelector('.log'),bar=boot.querySelector('.bar i'),pct=boot.querySelector('.pct'),t0=performance.now(),DUR=1700,done=false;
       function finish(){if(done)return;done=true;boot.classList.add('out');go();setTimeout(function(){boot.remove();cur.style.display=''},950)}
       boot.querySelector('.skip').onclick=finish;addEventListener('keydown',function k(e){if(e.key==='Enter'||e.key==='Escape'){finish();removeEventListener('keydown',k)}});
