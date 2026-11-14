@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Parisa Abbasalizadehrezaei | Hydrology · Remote Sensing · Machine Learning</title>
 <meta name="description" content="Environmental engineer working at the interface of hydrology, satellite remote sensing and machine learning.">
@@ -15,11 +16,11 @@
 <meta property="og:image:height" content="627">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#070b14; --bg2:#0c1220; --card:#111a2b; --line:#1e2a40; --ink:#e7edf7; --muted:#8d9bb3;
-  --accent:#4fd1c5; --accent2:#60a5fa; --soft:rgba(79,209,197,.12);
+  --accent:#4fd1c5; --accent2:#60a5fa; --soft:rgba(255,61,142,.12);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -37,7 +38,7 @@ h1,h2,h3{font-family:"Space Grotesk",Inter,sans-serif}
 .hero{min-height:92vh;display:flex;align-items:center;overflow:hidden}
 .hero-text{max-width:600px}
 .eyebrow{display:inline-block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
-  border:1px solid rgba(79,209,197,.35);padding:5px 12px;border-radius:999px;margin-bottom:22px}
+  border:1px solid rgba(255,61,142,.35);padding:5px 12px;border-radius:999px;margin-bottom:22px}
 h1{font-size:clamp(30px,5vw,52px);line-height:1.08;margin:0 0 18px;font-weight:700;overflow-wrap:break-word}
 h1 span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
 .lead{font-size:18px;color:var(--muted);margin:0 0 28px}
@@ -59,32 +60,6 @@ h1 span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-b
 .hud .live{display:inline-block;width:7px;height:7px;border-radius:50%;background:#34d399;margin-right:7px;box-shadow:0 0 8px #34d399;animation:blink 1.6s infinite}
 @keyframes blink{50%{opacity:.3}}
 
-/* HERO v2: real Earth, study-site pins, lighter button row */
-#earth{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
-#pins{position:fixed;inset:0;z-index:2;pointer-events:none}
-.hero-text{max-width:570px}
-.lead{color:#bcc8da}
-.social{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:14px}
-.sbtn{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:rgba(17,26,43,.7);color:var(--ink);font:700 13px Inter,sans-serif;backdrop-filter:blur(6px);transition:transform .15s,border-color .15s,color .15s}
-.sbtn svg{width:18px;height:18px}
-.sbtn:hover{border-color:var(--accent);color:var(--accent);text-decoration:none;transform:translateY(-2px)}
-.more{margin-left:8px;font-size:14.5px;font-weight:500;white-space:nowrap}
-.hud .site{display:inline-block;width:7px;height:7px;border-radius:50%;background:#fbbf24;margin-right:7px;box-shadow:0 0 8px #fbbf24}
-.pin{position:absolute;left:0;top:0;width:0;height:0;pointer-events:auto;color:var(--ink)}
-.pin:hover,.pin:focus{z-index:3;text-decoration:none;outline:0}
-.pin::before{content:"";position:absolute;left:-15px;top:-15px;width:30px;height:30px;border-radius:50%}
-.pin i{position:absolute;left:-6px;top:-6px;width:12px;height:12px;border-radius:50%;background:#fbbf24;box-shadow:0 0 0 2px rgba(7,11,20,.75),0 0 14px #fbbf24;cursor:pointer}
-.pin i::after{content:"";position:absolute;inset:-7px;border-radius:50%;border:1.5px solid #fbbf24;animation:pinp 2.2s ease-out infinite}
-@keyframes pinp{from{transform:scale(.5);opacity:.9}to{transform:scale(1.8);opacity:0}}
-.pincard{position:absolute;right:-34px;bottom:15px;width:196px;padding:8px 8px 10px;border-radius:12px;background:rgba(12,18,32,.95);border:1px solid var(--line);box-shadow:0 14px 40px rgba(0,0,0,.55);opacity:0;visibility:hidden;transform:translateY(5px);transition:opacity .18s,transform .18s,visibility .18s}
-.pin:hover .pincard,.pin:focus .pincard{opacity:1;visibility:visible;transform:none}
-.pincard img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:8px;display:block;background:#0c1220}
-.pincard b{display:block;font:600 13.5px/1.3 "Space Grotesk",sans-serif;margin-top:8px}
-.pincard em{display:block;font-style:normal;font-size:12px;line-height:1.35;color:var(--muted);margin-top:2px}
-.pincard u{display:block;text-decoration:none;font-size:12px;color:#fbbf24;margin-top:5px}
-@media(max-width:900px){.hud .hint{display:none}}
-@media(prefers-reduced-motion:reduce){.pin i::after{animation:none}}
-
 /* NAV */
 nav{position:sticky;top:0;z-index:10;background:rgba(7,11,20,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
@@ -102,9 +77,9 @@ h2[data-n]::before{content:attr(data-n);display:block;font:600 12px/1 "JetBrains
 h3{font-size:18px;margin:0 0 4px;line-height:1.35}
 p{margin:0 0 14px}
 .card{position:relative;overflow:hidden;background:rgba(17,26,43,.88);backdrop-filter:blur(6px);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin-bottom:16px;transition:border-color .2s}
-.card:hover{border-color:rgba(79,209,197,.4)}
+.card:hover{border-color:rgba(255,61,142,.4)}
 .card::after{content:"";position:absolute;left:0;right:0;top:-45%;height:45%;pointer-events:none;opacity:0;
-  background:linear-gradient(180deg,transparent,rgba(79,209,197,.09),transparent)}
+  background:linear-gradient(180deg,transparent,rgba(255,61,142,.09),transparent)}
 .card:hover::after{opacity:1;animation:scan 1.3s ease-in-out}
 @keyframes scan{from{top:-45%}to{top:100%}}
 a.card{display:block;color:var(--ink)}
@@ -136,7 +111,7 @@ li{margin-bottom:6px}
 .timeline{border-left:2px solid var(--line);padding-left:26px;margin-left:6px}
 .titem{position:relative;margin-bottom:18px}
 .titem::before{content:"";position:absolute;left:-34px;top:28px;width:12px;height:12px;border-radius:50%;
-  background:var(--bg);border:2px solid var(--accent);box-shadow:0 0 0 4px rgba(79,209,197,.12)}
+  background:var(--bg);border:2px solid var(--accent);box-shadow:0 0 0 4px rgba(255,61,142,.12)}
 .pub{border-left:3px solid var(--accent)}
 .pub em{color:var(--ink)}
 .repos{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px}
@@ -206,7 +181,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
 .filters button.on{background:var(--accent);border-color:var(--accent);color:#04121a}
 .tgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .tcard{background:rgba(17,26,43,.9);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .2s,transform .2s}
-.tcard:hover{border-color:rgba(79,209,197,.5);transform:translateY(-2px)}
+.tcard:hover{border-color:rgba(255,61,142,.5);transform:translateY(-2px)}
 .tcard.hide{display:none}
 .thumb{position:relative;display:block;aspect-ratio:16/10;background:#0b1120;border-bottom:1px solid var(--line);overflow:hidden}
 .thumb img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s}
@@ -235,103 +210,298 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
 .tourlink{position:relative;display:block}
 .tourlink img{transition:transform .5s}
 .tourlink:hover img{transform:scale(1.04)}
-.tourbadge{position:absolute;left:12px;bottom:12px;font:600 11.5px "JetBrains Mono",ui-monospace,monospace;padding:6px 10px;border-radius:8px;background:rgba(7,11,20,.85);border:1px solid rgba(79,209,197,.6);color:var(--accent);backdrop-filter:blur(4px)}
+.tourbadge{position:absolute;left:12px;bottom:12px;font:600 11.5px "JetBrains Mono",ui-monospace,monospace;padding:6px 10px;border-radius:8px;background:rgba(7,11,20,.85);border:1px solid rgba(255,61,142,.6);color:var(--accent);backdrop-filter:blur(4px)}
+/* ============ redesign v2 · theme A: original navy surfaces + hot-magenta accent ============ */
+@property --a{syntax:'<angle>';inherits:false;initial-value:0deg}
+@keyframes spin{to{--a:360deg}}
+:root{--bg:#070b14;--bg2:#0c1220;--card:#0f1828;--line:rgba(141,165,205,.17);--ink:#e7edf7;--muted:#8d9bb3;
+  --accent:#ff3d8e;--accent2:#ff8cc0;--soft:rgba(255,61,142,.12);
+  --acc:#ff3d8e;--acc2:#ff8cc0;--on:#1c0310;--mut2:#8d9bb3;--line2:rgba(141,165,205,.17);--card2:#0f1828;--card3:#14213a}
+html:root{--fx-a:#ff3d8e;--fx-b:#ff8cc0}
+html .fx-progress{box-shadow:0 0 12px rgba(255,61,142,.7)}
+html .fx-ring{border-color:rgba(255,61,142,.6)}
+html .fx-ring.big{border-color:rgba(255,61,142,.9);background:rgba(255,61,142,.08)}
+html .fx-spot{background:radial-gradient(520px circle at var(--mx,50%) var(--my,30%),rgba(96,165,250,.06),transparent 60%)}
+a{color:var(--acc2)}
+h1,h2,h3{font-weight:600}
+
+/* ---------- top bar: logo · centred pill nav · CV on one 48px row ---------- */
+nav.topbar{position:fixed;left:0;right:0;top:0;z-index:60;height:0;background:none;border:0;-webkit-backdrop-filter:none;backdrop-filter:none}
+nav.topbar::before{content:"";position:fixed;left:0;right:0;top:0;height:108px;pointer-events:none;background:linear-gradient(180deg,rgba(7,11,20,.97) 0%,rgba(7,11,20,.9) 58%,rgba(7,11,20,0) 100%);opacity:var(--tbg,1);transition:opacity .4s}
+.tb-in{position:relative;max-width:1440px;margin:0 auto}
+.tb-logo,.tb-cv,.tb-burger,nav.topbar .tabs{position:absolute;top:24px;height:48px;border-radius:999px;background:rgba(15,24,40,.66);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.tb-logo{left:48px;width:48px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--acc);color:var(--acc);font:700 15px "Space Grotesk",sans-serif;letter-spacing:.02em}
+.tb-logo:hover{text-decoration:none;background:rgba(255,61,142,.12)}
+nav.topbar .tabs{left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:2px;padding:4px;margin:0;max-width:none;border:1px solid var(--line2);overflow:visible}
+nav.topbar .tab{position:relative;z-index:1;height:38px;display:flex;align-items:center;padding:0 15px;border:0;border-radius:999px;color:var(--mut2);font:500 14px Inter,sans-serif;white-space:nowrap}
+nav.topbar .tab:hover{color:var(--ink);text-decoration:none}
+nav.topbar .tab.on{color:var(--ink)}
+nav.topbar .fx-ind{top:4px;bottom:auto;height:38px;border-radius:999px;background:rgba(141,165,205,.15);box-shadow:none;z-index:0}
+.tb-cv{right:48px;display:flex;align-items:center;gap:9px;padding:0 20px 0 18px;border:1px solid var(--line2);color:var(--ink);font:600 14px Inter,sans-serif}
+.tb-cv svg{width:16px;height:16px;color:var(--acc)}
+.tb-cv:hover{text-decoration:none;border-color:rgba(255,61,142,.6)}
+.tb-burger{display:none}
+
+/* ---------- hero ---------- */
+.hero.hx{position:relative;display:flex;flex-direction:column;align-items:center;height:100vh;height:100svh;min-height:680px;padding:112px 48px 46px;overflow:hidden}
+.hero.hx::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(60% 58% at 50% 54%,rgba(16,32,58,.95) 0%,rgba(10,18,34,.6) 45%,rgba(7,11,20,0) 75%)}
+.hero.hx::after{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(96,165,250,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(96,165,250,.07) 1px,transparent 1px);background-size:48px 48px;background-position:calc(50% - 24px) 0;
+  -webkit-mask-image:radial-gradient(ellipse 62% 72% at 50% 50%,#000 10%,transparent 92%);mask-image:radial-gradient(ellipse 62% 72% at 50% 50%,#000 10%,transparent 92%)}
+.hx-head{position:relative;z-index:5;text-align:center;width:100%;max-width:none}
+.hx .eyebrow{display:flex;width:fit-content;margin:0 auto;align-items:center;height:16px;padding:0 0 0 .26em;border:0;border-radius:0;font:500 12px/16px "JetBrains Mono",ui-monospace,monospace;letter-spacing:.26em;text-transform:uppercase;color:var(--mut2)}
+.hx .eyebrow i{width:5px;height:5px;border-radius:50%;background:var(--acc);margin:0 calc(14px + .26em) 0 14px}
+.hx h1{font:600 58px/56px "Space Grotesk",sans-serif;letter-spacing:-.025em;margin:20px auto 0;color:var(--ink);white-space:nowrap}
+.hx h1 span{background:none;-webkit-background-clip:border-box;background-clip:border-box;color:inherit}
+.hx h1 .fx-line{display:inline-block;vertical-align:top}
+.hx h1 .fx-line+.fx-line{margin-left:.24em}
+.hx .lead{font:400 17px/24px Inter,sans-serif;color:var(--mut2);margin:16px auto 0;max-width:none}
+.hx-earth{position:relative;z-index:2;flex:1 1 0;min-height:200px;width:100%}
+.hx-cx{position:absolute;left:50%;top:50%;width:0;height:0;transform:scale(var(--s,1))}
+.hx-cx .L{position:absolute;left:0;top:0;width:0;height:0}
+.hx-cx .L1{z-index:1}.hx-cx .L2{z-index:2}.hx-cx .L3{z-index:3}
+.hx-globe{position:absolute;left:-255px;top:-255px;width:510px;height:510px;display:block}
+.orb{position:absolute;left:0;top:0;width:0;height:0}
+.ol{position:absolute;left:-400px;top:-400px;overflow:visible}
+.ob{fill:none;stroke:var(--acc);stroke-opacity:.26;stroke-width:1.1}
+.of{fill:none;stroke:var(--acc);stroke-opacity:.6;stroke-width:1.3}
+.sat{position:absolute;left:0;top:0;width:50px;height:25px;offset-rotate:auto;animation-name:fly,vf;animation-timing-function:linear,step-end;animation-iteration-count:infinite;filter:drop-shadow(0 0 6px rgba(255,61,142,.9))}
+.sat svg{display:block;transform:scale(var(--ss,1))}.sat.bk{animation-name:fly,vb}
+@keyframes fly{from{offset-distance:0%}to{offset-distance:100%}}
+@keyframes vf{0%{opacity:1}50%{opacity:0}100%{opacity:0}}
+@keyframes vb{0%{opacity:0}50%{opacity:.55}100%{opacity:.55}}
+.lab{position:absolute;left:0;top:0;width:0;height:0;offset-rotate:0deg;animation-name:fly,vf;animation-timing-function:linear,step-end;animation-iteration-count:infinite}
+.lab span{position:absolute;display:inline-flex;align-items:center;gap:7px;white-space:nowrap;padding:5px 10px;border-radius:7px;background:rgba(7,11,20,.82);border:1px solid rgba(255,61,142,.38);font:500 10.5px "JetBrains Mono",ui-monospace,monospace;letter-spacing:.06em;color:var(--mut2);transform-origin:0 0}
+.lab b{color:var(--ink);font-weight:600}.lab i{width:5px;height:5px;border-radius:50%;background:var(--acc)}
+.hx-act{position:relative;z-index:5}
+.hx-foot{position:absolute;left:max(48px,calc(50% - 672px));right:max(48px,calc(50% - 672px));bottom:24px;z-index:5;display:flex;justify-content:space-between;height:16px;font:500 11px/16px "JetBrains Mono",ui-monospace,monospace;letter-spacing:.16em;color:#55637c;text-transform:uppercase}
+@media (prefers-reduced-motion:reduce){.sat,.lab{animation-play-state:paused}}
+
+/* button set A (Orbit) */
+.set{display:flex;flex-direction:column;align-items:center;gap:16px}
+.set .row{display:flex;gap:12px}
+.hb{position:relative;isolation:isolate;display:inline-flex;align-items:center;justify-content:center;gap:12px;height:54px;min-width:212px;padding:0 24px;border-radius:999px;border:1.5px solid transparent;color:var(--ink);font:600 15px Inter,sans-serif;letter-spacing:-.005em;white-space:nowrap;cursor:pointer;text-decoration:none;transition:transform .3s;
+  background:linear-gradient(var(--card2),var(--card2)) padding-box,conic-gradient(from var(--a),var(--line2) 0 100%) border-box}
+.hb:hover{text-decoration:none}
+.hb svg,.dk svg{width:18px;height:18px;display:block}
+.roll{display:inline-block;height:20px;line-height:20px;overflow:hidden}
+.roll span{display:block;transition:transform .5s cubic-bezier(.7,0,.2,1)}
+.hb:hover .roll span{transform:translateY(-100%)}
+.hb .dot{width:8px;height:8px;border-radius:50%;background:var(--acc);box-shadow:0 0 0 4px rgba(255,61,142,.22);animation:pulse 2s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 7px rgba(255,61,142,0)}}
+.hb.s:hover{color:var(--ink);background:linear-gradient(var(--card3),var(--card3)) padding-box,conic-gradient(from var(--a),rgba(141,165,205,.14) 0deg 190deg,var(--acc) 290deg,#fff 330deg,rgba(141,165,205,.14) 360deg) border-box;animation:spin 2.4s linear infinite}
+.hb.s .ic{opacity:.7}
+.hb.p{padding:0 8px 0 28px;justify-content:space-between;gap:18px;color:var(--on);overflow:hidden;
+  background:linear-gradient(var(--acc),var(--acc)) padding-box,conic-gradient(from var(--a),var(--acc) 0deg 230deg,#ffd3e6 300deg,#fff 325deg,var(--acc) 360deg) border-box;
+  animation:spin 3.2s linear infinite;box-shadow:0 12px 34px -10px var(--acc)}
+.hb.p .roll{position:relative;z-index:2;transition:color .45s}
+.hb.p .ar{position:relative;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--acc);z-index:1}
+.hb.p .ar::before{content:"";position:absolute;inset:0;border-radius:50%;background:var(--on);z-index:-1;transition:transform .6s cubic-bezier(.7,0,.2,1)}
+.hb.p .ar svg{transition:transform .5s cubic-bezier(.7,0,.2,1)}
+.hb.p:hover{color:var(--on);transform:translateY(-2px)}
+.hb.p:hover .ar::before{transform:scale(13)}
+.hb.p:hover .roll{color:#fff}
+.hb.p:hover .ar svg{transform:rotate(-45deg)}
+.dock{display:flex;align-items:center;gap:4px;height:56px;padding:5px;border-radius:999px;border:1px solid var(--line2);background:rgba(15,24,40,.7)}
+.dk{position:relative;display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;color:#c6d0e0;transform-origin:50% 100%;transition:.3s cubic-bezier(.3,1.4,.5,1)}
+.dk:hover{text-decoration:none;transform:scale(1.32) translateY(-5px);color:var(--acc);background:rgba(255,61,142,.14)}
+.dk:hover+.dk,.dk:has(+.dk:hover){transform:scale(1.12) translateY(-2px)}
+.dk::after{content:attr(data-t);position:absolute;top:calc(100% + 10px);left:50%;transform:translate(-50%,-4px);padding:6px 10px;border-radius:8px;background:var(--card3);border:1px solid var(--line2);color:var(--ink);font:600 12px Inter,sans-serif;white-space:nowrap;opacity:0;pointer-events:none;transition:.2s}
+.dk:hover::after{opacity:1;transform:translate(-50%,0)}
+
+/* ---------- sections: same 48px grid as the top bar ---------- */
+.wrap,.wrap2{max-width:1440px;margin:0 auto;padding:0 48px}
+.col,.col2{width:calc(50% - 12px);max-width:660px}
+section{padding:160px 0 128px}
+section.s2{min-height:auto}
+.kick{display:flex;align-items:center;gap:12px;height:16px;font:500 12px/16px "JetBrains Mono",ui-monospace,monospace;letter-spacing:.26em;text-transform:uppercase;color:var(--mut2)}
+.kick b{color:var(--acc);font-weight:600;letter-spacing:.12em}
+.kick i{width:28px;height:1px;background:rgba(141,165,205,.35)}
+.h2{font:600 48px/52px "Space Grotesk",sans-serif;letter-spacing:-.02em;margin:20px 0 0;color:var(--ink)}
+h2.h2::before{content:none}
+.lede{font:400 19px/28px Inter,sans-serif;color:var(--mut2);margin:12px 0 0;max-width:660px}
+.kick+.h2+.lede{margin-bottom:40px}
+#about .lede{margin-bottom:0}
+.body2 p{font:400 16.5px/28px Inter,sans-serif;color:#c3cddd;margin:24px 0 0}
+.body2 strong,.body2 em{color:var(--ink)}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-top:40px;border:1px solid var(--line2);border-radius:16px;background:rgba(15,24,40,.62);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.kpis>div{position:relative;padding:22px 18px 20px}
+.kpis>div+div{border-left:1px solid var(--line2)}
+.kpis>div::before,.ghstat::before{content:"";position:absolute;left:18px;top:-1px;right:auto;bottom:auto;width:20px;height:2px;border-radius:0 0 2px 2px;background:var(--acc);opacity:1}
+.kpis b{display:block;font:600 30px/36px "Space Grotesk",sans-serif;letter-spacing:-.02em;color:var(--ink);white-space:nowrap}
+.kpis b small{font-size:16px;font-weight:500;color:var(--mut2);letter-spacing:0}
+.kpis span{display:block;margin-top:8px;font:400 12.5px/18px Inter,sans-serif;color:var(--mut2)}
+.vhead{display:flex;align-items:center;justify-content:space-between;height:20px;margin-top:48px}
+.vhead span,.subhead span,.skillrow span{font:500 12px/16px "JetBrains Mono",ui-monospace,monospace;letter-spacing:.2em;text-transform:uppercase;color:var(--mut2)}
+.vhead span{display:flex;align-items:center;gap:10px}
+.vhead span em{font-style:normal}
+.vhead span i{width:6px;height:6px;border-radius:50%;background:var(--acc);box-shadow:0 0 0 4px rgba(255,61,142,.18)}
+.vhead a{display:flex;align-items:center;gap:6px;font:600 14px Inter,sans-serif;color:var(--ink)}
+.vhead a svg{width:15px;height:15px;color:var(--acc);transition:transform .3s}
+.vhead a:hover{text-decoration:none;color:var(--acc)}.vhead a:hover svg{transform:translate(2px,-2px)}
+.vids{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:16px}
+.vcard{border:1px solid var(--line2);border-radius:16px;overflow:hidden;background:var(--card2);transition:border-color .3s,transform .3s}
+.vcard:hover{border-color:rgba(255,61,142,.55);transform:translateY(-3px)}
+.vcard .yt-frame{border-radius:0}
+.vcard .yt-frame img{opacity:.9}.vcard:hover .yt-frame img{opacity:1}
+.vplay{position:absolute;left:50%;top:50%;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;background:var(--acc);box-shadow:0 0 0 7px rgba(255,61,142,.2),0 12px 30px -8px rgba(255,61,142,.9);transition:transform .35s cubic-bezier(.3,1.4,.5,1)}
+.vplay::after{content:"";position:absolute;left:22px;top:19px;border-style:solid;border-width:9px 0 9px 15px;border-color:transparent transparent transparent #fff}
+.vcard:hover .vplay{transform:scale(1.1)}
+.vtag{position:absolute;left:12px;top:12px;font:600 10.5px/1 "JetBrains Mono",ui-monospace,monospace;letter-spacing:.14em;padding:6px 8px;border-radius:6px;background:var(--acc);color:#fff}
+.vmeta{padding:14px 16px 16px}
+.vmeta b{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:42px;font:600 15px/21px "Space Grotesk",sans-serif;color:var(--ink)}
+.vmeta span{display:block;margin-top:6px;font:400 12.5px/18px Inter,sans-serif;color:var(--mut2)}
+
+/* cards, tags, buttons */
+.card{background:rgba(15,24,40,.9);border:1px solid var(--line2);border-radius:16px;padding:24px 26px}
+.card:hover{border-color:rgba(255,61,142,.45)}
+.card h3{font:600 18px/1.35 "Space Grotesk",sans-serif;color:var(--ink)}
+.meta{font-size:14px;color:var(--mut2)}
+.tags{gap:6px}
+.tag{font:500 12.5px/18px Inter,sans-serif;padding:4px 11px;border-radius:999px;background:rgba(141,165,205,.08);border:1px solid var(--line2);color:#c6d0e0}
+.kicker,.yt-kicker{display:flex;align-items:center;gap:8px;font:500 11px/14px "JetBrains Mono",ui-monospace,monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--mut2);margin-bottom:10px}
+.kicker::before{content:"";flex:none;width:5px;height:5px;border-radius:50%;background:var(--acc)}
+.btn{border-radius:999px;padding:10px 18px;background:rgba(15,24,40,.85);border:1px solid var(--line2);color:var(--ink);font:600 14px Inter,sans-serif;transition:border-color .25s,background .25s,transform .25s}
+.btn:hover{border-color:rgba(255,61,142,.65);color:var(--ink);background:var(--card3);transform:translateY(-1px)}
+.btn.primary{background:var(--acc);border:1px solid var(--acc);color:var(--on)}
+.btn.primary:hover{background:#ff5aa0;border-color:#ff5aa0;color:var(--on);opacity:1}
+.btn.sm{padding:7px 14px;font-size:13px;border-radius:999px}
+.stat b,.ghstat b{color:var(--ink)}
+ul li::marker{color:var(--acc)}
+
+/* projects + code */
+.subhead{margin:72px 0 20px;align-items:flex-end}
+.subhead h3{font:600 30px/36px "Space Grotesk",sans-serif;letter-spacing:-.015em}
+.subhead a{font:600 14px Inter,sans-serif;letter-spacing:0;text-transform:none;color:var(--ink)}
+.subhead a:hover{color:var(--acc);text-decoration:none}
+#projects .col{margin-bottom:0}
+.mapcard{margin:0 0 24px;border:1px solid var(--line2);border-radius:20px;background:var(--card2)}
+.maphead{padding:22px 28px}
+.maphead h3{font:600 22px/1.3 "Space Grotesk",sans-serif}
+.maphead p{color:var(--mut2)}
+.mapcard iframe{border-top:1px solid var(--line2)}
+.pgrid,.tgrid{gap:20px}
+.pcard{padding:0}
+.pvis{height:190px;background:#0b1322;border-bottom:1px solid var(--line2)}
+.pbody{padding:20px 24px 22px}
+.rel{border-top:1px dashed var(--line2)}
+.codewrap .sub{font:400 17px/27px Inter,sans-serif;color:var(--mut2)}
+.ghproof{gap:12px;margin:24px 0 20px}
+.ghproof>*{background:rgba(15,24,40,.9);border:1px solid var(--line2);border-radius:16px;padding:18px 18px 16px}
+.ghid:hover{border-color:rgba(255,61,142,.6)}
+.ghid svg{color:var(--ink)}
+.ghstat b{font:600 26px/1.2 "Space Grotesk",sans-serif}
+.skillrow{margin:0 0 20px}
+.skillrow span{font-size:11px;letter-spacing:.16em}
+.skillrow em{border-color:var(--line2);background:rgba(15,24,40,.8)}
+.filters{margin:0 0 20px}
+.filters button{border-radius:999px;padding:8px 16px;border-color:var(--line2);background:rgba(15,24,40,.85);font:500 13.5px Inter,sans-serif}
+.filters button:hover{border-color:rgba(255,61,142,.5);color:var(--ink)}
+.filters button.on{background:var(--acc);border-color:var(--acc);color:var(--on);font-weight:600}
+.tcard{background:rgba(15,24,40,.94);border:1px solid var(--line2);border-radius:16px}
+.tcard:hover{border-color:rgba(255,61,142,.55);transform:translateY(-3px)}
+.thumb{border-bottom:1px solid var(--line2)}
+.thumb .badge{color:var(--acc2)}
+.tbody{padding:18px 20px 20px}
+.tbody h3 a:hover{color:var(--acc2);text-decoration:none}
+.tourbadge{border-color:rgba(255,61,142,.6);color:var(--acc2)}
+
+/* publications, timeline, contact */
+.pub{border-left:2px solid var(--acc)}
+.sw li{border-top:1px solid var(--line2)}
+.timeline{border-left:1px solid var(--line2);padding-left:28px;margin-left:6px}
+.titem{margin-bottom:20px}
+.titem::before{left:-35px;top:30px;width:12px;height:12px;background:var(--bg);border:2px solid var(--acc);box-shadow:0 0 0 5px rgba(255,61,142,.13)}
+#contact a.card{display:flex;flex-direction:column;justify-content:center;min-height:88px;padding:18px 24px;margin-bottom:12px}
+#contact a.card .kicker{margin-bottom:6px}
+#contact a.card h3{font-size:19px;margin:0}
+#contact a.card::before{content:"";position:absolute;right:24px;top:50%;width:10px;height:10px;margin-top:-5px;border-top:2px solid var(--mut2);border-right:2px solid var(--mut2);transform:rotate(45deg);transition:transform .3s,border-color .3s}
+#contact a.card:hover::before{border-color:var(--acc);transform:translateX(4px) rotate(45deg)}
+footer{border-top:1px solid var(--line2);padding:28px 0;font:500 12px/16px "JetBrains Mono",ui-monospace,monospace;letter-spacing:.12em;color:#55637c;text-transform:uppercase;background:rgba(7,11,20,.9)}
+
+@media (max-width:1100px){nav.topbar .tab{padding:0 10px;font-size:13px}.hb{min-width:0}}
+@media (max-width:900px){
+  .tb-logo,.tb-cv,.tb-burger{top:20px;height:44px}
+  .tb-logo{left:20px;width:44px;font-size:14px}
+  .tb-cv{right:76px;padding:0 16px 0 14px}
+  .tb-burger{display:flex;right:20px;width:44px;flex-direction:column;align-items:center;justify-content:center;gap:5px;border:1px solid var(--line2);cursor:pointer;color:var(--ink)}
+  .tb-burger span{width:16px;height:1.5px;background:var(--ink);transition:transform .3s}
+  nav.topbar .tabs{display:none}
+  nav.topbar.open .tabs{display:flex;flex-direction:column;align-items:stretch;gap:2px;position:fixed;top:76px;left:20px;right:20px;height:auto;transform:none;padding:8px;border-radius:22px;background:rgba(10,16,30,.97)}
+  nav.topbar.open .tab{height:46px;justify-content:center;font-size:15px}
+  nav.topbar.open .tab.on{background:rgba(141,165,205,.15)}
+  nav.topbar .fx-ind{display:none}
+  nav.topbar.open .tb-burger span:first-child{transform:translateY(3.25px) rotate(45deg)}
+  nav.topbar.open .tb-burger span:last-child{transform:translateY(-3.25px) rotate(-45deg)}
+  nav.topbar::before{height:92px}
+  .hero.hx{min-height:600px;padding:96px 20px 68px}
+  .hx .eyebrow{font-size:9.5px;height:12px;line-height:12px;letter-spacing:.12em;padding-left:.12em}
+  .hx .eyebrow i{width:4px;height:4px;margin:0 calc(7px + .12em) 0 7px}
+  .hx h1{font-size:34px;line-height:36px;margin-top:16px;white-space:normal}
+  .hx h1 .fx-line{display:block}.hx h1 .fx-line+.fx-line{margin-left:0}
+  .hx .lead{font-size:15px;line-height:22px;margin-top:12px;max-width:330px;text-wrap:balance}
+  .hx-earth{min-height:180px}
+  .lab{display:none}
+  .hx-act{width:100%}
+  .set .row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;width:100%}
+  .hb{min-width:0;width:100%;height:48px;font-size:14px}
+  .hb.s{padding:0 8px;gap:8px}
+  .hb.p{grid-column:1/-1;justify-content:center;padding:0 52px}
+  .hb.p .ar{position:absolute;right:5px;top:50%;margin-top:-19px}
+  .dock{height:52px;padding:3px}
+  .hx-foot{display:none}
+  .wrap,.wrap2{padding:0 20px}
+  .col,.col2{width:auto;max-width:none}
+  section{padding:112px 0 72px;min-height:auto}
+  .h2{font-size:36px;line-height:40px;margin-top:16px}
+  .lede{font-size:17px;line-height:26px}
+  .kick+.h2+.lede{margin-bottom:32px}
+  .body2 p{font-size:15.5px;line-height:26px;margin-top:20px}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:32px}
+  .kpis>div:nth-child(3){border-left:0}
+  .kpis>div:nth-child(n+3){border-top:1px solid var(--line2)}
+  .kpis>div:nth-child(n+3)::before{display:none}
+  .kpis b{font-size:26px;line-height:32px}
+  .vhead{margin-top:40px}.vhead span{font-size:10.5px;letter-spacing:.14em}.vhead span em{display:none}.vhead a{font-size:13px}
+  .vids{grid-template-columns:minmax(0,1fr)}
+  .subhead{margin:56px 0 16px}.subhead h3{font-size:24px;line-height:30px}
+  .maphead{padding:18px 20px}
+  .card{padding:20px}
+}
+
 </style>
 <link rel="stylesheet" href="assets/fx.css">
 </head>
 <body>
-<canvas id="earth" aria-hidden="true"></canvas>
 <canvas id="stage" aria-hidden="true"></canvas>
-<div id="pins"></div>
 
-<header class="hero" id="top">
-  <div class="wrap" style="width:100%">
-    <div class="hero-text">
-      <div class="eyebrow">Hydrology · Remote Sensing · Machine Learning</div>
-      <h1>Parisa <span>Abbasalizadehrezaei</span></h1>
-      <p class="lead">Environmental engineer turning satellite data and water models into decisions for water management.</p>
-      <div class="links">
-        <a class="btn primary" href="#projects">View projects</a>
-        <a class="btn" href="#wetland-map">Live demo: waterbody trend map</a>
-      </div>
-      <div class="social">
-        <a class="sbtn" href="mailto:risarezaei@gmail.com" aria-label="Email" title="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></svg></a>
-        <a class="sbtn" href="https://www.linkedin.com/in/risarezaei" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5zM5.25 3.5a1.97 1.97 0 1 0 0 3.94 1.97 1.97 0 0 0 0-3.94zM20.44 13.4c0-3.07-1.64-5.15-4.4-5.15-1.5 0-2.5.7-3.06 1.55V8.5H9.6V20h3.38v-6.2c0-1.5.72-2.47 2-2.47 1.2 0 2.08.86 2.08 2.6V20h3.38v-6.6z"/></svg></a>
-        <a class="sbtn" href="https://github.com/RisaRezaei" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
-        <a class="sbtn" href="https://www.youtube.com/@ParisaAbbasalizadehrezaei" target="_blank" rel="noopener" aria-label="YouTube" title="YouTube"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.76-1.77C18.25 5 12 5 12 5s-6.25 0-7.84.43A2.5 2.5 0 0 0 2.4 7.2C2 8.8 2 12 2 12s0 3.2.4 4.8a2.5 2.5 0 0 0 1.76 1.77C5.75 19 12 19 12 19s6.25 0 7.84-.43a2.5 2.5 0 0 0 1.76-1.77C22 15.2 22 12 22 12s0-3.2-.4-4.8zM10 15V9l5.2 3L10 15z"/></svg></a>
-        <a class="sbtn" href="https://orcid.org/0009-0009-5708-7673" target="_blank" rel="noopener" aria-label="ORCID" title="ORCID">iD</a>
-        <a class="more" href="#code">Code &amp; tutorials →</a>
-      </div>
-      <div class="hud" aria-hidden="true">
-        <div><span class="live"></span><b>EO-SAT</b> · nadir scan</div>
-        <div>LAT <span id="hlat">--</span>  LON <span id="hlon">--</span></div>
-        <div>Bands B03 · B08 · B11 · NDWI</div>
-        <div class="hint"><span class="site"></span>Study sites · hover a pin</div>
-      </div>
-    </div>
-  </div>
-  <div class="waves" aria-hidden="true">
-    <svg class="w1" viewBox="0 0 1440 96" preserveAspectRatio="none"><path d="M0 56 Q90 30 180 56 T360 56 T540 56 T720 56 T900 56 T1080 56 T1260 56 T1440 56 V96 H0Z" fill="rgba(79,209,197,.07)"/></svg>
-    <svg class="w2" viewBox="0 0 1440 96" preserveAspectRatio="none"><path d="M0 70 Q60 52 120 70 T240 70 T360 70 T480 70 T600 70 T720 70 T840 70 T960 70 T1080 70 T1200 70 T1320 70 T1440 70 V96 H0Z" fill="rgba(96,165,250,.07)"/></svg>
-  </div>
-  <div class="scroll">SCROLL ↓</div>
+<header class="hero hx" id="top">
+<div class="hx-head hero-text"><div class="eyebrow">Hydrology<i></i>Remote sensing<i></i>Machine learning</div>
+<h1>Parisa <span>Abbasalizadehrezaei</span></h1>
+<p class="lead">Environmental engineer turning satellite data and water models into decisions for water management.</p></div>
+<div class="hx-earth" aria-hidden="true"><div class="hx-cx"><div class="L L1"></div><div class="L L2"><canvas class="hx-globe" width="2" height="2"></canvas></div><div class="L L3"></div></div></div>
+<div class="hx-act links"><div class="set"><div class="row"><a class="hb p" href="#projects"><span class="roll"><span>View projects</span><span>View projects</span></span><span class="ar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a><a class="hb s" href="#wetland-map"><span class="dot"></span><span class="roll"><span>Live demo</span><span>Live demo</span></span></a><a class="hb s" href="#code"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></svg></span><span class="roll"><span>Code &amp; tutorials</span><span>Code &amp; tutorials</span></span></a></div>
+<div class="dock"><a class="dk" data-t="Email" aria-label="Email" href="mailto:risarezaei@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></svg></a><a class="dk" data-t="LinkedIn" aria-label="LinkedIn" href="https://www.linkedin.com/in/risarezaei" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5zM5.25 3.5a1.97 1.97 0 1 0 0 3.94 1.97 1.97 0 0 0 0-3.94zM20.44 13.4c0-3.07-1.64-5.15-4.4-5.15-1.5 0-2.5.7-3.06 1.55V8.5H9.6V20h3.38v-6.2c0-1.5.72-2.47 2-2.47 1.2 0 2.08.86 2.08 2.6V20h3.38v-6.6z"/></svg></a><a class="dk" data-t="GitHub" aria-label="GitHub" href="https://github.com/RisaRezaei" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a><a class="dk" data-t="YouTube" aria-label="YouTube" href="https://www.youtube.com/@ParisaAbbasalizadehrezaei" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.76-1.77C18.25 5 12 5 12 5s-6.25 0-7.84.43A2.5 2.5 0 0 0 2.4 7.2C2 8.8 2 12 2 12s0 3.2.4 4.8a2.5 2.5 0 0 0 1.76 1.77C5.75 19 12 19 12 19s6.25 0 7.84-.43a2.5 2.5 0 0 0 1.76-1.77C22 15.2 22 12 22 12s0-3.2-.4-4.8zM10 15V9l5.2 3L10 15z"/></svg></a><a class="dk" data-t="ORCID" aria-label="ORCID" href="https://orcid.org/0009-0009-5708-7673" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><text x="12" y="16.5" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="12" fill="currentColor">iD</text></svg></a></div></div></div>
+<div class="hx-foot" aria-hidden="true"><span>↓ Scroll to explore</span><span>Earth · NASA Blue Marble</span></div>
 </header>
 
-<nav aria-label="Sections">
-  <div class="wrap tabs">
-    <a class="tab" href="#about">About</a>
-    <a class="tab" href="#skills">Skills</a>
-    <a class="tab" href="#projects">Projects</a>
-    <a class="tab" href="#code">Code</a>
-    <a class="tab" href="#publications">Publications</a>
-    <a class="tab" href="#experience">Experience</a>
-    <a class="tab" href="#education">Education</a>
-    <a class="tab" href="#contact">Contact</a>
-  </div>
-</nav>
+<nav class="topbar" aria-label="Sections"><div class="tb-in"><a class="tb-logo" href="#top" aria-label="Home">PA</a><div class="tabs"><a class="tab" href="#top">Home</a><a class="tab" href="#about">About</a><a class="tab" href="#skills">Skills</a><a class="tab" href="#projects">Projects</a><a class="tab" href="#code">Code</a><a class="tab" href="#publications">Publications</a><a class="tab" href="#experience">Experience</a><a class="tab" href="#education">Education</a><a class="tab" href="#contact">Contact</a></div><a class="tb-cv" href="#experience"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span>CV</span></a><button class="tb-burger" type="button" aria-label="Menu"><span></span><span></span></button></div></nav>
 
 <main>
 
   <!-- 01 ACQUISITION -->
-  <section id="about"><div class="wrap"><div class="col">
-    <h2 class="rv" data-n="01 · ACQUISITION">About</h2>
-    <p class="sub rv">Water, satellites and data.</p>
-    <p class="rv">I'm an environmental engineer (MSc, Sharif University of Technology) working at the interface of <strong>hydrology</strong>, <strong>satellite remote sensing</strong> and <strong>machine learning</strong>. I build Earth-observation workflows in Google Earth Engine and Python, model surface water and groundwater with WEAP, MODFLOW and MIKE, and turn model results into decision support for water management.</p>
-    <p class="rv">My work on a decision-support system for the Lake Urmia basin, carried out with the University of Delaware, is published in the <em>Journal of Hydrology</em> and was presented at AGU24. I also have hands-on experience in water-quality laboratory analysis and review regularly for Elsevier journals.</p>
-    <div class="stats rv">
-      <div class="stat"><b>44</b><span>Peer reviews for Elsevier journals</span></div>
-      <div class="stat"><b>+31%</b><span>Environmental water supply in optimized allocation scenarios</span></div>
-      <div class="stat"><b>17.71/20</b><span>MSc GPA, Sharif University</span></div>
-      <div class="stat"><b>AGU24</b><span>Conference presentation, Washington, D.C.</span></div>
-    </div>
-    <div class="yt rv">
-      <button class="yt-frame" type="button" data-yt="bDhEnSg61W8" aria-label="Play video: Three days of rain – Iran's floods and a record El Niño">
-        <img src="https://i.ytimg.com/vi/bDhEnSg61W8/maxresdefault.jpg" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/bDhEnSg61W8/hqdefault.jpg'" alt="" loading="lazy" decoding="async"><span class="yt-play" aria-hidden="true"></span>
-      </button>
-      <div class="yt-meta">
-        <span class="yt-kicker">LATEST ON MY YOUTUBE CHANNEL · EARTH FROM SPACE</span>
-        <b>Three days of rain — Iran's floods and a record El Niño</b>
-        <span class="yt-sub">Floods across Iran, 6–8 November 2026 · English &amp; Persian subtitles</span>
-        <div class="yt-links"><a href="https://www.youtube.com/watch?v=bDhEnSg61W8" target="_blank" rel="noopener">Watch on YouTube ↗</a><a href="https://www.youtube.com/@ParisaAbbasalizadehrezaei" target="_blank" rel="noopener">Visit the channel ↗</a></div>
-      </div>
-    </div>
-    <div class="yt rv">
-      <button class="yt-frame" type="button" data-yt="rBgaC2yz1hw" aria-label="Play video: A wetland being dug out – 15 years of satellite images">
-        <img src="https://i.ytimg.com/vi/rBgaC2yz1hw/maxresdefault.jpg" alt="" loading="lazy" decoding="async"><span class="yt-play" aria-hidden="true"></span>
-      </button>
-      <div class="yt-meta">
-        <span class="yt-kicker">ALSO ON THE CHANNEL · EARTH FROM SPACE</span>
-        <b>A wetland being dug out — 15 years of satellite images</b>
-        <span class="yt-sub">Kiakalayeh wetland, Langarud</span>
-        <div class="yt-links"><a href="https://www.youtube.com/watch?v=rBgaC2yz1hw" target="_blank" rel="noopener">Watch on YouTube ↗</a><a href="https://www.youtube.com/@ParisaAbbasalizadehrezaei" target="_blank" rel="noopener">Visit the channel ↗</a></div>
-      </div>
-    </div>
-  </div></div></section>
+  <section id="about" class="s2"><div class="wrap2"><div class="col2">
+<div class="kick rv"><b>01</b><i></i>Acquisition</div><h2 class="h2 rv">About</h2><p class="lede rv">Water, satellites and data.</p>
+<div class="body2"><p class="rv">I'm an environmental engineer (MSc, Sharif University of Technology) working at the interface of <strong>hydrology</strong>, <strong>satellite remote sensing</strong> and <strong>machine learning</strong>. I build Earth-observation workflows in Google Earth Engine and Python, model surface water and groundwater with WEAP, MODFLOW and MIKE, and turn model results into decision support for water management.</p><p class="rv">My work on a decision-support system for the Lake Urmia basin, carried out with the University of Delaware, is published in the <em>Journal of Hydrology</em> and was presented at AGU24. I also have hands-on experience in water-quality laboratory analysis and review regularly for Elsevier journals.</p></div>
+<div class="kpis rv"><div><b>44</b><span>Peer reviews for Elsevier journals</span></div><div><b>+31%</b><span>Environmental water supply in optimized allocation scenarios</span></div><div><b>17.71<small>/20</small></b><span>MSc GPA, Sharif University</span></div><div><b>AGU24</b><span>Conference presentation, Washington, D.C.</span></div></div>
+<div class="vhead rv"><span><i></i><em>Earth from space · </em>my YouTube channel</span><a href="https://www.youtube.com/@ParisaAbbasalizadehrezaei" target="_blank" rel="noopener">Visit the channel <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></div>
+<div class="vids"><article class="vcard rv"><button class="yt-frame" type="button" data-yt="bDhEnSg61W8" aria-label="Play video: Three days of rain — Iran’s floods and a record El Niño"><img src="assets/yt/bDhEnSg61W8.jpg" alt="" loading="lazy" decoding="async"><span class="vplay" aria-hidden="true"></span><span class="vtag">NEW</span></button><div class="vmeta"><b>Three days of rain — Iran’s floods and a record El Niño</b><span>Floods across Iran, 6–8 November 2026 · English &amp; Persian subtitles</span></div></article><article class="vcard rv"><button class="yt-frame" type="button" data-yt="rBgaC2yz1hw" aria-label="Play video: A wetland being dug out — 15 years of satellite images"><img src="assets/yt/rBgaC2yz1hw.jpg" alt="" loading="lazy" decoding="async"><span class="vplay" aria-hidden="true"></span></button><div class="vmeta"><b>A wetland being dug out — 15 years of satellite images</b><span>Kiakalayeh wetland, Langarud</span></div></article></div>
+</div></div></section>
 
   <!-- 02 SPECTRAL BANDS -->
   <section id="skills"><div class="wrap"><div class="col">
-    <h2 class="rv" data-n="02 · SPECTRAL BANDS">Skills</h2>
-    <p class="sub rv">Tools and methods.</p>
+    <div class="kick rv"><b>02</b><i></i>SPECTRAL BANDS</div>
+    <h2 class="h2 rv">Skills</h2>
+    <p class="lede rv">Tools and methods.</p>
     <div class="card rv"><h3>Remote sensing</h3>
       <div class="tags"><span class="tag">Google Earth Engine (JS &amp; Python)</span><span class="tag">Landsat</span><span class="tag">Sentinel-2</span><span class="tag">Spectral &amp; water indices</span><span class="tag">Land-cover classification</span><span class="tag">Change detection</span><span class="tag">Accuracy assessment</span><span class="tag">ENVI</span></div></div>
     <div class="card rv"><h3>Machine learning &amp; data</h3>
@@ -349,8 +519,9 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
   <!-- 03 CLASSIFICATION -->
   <section id="projects"><div class="wrap">
     <div class="col">
-      <h2 class="rv" data-n="03 · CLASSIFICATION">Projects</h2>
-      <p class="sub rv">Research and engineering projects across water resources and Earth observation, each linked to the open-source code that reproduces its methods.</p>
+      <div class="kick rv"><b>03</b><i></i>CLASSIFICATION</div>
+    <h2 class="h2 rv">Projects</h2>
+    <p class="lede rv">Research and engineering projects across water resources and Earth observation, each linked to the open-source code that reproduces its methods.</p>
     </div>
     <div class="mapcard rv" id="wetland-map">
       <div class="maphead">
@@ -378,16 +549,16 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
     <div class="subhead rv"><h3>Research projects</h3><span>8 projects</span></div>
     <div class="pgrid">
       <article class="card pcard rv">
-        <div class="pvis"><svg viewBox="0 0 400 160" role="img" aria-label="Decision-support workflow: inflow forecasts feed a daily WEAP model, optimised with NSGA-II and AHP"><defs><linearGradient id="ga" x1="0" x2="1"><stop offset="0" stop-color="#4fd1c5"/><stop offset="1" stop-color="#60a5fa"/></linearGradient></defs><path d="M0 40H400M0 80H400M0 120H400M80 0V160M160 0V160M240 0V160M320 0V160" stroke="#16233a" stroke-width="1"/>
+        <div class="pvis"><svg viewBox="0 0 400 160" role="img" aria-label="Decision-support workflow: inflow forecasts feed a daily WEAP model, optimised with NSGA-II and AHP"><defs><linearGradient id="ga" x1="0" x2="1"><stop offset="0" stop-color="#ff3d8e"/><stop offset="1" stop-color="#60a5fa"/></linearGradient></defs><path d="M0 40H400M0 80H400M0 120H400M80 0V160M160 0V160M240 0V160M320 0V160" stroke="#16233a" stroke-width="1"/>
 <g font-family="JetBrains Mono,monospace" font-size="9.5" fill="#cbd5e1" text-anchor="middle">
 <rect x="14" y="30" width="78" height="40" rx="8" fill="#0f1a2e" stroke="#2a3b5a"/><text x="53" y="47" >Inflow</text><text x="53" y="60" >forecast</text>
 <rect x="14" y="90" width="78" height="40" rx="8" fill="#0f1a2e" stroke="#2a3b5a"/><text x="53" y="107" >Demands &amp;</text><text x="53" y="120" >scenarios</text>
-<rect x="122" y="56" width="88" height="48" rx="9" fill="#0f1a2e" stroke="url(#ga)" stroke-width="1.6"/><text x="166" y="76" fill="#4fd1c5" font-weight="600">WEAP</text><text x="166" y="90" >daily balance</text>
+<rect x="122" y="56" width="88" height="48" rx="9" fill="#0f1a2e" stroke="url(#ga)" stroke-width="1.6"/><text x="166" y="76" fill="#ff3d8e" font-weight="600">WEAP</text><text x="166" y="90" >daily balance</text>
 <rect x="240" y="56" width="70" height="48" rx="9" fill="#0f1a2e" stroke="#2a3b5a"/><text x="275" y="76" >MOEA</text><text x="275" y="90" >+ AHP</text>
 </g>
 <g stroke="#60a5fa" stroke-width="1.6" fill="none" marker-end="url(#ar)"><path d="M92 50H101Q107 50 107 56V68Q107 74 113 74H119"/><path d="M92 110H101Q107 110 107 104V92Q107 86 113 86H119"/><path d="M210 80H238"/><path d="M310 80H326"/></g>
 <defs><marker id="ar" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L8 4L0 8z" fill="#60a5fa"/></marker></defs>
-<g font-family="Space Grotesk,sans-serif"><rect x="330" y="30" width="58" height="46" rx="8" fill="rgba(79,209,197,.12)" stroke="#4fd1c5"/><text x="359" y="54" text-anchor="middle" fill="#4fd1c5" font-size="17" font-weight="700">+31%</text><text x="359" y="68" text-anchor="middle" fill="#8d9bb3" font-size="8.5" font-family="Inter,sans-serif">env. water</text>
+<g font-family="Space Grotesk,sans-serif"><rect x="330" y="30" width="58" height="46" rx="8" fill="rgba(255,61,142,.12)" stroke="#ff3d8e"/><text x="359" y="54" text-anchor="middle" fill="#ff3d8e" font-size="17" font-weight="700">+31%</text><text x="359" y="68" text-anchor="middle" fill="#8d9bb3" font-size="8.5" font-family="Inter,sans-serif">env. water</text>
 <rect x="330" y="86" width="58" height="46" rx="8" fill="rgba(96,165,250,.12)" stroke="#60a5fa"/><text x="359" y="110" text-anchor="middle" fill="#60a5fa" font-size="17" font-weight="700">+26%</text><text x="359" y="124" text-anchor="middle" fill="#8d9bb3" font-size="8.5" font-family="Inter,sans-serif">agri. profit</text></g></svg></div>
         <div class="pbody">
           <div class="kicker">Water resources · Decision support</div>
@@ -410,9 +581,9 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
         </div>
       </article>
       <article class="card pcard rv">
-        <div class="pvis"><svg viewBox="0 0 400 160" role="img" aria-label="Pipeline from satellite bands to spectral indices, Random Forest and K-means, to a water map"><defs><linearGradient id="gb" x1="0" x2="1"><stop offset="0" stop-color="#4fd1c5"/><stop offset="1" stop-color="#60a5fa"/></linearGradient></defs><path d="M0 40H400M0 80H400M0 120H400M80 0V160M160 0V160M240 0V160M320 0V160" stroke="#16233a" stroke-width="1"/>
+        <div class="pvis"><svg viewBox="0 0 400 160" role="img" aria-label="Pipeline from satellite bands to spectral indices, Random Forest and K-means, to a water map"><defs><linearGradient id="gb" x1="0" x2="1"><stop offset="0" stop-color="#ff3d8e"/><stop offset="1" stop-color="#60a5fa"/></linearGradient></defs><path d="M0 40H400M0 80H400M0 120H400M80 0V160M160 0V160M240 0V160M320 0V160" stroke="#16233a" stroke-width="1"/>
 <g transform="translate(18,34)"><rect x="0" y="0" width="62" height="62" rx="4" fill="#1d3557" stroke="#3b5785"/><rect x="7" y="7" width="62" height="62" rx="4" fill="#22406a" stroke="#3b5785"/><rect x="14" y="14" width="62" height="62" rx="4" fill="#2a4d7d" stroke="#3b5785"/><text x="38" y="96" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#8d9bb3">bands</text></g>
-<g font-family="JetBrains Mono,monospace" font-size="9.5" text-anchor="middle"><rect x="120" y="30" width="64" height="24" rx="12" fill="rgba(79,209,197,.12)" stroke="#4fd1c5"/><text x="152" y="46" fill="#4fd1c5">NDWI</text><rect x="120" y="64" width="64" height="24" rx="12" fill="rgba(79,209,197,.12)" stroke="#4fd1c5"/><text x="152" y="80" fill="#4fd1c5">MNDWI</text><rect x="120" y="98" width="64" height="24" rx="12" fill="rgba(79,209,197,.12)" stroke="#4fd1c5"/><text x="152" y="114" fill="#4fd1c5">AWEI</text>
+<g font-family="JetBrains Mono,monospace" font-size="9.5" text-anchor="middle"><rect x="120" y="30" width="64" height="24" rx="12" fill="rgba(255,61,142,.12)" stroke="#ff3d8e"/><text x="152" y="46" fill="#ff3d8e">NDWI</text><rect x="120" y="64" width="64" height="24" rx="12" fill="rgba(255,61,142,.12)" stroke="#ff3d8e"/><text x="152" y="80" fill="#ff3d8e">MNDWI</text><rect x="120" y="98" width="64" height="24" rx="12" fill="rgba(255,61,142,.12)" stroke="#ff3d8e"/><text x="152" y="114" fill="#ff3d8e">AWEI</text>
 <rect x="214" y="36" width="70" height="34" rx="8" fill="#0f1a2e" stroke="#2a3b5a"/><text x="249" y="57" fill="#cbd5e1">Random Forest</text>
 <rect x="214" y="90" width="70" height="34" rx="8" fill="#0f1a2e" stroke="#2a3b5a"/><text x="249" y="111" fill="#cbd5e1">K-means</text></g>
 <g stroke="#60a5fa" stroke-width="1.4" fill="none"><path d="M100 80H116"/><path d="M184 66C200 66 200 53 212 53"/><path d="M184 94C200 94 200 107 212 107"/><path d="M284 53C300 53 300 76 314 78"/><path d="M284 107C300 107 300 84 314 82"/></g>
@@ -427,7 +598,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
         </div>
       </article>
       <article class="card pcard rv">
-        <div class="pvis"><svg viewBox="0 0 400 160" role="img" aria-label="Cross-section of a dam, reservoir, aquifer and river with groundwater flow arrows"><defs><linearGradient id="gc" x1="0" x2="1"><stop offset="0" stop-color="#4fd1c5"/><stop offset="1" stop-color="#60a5fa"/></linearGradient></defs>
+        <div class="pvis"><svg viewBox="0 0 400 160" role="img" aria-label="Cross-section of a dam, reservoir, aquifer and river with groundwater flow arrows"><defs><linearGradient id="gc" x1="0" x2="1"><stop offset="0" stop-color="#ff3d8e"/><stop offset="1" stop-color="#60a5fa"/></linearGradient></defs>
 <rect width="400" height="160" fill="#0b1322"/>
 <path d="M0 64H120L140 64L140 64V64" fill="none"/>
 <rect x="0" y="62" width="128" height="34" fill="#1e88e5" opacity=".55"/>
@@ -437,9 +608,9 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
 <rect x="0" y="142" width="400" height="18" fill="#2b2118"/>
 <path d="M0 62 C120 62 160 80 230 88 S330 92 400 92" fill="none" stroke="url(#gc)" stroke-width="2.2" stroke-dasharray="5 4"/>
 <path d="M330 86 Q350 80 370 86 L370 96 L330 96Z" fill="#1e88e5" opacity=".8"/>
-<g stroke="#4fd1c5" stroke-width="1.6" fill="none" marker-end="url(#ac)"><path d="M150 112 C190 118 230 118 270 112"/><path d="M200 132 C250 136 300 128 340 118"/></g>
-<defs><marker id="ac" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L8 4L0 8z" fill="#4fd1c5"/></marker></defs>
-<g font-family="JetBrains Mono,monospace" font-size="9.5" fill="#cbd5e1"><text x="10" y="56">reservoir</text><text x="132" y="34">dam</text><text x="318" y="78">river</text><text x="210" y="80" fill="#4fd1c5">water table</text><text x="10" y="154" fill="#8d9bb3">MODFLOW grid · leakage → aquifer → river</text></g></svg></div>
+<g stroke="#ff3d8e" stroke-width="1.6" fill="none" marker-end="url(#ac)"><path d="M150 112 C190 118 230 118 270 112"/><path d="M200 132 C250 136 300 128 340 118"/></g>
+<defs><marker id="ac" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L8 4L0 8z" fill="#ff3d8e"/></marker></defs>
+<g font-family="JetBrains Mono,monospace" font-size="9.5" fill="#cbd5e1"><text x="10" y="56">reservoir</text><text x="132" y="34">dam</text><text x="318" y="78">river</text><text x="210" y="80" fill="#ff3d8e">water table</text><text x="10" y="154" fill="#8d9bb3">MODFLOW grid · leakage → aquifer → river</text></g></svg></div>
         <div class="pbody">
           <div class="kicker">Groundwater</div>
           <h3>Dam Leakage &amp; Aquifer Response</h3>
@@ -450,11 +621,11 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
         </div>
       </article>
       <article class="card pcard rv">
-        <div class="pvis"><svg viewBox="0 0 400 160" role="img" aria-label="Sub-basin water balance with precipitation, evapotranspiration, outflow and storage, and a chloride time series"><defs><linearGradient id="gd" x1="0" x2="1"><stop offset="0" stop-color="#4fd1c5"/><stop offset="1" stop-color="#60a5fa"/></linearGradient></defs><path d="M0 40H400M0 80H400M0 120H400M80 0V160M160 0V160M240 0V160M320 0V160" stroke="#16233a" stroke-width="1"/>
-<path d="M20 120 L50 54 L95 38 L150 60 L170 112 L120 134 L60 136Z" fill="rgba(79,209,197,.10)" stroke="#4fd1c5" stroke-width="1.6"/>
+        <div class="pvis"><svg viewBox="0 0 400 160" role="img" aria-label="Sub-basin water balance with precipitation, evapotranspiration, outflow and storage, and a chloride time series"><defs><linearGradient id="gd" x1="0" x2="1"><stop offset="0" stop-color="#ff3d8e"/><stop offset="1" stop-color="#60a5fa"/></linearGradient></defs><path d="M0 40H400M0 80H400M0 120H400M80 0V160M160 0V160M240 0V160M320 0V160" stroke="#16233a" stroke-width="1"/>
+<path d="M20 120 L50 54 L95 38 L150 60 L170 112 L120 134 L60 136Z" fill="rgba(255,61,142,.10)" stroke="#ff3d8e" stroke-width="1.6"/>
 <g stroke="#60a5fa" stroke-width="1.6" fill="none" marker-end="url(#ad)"><path d="M70 6V36"/><path d="M110 50V14" stroke="#f59e0b" marker-end="url(#ad2)"/><path d="M168 112H196"/></g>
 <defs><marker id="ad" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L8 4L0 8z" fill="#60a5fa"/></marker><marker id="ad2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L8 4L0 8z" fill="#f59e0b"/></marker></defs>
-<g font-family="JetBrains Mono,monospace" font-size="9.5" fill="#cbd5e1"><text x="40" y="16">P</text><text x="116" y="18" fill="#f59e0b">ET</text><text x="176" y="106">Q</text><text x="74" y="96" fill="#4fd1c5">ΔS</text></g>
+<g font-family="JetBrains Mono,monospace" font-size="9.5" fill="#cbd5e1"><text x="40" y="16">P</text><text x="116" y="18" fill="#f59e0b">ET</text><text x="176" y="106">Q</text><text x="74" y="96" fill="#ff3d8e">ΔS</text></g>
 <g transform="translate(222,18)"><rect width="164" height="118" rx="8" fill="#0f1a2e" stroke="#2a3b5a"/>
 <path d="M12 96 L28 88 L40 92 L54 74 L68 80 L82 62 L96 66 L110 48 L124 54 L138 36 L152 40" fill="none" stroke="url(#gd)" stroke-width="2"/>
 <circle cx="12" cy="96" r="2.2" fill="#e7edf7"/><circle cx="28" cy="88" r="2.2" fill="#e7edf7"/><circle cx="40" cy="92" r="2.2" fill="#e7edf7"/><circle cx="54" cy="74" r="2.2" fill="#e7edf7"/><circle cx="68" cy="80" r="2.2" fill="#e7edf7"/><circle cx="82" cy="62" r="2.2" fill="#e7edf7"/><circle cx="96" cy="66" r="2.2" fill="#e7edf7"/><circle cx="110" cy="48" r="2.2" fill="#e7edf7"/><circle cx="124" cy="54" r="2.2" fill="#e7edf7"/><circle cx="138" cy="36" r="2.2" fill="#e7edf7"/><circle cx="152" cy="40" r="2.2" fill="#e7edf7"/>
@@ -469,7 +640,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
         </div>
       </article>
       <article class="card pcard rv">
-        <div class="pvis"><svg viewBox="0 0 400 160" role="img" aria-label="Reservoir with an oil slick spreading downstream over three time steps"><defs><linearGradient id="ge" x1="0" x2="1"><stop offset="0" stop-color="#4fd1c5"/><stop offset="1" stop-color="#60a5fa"/></linearGradient></defs>
+        <div class="pvis"><svg viewBox="0 0 400 160" role="img" aria-label="Reservoir with an oil slick spreading downstream over three time steps"><defs><linearGradient id="ge" x1="0" x2="1"><stop offset="0" stop-color="#ff3d8e"/><stop offset="1" stop-color="#60a5fa"/></linearGradient></defs>
 <rect width="400" height="160" fill="#0b1322"/>
 <path d="M0 70 C40 40 90 30 140 44 C190 58 220 30 270 34 C320 38 360 70 400 64 L400 120 C350 128 320 104 270 112 C220 120 190 136 140 126 C90 116 40 132 0 112Z" fill="#12406b" stroke="#1e88e5" stroke-width="1.2"/>
 <g stroke="#60a5fa" stroke-width="1" fill="none" opacity=".55"><path d="M30 84 q16 -6 32 0" marker-end="url(#ae)"/><path d="M100 90 q16 -6 32 0" marker-end="url(#ae)"/><path d="M170 84 q16 -6 32 0" marker-end="url(#ae)"/><path d="M240 90 q16 -6 32 0" marker-end="url(#ae)"/><path d="M310 84 q16 -6 32 0" marker-end="url(#ae)"/></g>
@@ -488,11 +659,11 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
         </div>
       </article>
       <article class="card pcard rv">
-        <div class="pvis"><svg viewBox="0 0 400 160" role="img" aria-label="Watershed boundary with a stream network over classified land cover"><defs><linearGradient id="gf" x1="0" x2="1"><stop offset="0" stop-color="#4fd1c5"/><stop offset="1" stop-color="#60a5fa"/></linearGradient></defs>
+        <div class="pvis"><svg viewBox="0 0 400 160" role="img" aria-label="Watershed boundary with a stream network over classified land cover"><defs><linearGradient id="gf" x1="0" x2="1"><stop offset="0" stop-color="#ff3d8e"/><stop offset="1" stop-color="#60a5fa"/></linearGradient></defs>
 <rect width="400" height="160" fill="#0b1322"/>
 <clipPath id="ws"><path d="M60 140 C30 100 40 40 100 22 C150 8 220 14 270 28 C330 44 370 80 350 118 C330 150 260 150 200 146 C140 142 90 156 60 140Z"/></clipPath>
 <g clip-path="url(#ws)"><rect x="30" y="0" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="53" y="0" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="76" y="0" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="99" y="0" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="122" y="0" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="145" y="0" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="168" y="0" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="191" y="0" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="214" y="0" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="237" y="0" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="260" y="0" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="283" y="0" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="306" y="0" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="329" y="0" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="352" y="0" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="30" y="20" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="53" y="20" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="76" y="20" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="99" y="20" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="122" y="20" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="145" y="20" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="168" y="20" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="191" y="20" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="214" y="20" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="237" y="20" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="260" y="20" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="283" y="20" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="306" y="20" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="329" y="20" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="352" y="20" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="30" y="40" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="53" y="40" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="76" y="40" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="99" y="40" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="122" y="40" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="145" y="40" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="168" y="40" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="191" y="40" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="214" y="40" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="237" y="40" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="260" y="40" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="283" y="40" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="306" y="40" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="329" y="40" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="352" y="40" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="30" y="60" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="53" y="60" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="76" y="60" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="99" y="60" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="122" y="60" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="145" y="60" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="168" y="60" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="191" y="60" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="214" y="60" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="237" y="60" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="260" y="60" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="283" y="60" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="306" y="60" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="329" y="60" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="352" y="60" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="30" y="80" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="53" y="80" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="76" y="80" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="99" y="80" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="122" y="80" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="145" y="80" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="168" y="80" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="191" y="80" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="214" y="80" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="237" y="80" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="260" y="80" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="283" y="80" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="306" y="80" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="329" y="80" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="352" y="80" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="30" y="100" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="53" y="100" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="76" y="100" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="99" y="100" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="122" y="100" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="145" y="100" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="168" y="100" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="191" y="100" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="214" y="100" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="237" y="100" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="260" y="100" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="283" y="100" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="306" y="100" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="329" y="100" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="352" y="100" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="30" y="120" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="53" y="120" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="76" y="120" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="99" y="120" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="122" y="120" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="145" y="120" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="168" y="120" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="191" y="120" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="214" y="120" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="237" y="120" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="260" y="120" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="283" y="120" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="306" y="120" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="329" y="120" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="352" y="120" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="30" y="140" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="53" y="140" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="76" y="140" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="99" y="140" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="122" y="140" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="145" y="140" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="168" y="140" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="191" y="140" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="214" y="140" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="237" y="140" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="260" y="140" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="283" y="140" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="306" y="140" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="329" y="140" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="352" y="140" width="23" height="20" fill="#78909c" opacity=".55"/></g>
-<path d="M60 140 C30 100 40 40 100 22 C150 8 220 14 270 28 C330 44 370 80 350 118 C330 150 260 150 200 146 C140 142 90 156 60 140Z" fill="none" stroke="#4fd1c5" stroke-width="2"/>
+<path d="M60 140 C30 100 40 40 100 22 C150 8 220 14 270 28 C330 44 370 80 350 118 C330 150 260 150 200 146 C140 142 90 156 60 140Z" fill="none" stroke="#ff3d8e" stroke-width="2"/>
 <g stroke="#1e88e5" fill="none" stroke-linecap="round"><path d="M200 146 C204 120 196 100 204 80 C210 62 230 50 262 40" stroke-width="3"/><path d="M204 80 C180 66 150 52 112 40" stroke-width="2.2"/><path d="M200 112 C240 106 290 96 330 76" stroke-width="2.2"/><path d="M200 120 C170 114 120 112 76 104" stroke-width="1.8"/><path d="M150 54 C146 40 140 30 132 22" stroke-width="1.3"/><path d="M262 92 C270 78 290 66 304 54" stroke-width="1.3"/></g>
 <circle cx="200" cy="146" r="4" fill="#e7edf7"/><text x="210" y="156" font-family="JetBrains Mono,monospace" font-size="9" fill="#cbd5e1">outlet</text></svg></div>
         <div class="pbody">
@@ -669,8 +840,9 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
 
   <!-- 04 CHANGE DETECTION -->
   <section id="publications"><div class="wrap"><div class="col">
-    <h2 class="rv" data-n="04 · CHANGE DETECTION">Publications &amp; Peer Review</h2>
-    <p class="sub rv">Selected outputs.</p>
+    <div class="kick rv"><b>04</b><i></i>CHANGE DETECTION</div>
+    <h2 class="h2 rv">Publications &amp; Peer Review</h2>
+    <p class="lede rv">Selected outputs.</p>
     <div class="card pub rv">
       <div class="kicker">Journal article · 2026</div>
       <p>Meydani, A., <strong>Abbasalizadehrezaei, P.</strong>, Javadian, M., Khodaei, H., Tajrishy, M., Levia, D.F. (2026). Scenario-driven decision support system for assessing water balance to support agricultural and ecosystem sustainability. <em>Journal of Hydrology</em>, 665, 134679.</p>
@@ -706,8 +878,9 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
 
   <!-- 05 DECISION SUPPORT -->
   <section id="experience"><div class="wrap"><div class="col">
-    <h2 class="rv" data-n="05 · DECISION SUPPORT">Experience</h2>
-    <p class="sub rv">Research and teaching.</p>
+    <div class="kick rv"><b>05</b><i></i>DECISION SUPPORT</div>
+    <h2 class="h2 rv">Experience</h2>
+    <p class="lede rv">Research and teaching.</p>
     <div class="timeline">
       <div class="titem card rv">
         <h3>Research Collaborator, University of Delaware, USA (remote)</h3>
@@ -736,8 +909,9 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
 
   <!-- 06 GROUND TRUTH -->
   <section id="education"><div class="wrap"><div class="col">
-    <h2 class="rv" data-n="06 · GROUND TRUTH">Education</h2>
-    <p class="sub rv">Degrees, distinctions and training.</p>
+    <div class="kick rv"><b>06</b><i></i>GROUND TRUTH</div>
+    <h2 class="h2 rv">Education</h2>
+    <p class="lede rv">Degrees, distinctions and training.</p>
     <div class="timeline">
       <div class="titem card rv">
         <h3>MSc, Environmental Engineering</h3>
@@ -768,8 +942,9 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
 
   <!-- 07 DOWNLINK -->
   <section id="contact"><div class="wrap"><div class="col">
-    <h2 class="rv" data-n="07 · DOWNLINK">Contact</h2>
-    <p class="sub rv">Open to research, data and engineering roles and collaborations across Europe.</p>
+    <div class="kick rv"><b>07</b><i></i>DOWNLINK</div>
+    <h2 class="h2 rv">Contact</h2>
+    <p class="lede rv">Open to research, data and engineering roles and collaborations across Europe.</p>
     <a class="card rv" href="mailto:risarezaei@gmail.com"><div class="kicker">Email</div><h3>risarezaei@gmail.com</h3></a>
     <a class="card rv" href="https://www.linkedin.com/in/risarezaei" target="_blank" rel="noopener"><div class="kicker">LinkedIn</div><h3>linkedin.com/in/risarezaei</h3></a>
     <a class="card rv" href="https://orcid.org/0009-0009-5708-7673" target="_blank" rel="noopener"><div class="kicker">ORCID</div><h3>0009-0009-5708-7673</h3></a>
@@ -800,7 +975,7 @@ document.getElementById('yr').textContent=new Date().getFullYear();
   var secs=IDS.map(function(id){return document.getElementById(id)});
   var tabs=[].slice.call(document.querySelectorAll('.tab'));
   var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var W,H,mob,TR=0,P=0,Pt=0,T0=performance.now();
+  var W,H,mob,P=0,Pt=0,T0=performance.now();
   var D2R=Math.PI/180;
   function cl(v,a,b){return v<(a||0)?(a||0):v>(b===undefined?1:b)?(b===undefined?1:b):v}
   function ez(t){t=cl(t);return t*t*(3-2*t)}
@@ -811,55 +986,6 @@ document.getElementById('yr').textContent=new Date().getFullYear();
 
   /* ---------- stars ---------- */
   var ST=[];for(var i=0;i<170;i++)ST.push([rnd(),rnd(),rnd()*1.2+.2,rnd()*6]);
-
-  /* ---------- real Earth (WebGL, NASA Blue Marble + night lights); falls back to the dot globe ---------- */
-  var E3=(function(){
-    var cv=document.getElementById('earth'),gl=null,o={ok:false,begin:function(){},draw:function(){}};
-    try{gl=cv.getContext('webgl',{alpha:true,premultipliedAlpha:true,antialias:false})}catch(e){}
-    if(!gl)return o;
-    var vs='attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
-    var fs='precision highp float;uniform vec2 c;uniform float R,al;uniform vec4 rt;uniform sampler2D D,N;'+
-     'void main(){vec2 d=(gl_FragCoord.xy-c)/R;float r=length(d);vec3 L=normalize(vec3(-.58,.34,.74));'+
-     'if(r>1.24){gl_FragColor=vec4(0.);return;}'+
-     'float sd=.3+.7*smoothstep(-.7,.5,dot(d/max(r,.0001),L.xy));vec3 hc=vec3(.30,.62,1.);'+
-     'if(r>=1.){float h=pow(1.-(r-1.)/.24,3.)*sd*.6;gl_FragColor=vec4(hc*h,h)*al;return;}'+
-     'vec3 n=vec3(d,sqrt(1.-r*r));float Y=n.y*rt.z+n.z*rt.w,Z1=-n.y*rt.w+n.z*rt.z,X=n.x*rt.x+Z1*rt.y,Z=-n.x*rt.y+Z1*rt.x;'+
-     'vec2 uv=vec2(atan(-Z,X)/6.2831853+.5,.5-asin(clamp(Y,-1.,1.))/3.14159265);'+
-     'vec3 day=texture2D(D,uv).rgb,ngt=texture2D(N,uv).rgb;float di=dot(n,L),k=smoothstep(-.14,.24,di);'+
-     'vec3 col=day*(.05+1.3*max(di,0.))*k+ngt*vec3(1.,.8,.5)*1.7*(1.-k);'+
-     'float rim=pow(1.-n.z,2.6);col+=hc*rim*(.16+.8*k);'+
-     'float a=smoothstep(1.,1.-2.5/R,r);gl_FragColor=mix(vec4(hc*sd*.6,sd*.6),vec4(col,1.),a)*al;}';
-    function sh(t,src){var h=gl.createShader(t);gl.shaderSource(h,src);gl.compileShader(h);return gl.getShaderParameter(h,gl.COMPILE_STATUS)?h:null}
-    var v=sh(gl.VERTEX_SHADER,vs),f=sh(gl.FRAGMENT_SHADER,fs);if(!v||!f)return o;
-    var pr=gl.createProgram();gl.attachShader(pr,v);gl.attachShader(pr,f);gl.linkProgram(pr);if(!gl.getProgramParameter(pr,gl.LINK_STATUS))return o;
-    gl.useProgram(pr);var bf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,bf);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
-    var lp=gl.getAttribLocation(pr,'p');gl.enableVertexAttribArray(lp);gl.vertexAttribPointer(lp,2,gl.FLOAT,false,0,0);
-    var U={};['c','R','al','rt','D','N'].forEach(function(n){U[n]=gl.getUniformLocation(pr,n)});
-    gl.uniform1i(U.D,0);gl.uniform1i(U.N,1);gl.enable(gl.BLEND);gl.blendFunc(gl.ONE,gl.ONE_MINUS_SRC_ALPHA);gl.clearColor(0,0,0,0);
-    var left=2;
-    function tex(unit,src){var im=new Image();im.onload=function(){var t=gl.createTexture();gl.activeTexture(gl.TEXTURE0+unit);gl.bindTexture(gl.TEXTURE_2D,t);
-      gl.texImage2D(gl.TEXTURE_2D,0,gl.RGB,gl.RGB,gl.UNSIGNED_BYTE,im);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
-      gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.REPEAT);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);if(--left===0)o.ok=true};im.src=src}
-    tex(0,'assets/earth-day.jpg');tex(1,'assets/earth-night.jpg');
-    cv.addEventListener('webglcontextlost',function(){o.ok=false});
-    var dp=1;
-    o.begin=function(){dp=Math.min(2,devicePixelRatio||1);var w=Math.round(W*dp),h=Math.round(H*dp);if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h}gl.viewport(0,0,w,h);gl.clear(gl.COLOR_BUFFER_BIT)};
-    o.draw=function(cx,cy,R,al,cr,sr,ct,st){gl.uniform2f(U.c,cx*dp,(H-cy)*dp);gl.uniform1f(U.R,R*dp);gl.uniform1f(U.al,al);gl.uniform4f(U.rt,cr,sr,ct,st);gl.drawArrays(gl.TRIANGLE_STRIP,0,4)};
-    return o;
-  })();
-  /* study-site pins on the globe: [lat, lon, title, subtitle, link, thumbnail] */
-  var PINS=[[37.6,45.5,'Lake Urmia','Water mapping with Random Forest, 1985–2025','tool.html?r=gee-wetland-water-rf','assets/tools/gee-wetland-water-rf.jpg'],
-    [37.19,50.15,'Kiakalayeh wetland','15 years of satellite images (video)','#about','https://i.ytimg.com/vi/rBgaC2yz1hw/mqdefault.jpg'],
-    [32.7,43.6,'Lake Razazah','GSW Lake Explorer, surface water 1984–2021','tool.html?r=gee-gsw-lake-explorer','assets/tools/gee-gsw-lake-explorer.jpg'],
-    [35.55,51.45,'Wastewater treatment plant','Interactive plant tour','zamzam.html','assets/images/zamzam-aeration-tank.jpg']];
-  var pinL=document.getElementById('pins'),pinHover=false;
-  PINS.forEach(function(p){var a=document.createElement('a');a.className='pin';a.href=p[4];a.setAttribute('aria-label',p[2]+': '+p[3]);a.style.display='none';
-    a.innerHTML='<i></i><span class="pincard"><img src="'+p[5]+'" alt="" loading="lazy"><b>'+p[2]+'</b><em>'+p[3]+'</em><u>Open →</u></span>';
-    a.addEventListener('mouseenter',function(){pinHover=true});a.addEventListener('mouseleave',function(){pinHover=false});
-    pinL.appendChild(a);p.el=a;var la=p[0]*Math.PI/180,lo=p[1]*Math.PI/180;p.v=[Math.cos(la)*Math.cos(lo),Math.sin(la),-Math.cos(la)*Math.sin(lo)]});
-  function pins(cx,cy,R,al,cr,sr,ct,st,on){for(var i=0;i<PINS.length;i++){var p=PINS[i],q=proj(p.v[0],p.v[1],p.v[2],cr,sr,ct,st),vis=on&&q[2]>.14&&al>.05;
-    if(!vis){if(p.on){p.el.style.display='none';p.on=false}continue}
-    if(!p.on){p.el.style.display='';p.on=true}p.el.style.transform='translate('+(cx+q[0]*R).toFixed(1)+'px,'+(cy-q[1]*R).toFixed(1)+'px)';p.el.style.opacity=(al*Math.min(1,(q[2]-.14)*5)).toFixed(2)}}
 
   /* ---------- globe (Natural Earth land dots) ---------- */
   var N=4200,G=[],gold=Math.PI*(3-Math.sqrt(5));
@@ -877,12 +1003,12 @@ document.getElementById('yr').textContent=new Date().getFullYear();
     }).catch(function(){});
   }
   var sc=document.createElement('script');sc.src='https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js';sc.onload=loadLand;document.head.appendChild(sc);
-  var th=1.0,inc=32*D2R,SW=Math.cos(9*D2R),tilt=0.38,rot=2.62,fn=0,hlat=document.getElementById('hlat'),hlon=document.getElementById('hlon');
+  var th=1.0,inc=32*D2R,SW=Math.cos(9*D2R),tilt=0.38,rot=2.0,fn=0,hlat=document.getElementById('hlat'),hlon=document.getElementById('hlon');
   function sat(t){var b=Math.sin(t);return [Math.cos(t),b*Math.sin(inc),b*Math.cos(inc)]}
   function proj(X,Y,Z,cr,sr,ct,st){var X1=X*cr-Z*sr,Z1=X*sr+Z*cr;return [X1,Y*ct-Z1*st,Y*st+Z1*ct]}
   function satIcon(sx,sy,ang,al){x.save();x.translate(sx,sy);x.rotate(ang);x.globalAlpha=al;
     x.fillStyle='rgba(96,165,250,.95)';x.fillRect(-16,-2.5,11,5);x.fillRect(5,-2.5,11,5);
-    x.fillStyle='#e7edf7';x.fillRect(-3.5,-4.5,7,9);x.restore();x.globalAlpha=1}
+    x.shadowColor='rgba(255,61,142,.95)';x.shadowBlur=10;x.fillStyle='#e9c77d';x.fillRect(-3.5,-4.5,7,9);x.restore();x.globalAlpha=1}
   function fmt(v,a,b){return Math.abs(v).toFixed(2)+'°'+(v>=0?a:b)}
   function globe(cx,cy,R,al,station){
     if(al<=.003)return;
@@ -891,12 +1017,8 @@ document.getElementById('yr').textContent=new Date().getFullYear();
     var glow=x.createRadialGradient(cx,cy,R*.6,cx,cy,R*1.35);glow.addColorStop(0,'rgba(79,209,197,.10)');glow.addColorStop(1,'rgba(79,209,197,0)');
     x.fillStyle=glow;x.beginPath();x.arc(cx,cy,R*1.35,0,7);x.fill();
     var sx=cx+s[0]*R*k,sy=cy-s[1]*R*k,s2=sat(th+.03),ang=Math.atan2(-(s2[1]-s[1]),s2[0]-s[0])+Math.PI/2;
-    if(s[2]<0&&(!E3.ok||Math.hypot(s[0],s[1])*k>1.03))satIcon(sx,sy,ang,al*.45);
+    if(s[2]<0)satIcon(sx,sy,ang,al*.45);
     x.globalAlpha=al;
-    if(E3.ok){ /* punch the stars out behind the planet, then let the WebGL layer show through */
-      x.globalCompositeOperation='destination-out';x.globalAlpha=al;x.fillStyle='#000';x.beginPath();x.arc(cx,cy,R,0,7);x.fill();x.globalCompositeOperation='source-over';
-      E3.draw(cx,cy,R,mob?al*.42:al,cr,sr,ct,st);
-    }else{
     var body=x.createRadialGradient(cx-R*.35,cy-R*.35,R*.1,cx,cy,R);body.addColorStop(0,'#13233c');body.addColorStop(1,'#070d18');
     x.fillStyle=body;x.beginPath();x.arc(cx,cy,R,0,7);x.fill();x.strokeStyle='rgba(96,165,250,.35)';x.lineWidth=1;x.stroke();
     x.strokeStyle='rgba(96,165,250,.10)';
@@ -912,10 +1034,8 @@ document.getElementById('yr').textContent=new Date().getFullYear();
       else{x.fillStyle='rgba(96,165,250,'+(aa*.18)+')';x.fillRect(X-dz*.55,Y-dz*.55,dz*1.1,dz*1.1);}
       if(p[6]>.03){x.fillStyle=p[5]?'rgba(209,250,229,'+Math.min(1,p[6]*aa*1.2)+')':'rgba(125,211,252,'+Math.min(1,p[6]*aa*1.1)+')';x.fillRect(X-dz*1.45,Y-dz*1.45,dz*2.9,dz*2.9);}
     }
-    }
-    pins(cx,cy,R,al,cr,sr,ct,st,!station&&!mob&&P<.45);
     if(s[2]>=0){var fx=cx+s[0]*R,fy=cy-s[1]*R,dx=fx-sx,dy=fy-sy,L=Math.hypot(dx,dy)||1,w=R*.15*(.35+.65*s[2]);
-      var gb=x.createLinearGradient(sx,sy,fx,fy);gb.addColorStop(0,'rgba(79,209,197,.38)');gb.addColorStop(1,'rgba(79,209,197,.03)');
+      var gb=x.createLinearGradient(sx,sy,fx,fy);gb.addColorStop(0,'rgba(255,61,142,.36)');gb.addColorStop(1,'rgba(255,61,142,.03)');
       x.fillStyle=gb;x.beginPath();x.moveTo(sx,sy);x.lineTo(fx-dy/L*w,fy+dx/L*w);x.lineTo(fx+dy/L*w,fy-dx/L*w);x.closePath();x.fill();
       satIcon(sx,sy,ang,al);}
     if(station>0){ /* ground station receiving the downlink */
@@ -923,9 +1043,9 @@ document.getElementById('yr').textContent=new Date().getFullYear();
       x.globalAlpha=al*station;
       x.strokeStyle='rgba(231,237,247,.9)';x.lineWidth=1.5;x.beginPath();x.arc(gx,gy2,7,Math.PI*1.1,Math.PI*1.9);x.stroke();
       x.beginPath();x.moveTo(gx,gy2);x.lineTo(gx,gy2+9);x.moveTo(gx-5,gy2+9);x.lineTo(gx+5,gy2+9);x.stroke();
-      for(var r=0;r<3;r++){var ph=((now/1400)+r/3)%1;x.strokeStyle='rgba(79,209,197,'+(.6*(1-ph))+')';x.beginPath();x.arc(gx,gy2-3,8+ph*26,Math.PI*1.15,Math.PI*1.85);x.stroke();}
-      if(s[2]>=0){x.setLineDash([3,5]);x.lineDashOffset=-now/40;x.strokeStyle='rgba(79,209,197,.55)';x.beginPath();x.moveTo(sx,sy);x.lineTo(gx,gy2-4);x.stroke();x.setLineDash([]);
-        var u=(now/900)%1;x.fillStyle='#d1fae5';x.beginPath();x.arc(lerp(sx,gx,u),lerp(sy,gy2-4,u),2.2,0,7);x.fill();}
+      for(var r=0;r<3;r++){var ph=((now/1400)+r/3)%1;x.strokeStyle='rgba(255,61,142,'+(.6*(1-ph))+')';x.beginPath();x.arc(gx,gy2-3,8+ph*26,Math.PI*1.15,Math.PI*1.85);x.stroke();}
+      if(s[2]>=0){x.setLineDash([3,5]);x.lineDashOffset=-now/40;x.strokeStyle='rgba(255,61,142,.6)';x.beginPath();x.moveTo(sx,sy);x.lineTo(gx,gy2-4);x.stroke();x.setLineDash([]);
+        var u=(now/900)%1;x.fillStyle='#ffd3e6';x.beginPath();x.arc(lerp(sx,gx,u),lerp(sy,gy2-4,u),2.2,0,7);x.fill();}
       x.lineWidth=1;
     }
     x.globalAlpha=1;
@@ -972,7 +1092,7 @@ document.getElementById('yr').textContent=new Date().getFullYear();
   /* ground-truth samples */
   var GT=[];seed=29;for(i=0;i<16;i++){var cc0=CELL[Math.floor(rnd()*CELL.length)];GT.push({c:cc0,ok:i!==5&&i!==12})}
 
-  function size(){var d=Math.min(2,devicePixelRatio||1);W=innerWidth;H=innerHeight;c.width=W*d;c.height=H*d;x.setTransform(d,0,0,d,0,0);mob=W<=900;var ht=document.querySelector('.hero-text');TR=ht?ht.offsetLeft+ht.offsetWidth:0;}
+  function size(){var d=Math.min(2,devicePixelRatio||1);W=innerWidth;H=innerHeight;c.width=W*d;c.height=H*d;x.setTransform(d,0,0,d,0,0);mob=W<=900;}
   function progress(){
     var vh=innerHeight,p=0;
     for(var k=1;k<secs.length;k++){var top=secs[k].getBoundingClientRect().top,t=cl((vh*.92-top)/(vh*.62));p=k-1+t;if(t<1)break;}
@@ -984,11 +1104,11 @@ document.getElementById('yr').textContent=new Date().getFullYear();
     Pt=progress();P+=(Pt-P)*(reduce?1:.12);if(Math.abs(Pt-P)<.0005)P=Pt;
     var p=P,ai=Math.round(Pt);
     var cdE=document.getElementById('code'),inCode=ai===3&&cdE&&cdE.getBoundingClientRect().top<innerHeight*.5;
-    tabs.forEach(function(tb){var h=tb.getAttribute('href').slice(1);tb.classList.toggle('on',h==='code'?inCode:(ai>=1&&h===IDS[ai]&&!(h==='projects'&&inCode)))});
-    x.clearRect(0,0,W,H);E3.begin();if(P>=1&&P<=6)pins(0,0,0,0,1,0,1,0,false);
+    tabs.forEach(function(tb){var h=tb.getAttribute('href').slice(1);tb.classList.toggle('on',h==='code'?inCode:(h===IDS[ai]&&!(h==='projects'&&inCode)))});
+    x.clearRect(0,0,W,H);window.v2dim&&v2dim();
     /* layout: visual on the right on desktop, centred behind the text on phones */
-    var vx=mob?W*.5:W*.75,vy=mob?H*.5:H*.55,S=mob?Math.min(W*.82,H*.5):Math.min(W*.32,H*.56);
-    var gx=mob?W*.7:W*.74,gyy=mob?H*.42:H*.46,R0=mob?Math.min(W*1.2,H)*.4:Math.min(W*.62,H*.92,760)*.4;if(!mob)R0=Math.max(150,Math.min(R0,gx-TR-34,(W-gx)*1.12));
+    var vx=mob?W*.5:(W-Math.max(48,(W-1440)/2+48)-Math.min(W*.32,H*.56)/2),vy=mob?H*.5:H*.55,S=mob?Math.min(W*.82,H*.5):Math.min(W*.32,H*.56);
+    var gx=mob?W*.7:W*.74,gyy=mob?H*.42:H*.46,R0=mob?Math.min(W*1.2,H)*.4:Math.min(W*.62,H*.92,760)*.4;
     var e1=ez(p),e2=ez(p-1),e3=ez(p-2),e4=ez(p-3),e5=ez(p-4),e6=ez(p-5),e7=ez(p-6);
 
     /* stars */
@@ -997,7 +1117,7 @@ document.getElementById('yr').textContent=new Date().getFullYear();
     x.globalAlpha=1;
 
     /* 0 -> 1 : dive from orbit into one scene;  6 -> 7 : pull back out to orbit */
-    if(p<1.001){var zg=1+Math.pow(e1,1.6)*4;globe(lerp(gx,vx,e1),lerp(gyy,vy,e1),R0*zg,1-ez(p*1.7),0);}
+    if(p<0){var zg=1+Math.pow(e1,1.6)*4;globe(lerp(gx,vx,e1),lerp(gyy,vy,e1),R0*zg,1-ez(p*1.7),0);}
     if(p>6){var zb=1+Math.pow(1-e7,1.6)*4;globe(vx,vy,S*.46*zb,ez((p-6)*1.7-.7),e7);}
 
     /* the scene tile (stages 1-3), then five annual snapshots (stage 4) */
@@ -1022,9 +1142,9 @@ document.getElementById('yr').textContent=new Date().getFullYear();
       }
       if(p<1.4&&p>.05){ /* satellite imaging the scene */
         var sa2=ez(p*2-.6)*(1-ez((p-1)*2.5)),stx=vx,sty=vy-Sz/2-46,sw=(tm/3600)%1,rowY=vy-Sz/2+Sz*sw;
-        x.globalAlpha=sa2*.9;var gb2=x.createLinearGradient(stx,sty,stx,rowY);gb2.addColorStop(0,'rgba(79,209,197,.32)');gb2.addColorStop(1,'rgba(79,209,197,.05)');
+        x.globalAlpha=sa2*.9;var gb2=x.createLinearGradient(stx,sty,stx,rowY);gb2.addColorStop(0,'rgba(255,61,142,.30)');gb2.addColorStop(1,'rgba(255,61,142,.04)');
         x.fillStyle=gb2;x.beginPath();x.moveTo(stx,sty);x.lineTo(vx+Sz/2,rowY);x.lineTo(vx-Sz/2,rowY);x.closePath();x.fill();
-        x.fillStyle='rgba(209,250,229,.5)';x.fillRect(vx-Sz/2,rowY-1,Sz,2);x.globalAlpha=1;
+        x.fillStyle='rgba(255,140,192,.6)';x.fillRect(vx-Sz/2,rowY-1,Sz,2);x.globalAlpha=1;
         satIcon(stx,sty,0,sa2);
       }
     }
@@ -1083,7 +1203,7 @@ document.getElementById('yr').textContent=new Date().getFullYear();
       'DECISION SUPPORT · water-allocation network','GROUND TRUTH · validation samples · accuracy assessment','DOWNLINK · data to the ground station'];
     if(!mob){var ci=Math.round(p),cap=CAP[ci]||'',caa=cl(1-Math.abs(p-ci)*3.2);txt(cap,vx,vy+S*.5+(ci===7?S*.12:0)+46,caa*.95,'center','#8d9bb3',11);}
 
-    if(!reduce){var ff=Math.max(0,Math.cos(rot-Math.PI/2-47*D2R));if(!pinHover)rot-=0.0021*(1-.87*ff*ff);th+=0.0042;}
+    if(!reduce){rot+=0.0018;th+=0.0042;}
     requestAnimationFrame(frame);
   }
   addEventListener('resize',size);size();requestAnimationFrame(frame);
@@ -1110,6 +1230,80 @@ document.querySelectorAll('.yt-frame').forEach(function(b){b.addEventListener('c
   f.allowFullscreen=true;f.referrerPolicy='strict-origin-when-cross-origin';
   var d=document.createElement('div');d.className='yt-frame';d.appendChild(f);b.replaceWith(d);
 },{once:true});});
+</script>
+<script>
+/* redesign v2: hero Earth + satellite orbits, phone menu, stage dimming */
+(function(){
+  var D=document,hero=D.querySelector('.hero.hx');
+  /* ---- satellites on three orbits (front/back copies fake the pass behind the Earth) ---- */
+  var SAT='<svg viewBox="-20 -10 40 20" width="50" height="25" aria-hidden="true"><rect x="-19" y="-5.5" width="12" height="11" rx="1" fill="#2b4a86" stroke="#9fb8ec" stroke-width=".8"/><path d="M-15 -5.5v11M-11 -5.5v11M-19 0h12" stroke="#9fb8ec" stroke-width=".5"/><rect x="7" y="-5.5" width="12" height="11" rx="1" fill="#2b4a86" stroke="#9fb8ec" stroke-width=".8"/><path d="M11 -5.5v11M15 -5.5v11M7 0h12" stroke="#9fb8ec" stroke-width=".5"/><path d="M-7 0h2M5 0h2" stroke="#d9d4e2" stroke-width="1.2"/><rect x="-5" y="-6" width="10" height="12" rx="1.6" fill="#e9c77d" stroke="#fff3cf" stroke-width=".7"/><circle cx="0" cy="-1" r="2.2" fill="#fff"/></svg>';
+  var ORB=[['LANDSAT 9','705 km',-14,300,66,26,[.44],22,-14],['SENTINEL-2','786 km',24,262,104,32,[.06],-190,-36],['GRACE-FO','twin satellites · 490 km',-42,290,84,22,[.40,.33],26,-30]];
+  if(hero){
+    var back='',front='';
+    ORB.forEach(function(o){var rx=o[3],ry=o[4],dur=o[5],path='M '+(-rx)+' 0 A '+rx+' '+ry+' 0 0 0 '+rx+' 0 A '+rx+' '+ry+' 0 0 0 '+(-rx)+' 0',
+      sv='<svg class="ol" width="800" height="800" viewBox="-400 -400 800 800" aria-hidden="true">',st0='transform:rotate('+o[2]+'deg)',
+      b='<div class="orb" style="'+st0+'">'+sv+'<path class="ob" d="M '+(-rx)+' 0 A '+rx+' '+ry+' 0 0 1 '+rx+' 0"/></svg>',
+      f='<div class="orb" style="'+st0+'">'+sv+'<path class="of" d="M '+(-rx)+' 0 A '+rx+' '+ry+' 0 0 0 '+rx+' 0"/></svg>';
+      o[6].forEach(function(p,i){var st="offset-path:path('"+path+"');animation-duration:"+dur+"s;animation-delay:"+(-p*dur).toFixed(3)+"s";
+        b+='<div class="sat bk" style="'+st+'">'+SAT+'</div>';f+='<div class="sat" style="'+st+'">'+SAT+'</div>';
+        if(i===0)f+='<div class="lab" style="'+st+'"><span style="transform:rotate('+(-o[2])+'deg) translate('+o[7]+'px,'+o[8]+'px)"><i></i><b>'+o[0]+'</b> · '+o[1]+'</span></div>';});
+      back+=b+'</div>';front+=f+'</div>';});
+    var cx=hero.querySelector('.hx-cx');
+    cx.querySelector('.L1').innerHTML=back;cx.querySelector('.L3').innerHTML=front;
+    /* scale the Earth scene to the space between the heading and the buttons */
+    var box=hero.querySelector('.hx-earth');
+    var fit=function(){var h=box.clientHeight,w=hero.clientWidth-(innerWidth<=900?40:96);var s=Math.max(.36,Math.min(1.12,h/484,w/620));
+      cx.style.setProperty('--s',s.toFixed(4));cx.style.setProperty('--ss',Math.max(1,.8/s).toFixed(3));return s};
+    var s0=fit();addEventListener('resize',fit);
+    /* photoreal Earth, rendered once from the site's Blue Marble / Black Marble textures */
+    var cv=hero.querySelector('.hx-globe');
+    var load=function(u){return new Promise(function(r,j){var i=new Image();i.onload=function(){r(i)};i.onerror=j;i.src=u})};
+    Promise.all([load('assets/earth-day.jpg'),load('assets/earth-night.jpg')]).then(function(im){
+      var dpr=Math.min(2,devicePixelRatio||1),N=Math.round(510*Math.min(1.12,Math.max(s0,.6))*dpr);
+      var tex=im.map(function(m){var c=D.createElement('canvas');c.width=m.naturalWidth;c.height=m.naturalHeight;var g=c.getContext('2d');g.drawImage(m,0,0);return g.getImageData(0,0,c.width,c.height).data});
+      var TW=im[0].naturalWidth,TH=im[0].naturalHeight,NW=im[1].naturalWidth,NH=im[1].naturalHeight;
+      cv.width=N;cv.height=N;var g=cv.getContext('2d'),out=g.createImageData(N,N),o=out.data;
+      var Rp=N*0.78182/2,c=N/2,lat0=20*Math.PI/180,lon0=40*Math.PI/180,sl0=Math.sin(lat0),cl0=Math.cos(lat0);
+      var L=[-.78,.34,.52],ln=Math.hypot(L[0],L[1],L[2]);L=[L[0]/ln,L[1]/ln,L[2]/ln];
+      var Hx=L[0],Hy=L[1],Hz=L[2]+1,hn=Math.hypot(Hx,Hy,Hz);Hx/=hn;Hy/=hn;Hz/=hn;
+      var atm=[.36,.62,1],FALL=860/24,P2=Math.PI*2;
+      for(var j=0;j<N;j++){var y=-(j+.5-c)/Rp;for(var i=0;i<N;i++){var x=(i+.5-c)/Rp,r2=x*x+y*y,rr=Math.sqrt(r2),k4=(j*N+i)*4;
+        var ad=Math.min(1,Math.max(0,(1-rr)*Rp/1.0)),halo=0;
+        if(rr>=.995){var side=Math.min(1.3,Math.max(.28,(x*L[0]+y*L[1])/Math.max(rr,1e-6)*1.1+.35));halo=Math.exp(-Math.max(0,rr-1)*FALL)*.9*side;}
+        var cr=0,cg=0,cb=0;
+        if(rr<1){var z=Math.sqrt(1-r2),rho=rr+1e-9,cc=Math.asin(Math.min(1,rho)),sc=Math.sin(cc),cc0=Math.cos(cc);
+          var lat=Math.asin(Math.max(-1,Math.min(1,cc0*sl0+y*sc*cl0/rho))),lon=lon0+Math.atan2(x*sc,rho*cc0*cl0-y*sc*sl0);
+          var u=(((lon/P2+.5)%1)+1)%1,v=.5-lat/Math.PI;
+          var t1=((Math.min(TH-1,v*(TH-1)|0))*TW+(u*(TW-1)|0))*4,t2=((Math.min(NH-1,v*(NH-1)|0))*NW+(u*(NW-1)|0))*4,T=tex[0],Nn=tex[1];
+          var dr=T[t1]/255,dg=T[t1+1]/255,db=T[t1+2]/255;
+          var dif=x*L[0]+y*L[1]+z*L[2],k=Math.min(1,Math.max(0,(dif+.08)/.3));k=k*k*(3-2*k);
+          var sh=.04+1.25*Math.pow(Math.max(0,dif),.85);
+          var r1=Math.pow(dr,.9)*sh,g1=Math.pow(dg,.9)*sh,b1=Math.pow(db,.9)*sh;
+          if(db>dr*1.15&&(dr+dg+db)/3<.35){var sp=Math.pow(Math.max(0,x*Hx+y*Hy+z*Hz),70)*.4;r1+=sp*.9;g1+=sp*.95;b1+=sp;}
+          var lum=(Nn[t2]+Nn[t2+1]+Nn[t2+2])/765,li=Math.pow(Math.min(1,Math.max(0,(lum-.205)/.22)),.75)*1.15;
+          var r0=li+dr*.025,g0=li*.8+dg*.025,b0=li*.5+db*.025;
+          cr=r1*k+r0*(1-k);cg=g1*k+g0*(1-k);cb=b1*k+b0*(1-k);
+          var rim=Math.pow(1-z,2.4),lit=Math.min(1,Math.max(0,dif+.3)),ra=rim*(.16+.85*lit),dm=1-.3*rim;
+          cr=Math.min(1,cr*dm+atm[0]*ra);cg=Math.min(1,cg*dm+atm[1]*ra);cb=Math.min(1,cb*dm+atm[2]*ra);}
+        var hb=halo*(1-ad),A=Math.min(1,ad+hb);
+        if(A<=0){continue}
+        o[k4]=Math.min(255,(cr*ad+atm[0]*hb)/A*255);o[k4+1]=Math.min(255,(cg*ad+atm[1]*hb)/A*255);o[k4+2]=Math.min(255,(cb*ad+atm[2]*hb)/A*255);o[k4+3]=A*255;}}
+      g.putImageData(out,0,0);cv.classList.add('ok');
+    }).catch(function(){});
+  }
+  /* ---- phone menu ---- */
+  var nav=D.querySelector('nav.topbar'),bg=nav&&nav.querySelector('.tb-burger');
+  if(bg){bg.addEventListener('click',function(){nav.classList.toggle('open')});
+    nav.querySelectorAll('.tab').forEach(function(t){t.addEventListener('click',function(){nav.classList.remove('open')})});}
+  /* ---- top band only once the page has scrolled ---- */
+  var band=function(){D.documentElement.style.setProperty('--tbg',scrollY>8?1:0)};addEventListener('scroll',band,{passive:true});band();
+  /* ---- fade the side animation while the wide project/code grids are on screen ---- */
+  var DIM=0;
+  window.v2dim=function(){var st=D.getElementById('stage'),a=D.getElementById('wetland-map'),b=D.getElementById('projects');if(!st||!a||!b)return;
+    var H=innerHeight,ra=a.getBoundingClientRect(),rb=b.getBoundingClientRect(),t=(ra.top<H*.72&&rb.bottom>H*.28)?1:0;
+    DIM+=(t-DIM)*.1;if(Math.abs(t-DIM)<.002)DIM=t;st.style.opacity=((innerWidth<=900?.38:1)*(1-.85*DIM)).toFixed(3)};
+})();
+
 </script>
 <script src="assets/fx.js" data-fx="home" defer></script>
 </body>
