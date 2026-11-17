@@ -277,6 +277,36 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
 .btn.primary:hover{background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:1;box-shadow:0 8px 22px -10px rgba(79,209,197,.9)}
 .btn.sm{border-radius:999px;padding:7px 14px}
 @media (max-width:640px){.hxl{width:100%}.hrow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;width:100%}.hb{height:48px;font-size:14px;padding:0 8px;gap:8px}.hb.p{grid-column:1/-1;justify-content:center;padding:0 52px}.hb.p .ar{position:absolute;right:5px;top:50%;margin-top:-19px}.hxl .dock{height:52px;padding:3px}}
+.orcid-live{display:inline-flex;align-items:center;gap:8px;margin-top:2px;font:500 12.5px Inter,sans-serif;color:var(--muted)}
+.orcid-live i{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px rgba(79,209,197,.2)}
+.orcid-live:hover{color:var(--accent)}
+/* contact: one console card, nothing written out in plain text */
+.uplink{margin-top:4px;padding:24px;border:1px solid var(--line);border-radius:18px;background:rgba(17,26,43,.88);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.ul-head{display:flex;align-items:center;gap:10px;font:600 11.5px/16px "JetBrains Mono",ui-monospace,monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--accent2)}
+.ul-live{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(79,209,197,.2);animation:hpulse 2s infinite}
+.ul-head em{font-style:normal}
+.ul-mail{display:flex;gap:10px;margin-top:20px}
+.ul-send{flex:1;justify-content:space-between}
+.ul-copy{position:relative;flex:none;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid var(--line);background:rgba(7,11,20,.5);color:#c8d3e6;cursor:pointer;transition:border-color .25s,color .25s,transform .25s}
+.ul-copy svg{width:19px;height:19px}
+.ul-copy:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+.ul-copy::after{content:attr(data-t);position:absolute;bottom:calc(100% + 10px);left:50%;transform:translate(-50%,4px);padding:6px 10px;border-radius:8px;background:#14213a;border:1px solid var(--line);color:var(--ink);font:600 12px Inter,sans-serif;white-space:nowrap;opacity:0;pointer-events:none;transition:.2s}
+.ul-copy:hover::after{opacity:1;transform:translate(-50%,0)}
+.ul-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}
+.ul-ch{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:rgba(7,11,20,.45);color:var(--ink);transition:border-color .25s,transform .25s,background .25s}
+.ul-ch:hover{text-decoration:none;border-color:rgba(79,209,197,.55);background:rgba(20,33,58,.7);transform:translateY(-2px)}
+.ul-ic{flex:none;width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:rgba(79,209,197,.1);color:var(--accent);transition:background .3s,color .3s}
+.ul-ic svg{width:19px;height:19px}
+.ul-ch:hover .ul-ic{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#04121a}
+.ul-tx{flex:1;min-width:0}
+.ul-tx b{display:block;font:600 15px/1.25 "Space Grotesk",sans-serif}
+.ul-tx small{display:block;margin-top:2px;font-size:12.5px;line-height:1.35;color:var(--muted)}
+.ul-go{flex:none;color:var(--muted);transition:transform .3s,color .3s}
+.ul-go svg{width:16px;height:16px}
+.ul-ch:hover .ul-go{color:var(--accent);transform:translate(2px,-2px)}
+.ul-toast{position:fixed;left:50%;bottom:28px;z-index:130;transform:translate(-50%,16px);padding:11px 18px;border-radius:999px;border:1px solid rgba(79,209,197,.45);background:rgba(10,18,32,.96);color:var(--ink);font:600 13.5px Inter,sans-serif;box-shadow:0 14px 40px rgba(0,0,0,.45);opacity:0;pointer-events:none;transition:opacity .3s,transform .3s}
+.ul-toast.on{opacity:1;transform:translate(-50%,0)}
+@media (max-width:640px){.ul-head em{display:none}.uplink{padding:18px}.ul-grid{grid-template-columns:minmax(0,1fr)}.ul-head{font-size:10.5px;letter-spacing:.14em}}
 </style>
 <link rel="stylesheet" href="assets/fx.css">
 </head>
@@ -291,7 +321,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
       <p class="lead">Environmental engineer turning satellite data and water models into decisions for water management.</p>
       <div class="links hxl">
         <div class="hrow"><a class="hb p" href="#projects"><span class="roll"><span>View projects</span><span>View projects</span></span><span class="ar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a><a class="hb s" href="#wetland-map"><span class="dot"></span><span class="roll"><span>Live demo</span><span>Live demo</span></span></a><a class="hb s" href="#code"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></svg></span><span class="roll"><span>Code &amp; tutorials</span><span>Code &amp; tutorials</span></span></a></div>
-        <div class="dock"><a class="dk" data-t="Email" aria-label="Email" href="mailto:risarezaei@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></svg></a><a class="dk" data-t="LinkedIn" aria-label="LinkedIn" href="https://www.linkedin.com/in/risarezaei" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5zM5.25 3.5a1.97 1.97 0 1 0 0 3.94 1.97 1.97 0 0 0 0-3.94zM20.44 13.4c0-3.07-1.64-5.15-4.4-5.15-1.5 0-2.5.7-3.06 1.55V8.5H9.6V20h3.38v-6.2c0-1.5.72-2.47 2-2.47 1.2 0 2.08.86 2.08 2.6V20h3.38v-6.6z"/></svg></a><a class="dk" data-t="GitHub" aria-label="GitHub" href="https://github.com/RisaRezaei" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a><a class="dk" data-t="YouTube" aria-label="YouTube" href="https://www.youtube.com/@ParisaAbbasalizadehrezaei" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.76-1.77C18.25 5 12 5 12 5s-6.25 0-7.84.43A2.5 2.5 0 0 0 2.4 7.2C2 8.8 2 12 2 12s0 3.2.4 4.8a2.5 2.5 0 0 0 1.76 1.77C5.75 19 12 19 12 19s6.25 0 7.84-.43a2.5 2.5 0 0 0 1.76-1.77C22 15.2 22 12 22 12s0-3.2-.4-4.8zM10 15V9l5.2 3L10 15z"/></svg></a><a class="dk" data-t="ORCID" aria-label="ORCID" href="https://orcid.org/0009-0009-5708-7673" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><text x="12" y="16.5" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="12" fill="currentColor">iD</text></svg></a></div>
+        <div class="dock"><a class="dk js-mail" data-t="Email" aria-label="Email" href="#contact" data-u="cmlzYXJlemFlaQ==" data-d="Z21haWwuY29t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></svg></a><a class="dk" data-t="LinkedIn" aria-label="LinkedIn" href="https://www.linkedin.com/in/risarezaei" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5zM5.25 3.5a1.97 1.97 0 1 0 0 3.94 1.97 1.97 0 0 0 0-3.94zM20.44 13.4c0-3.07-1.64-5.15-4.4-5.15-1.5 0-2.5.7-3.06 1.55V8.5H9.6V20h3.38v-6.2c0-1.5.72-2.47 2-2.47 1.2 0 2.08.86 2.08 2.6V20h3.38v-6.6z"/></svg></a><a class="dk" data-t="GitHub" aria-label="GitHub" href="https://github.com/RisaRezaei" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a><a class="dk" data-t="YouTube" aria-label="YouTube" href="https://www.youtube.com/@ParisaAbbasalizadehrezaei" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.76-1.77C18.25 5 12 5 12 5s-6.25 0-7.84.43A2.5 2.5 0 0 0 2.4 7.2C2 8.8 2 12 2 12s0 3.2.4 4.8a2.5 2.5 0 0 0 1.76 1.77C5.75 19 12 19 12 19s6.25 0 7.84-.43a2.5 2.5 0 0 0 1.76-1.77C22 15.2 22 12 22 12s0-3.2-.4-4.8zM10 15V9l5.2 3L10 15z"/></svg></a><a class="dk" data-t="ORCID" aria-label="ORCID" href="https://orcid.org/0009-0009-5708-7673" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><text x="12" y="16.5" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="12" fill="currentColor">iD</text></svg></a></div>
       </div>
       <div class="hud" aria-hidden="true">
         <div><span class="live"></span><b>EO-SAT</b> · nadir scan</div>
@@ -329,7 +359,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
     <p class="rv">I'm an environmental engineer (MSc, Sharif University of Technology) working at the interface of <strong>hydrology</strong>, <strong>satellite remote sensing</strong> and <strong>machine learning</strong>. I build Earth-observation workflows in Google Earth Engine and Python, model surface water and groundwater with WEAP, MODFLOW and MIKE, and turn model results into decision support for water management.</p>
     <p class="rv">My work on a decision-support system for the Lake Urmia basin, carried out with the University of Delaware, is published in the <em>Journal of Hydrology</em> and was presented at AGU24. I also have hands-on experience in water-quality laboratory analysis and review regularly for Elsevier journals.</p>
     <div class="stats rv">
-      <div class="stat"><b>44</b><span>Peer reviews for Elsevier journals</span></div>
+      <div class="stat"><b data-orcid="reviews">45</b><span data-orcid="reviews-label">Peer reviews for Elsevier journals</span></div>
       <div class="stat"><b>+31%</b><span>Environmental water supply in optimized allocation scenarios</span></div>
       <div class="stat"><b>17.71/20</b><span>MSc GPA, Sharif University</span></div>
       <div class="stat"><b>AGU24</b><span>Conference presentation, Washington, D.C.</span></div>
@@ -727,7 +757,8 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
     </div>
     <div class="card pub rv">
       <div class="kicker">Peer review · 12/2024 – present</div>
-      <p>44 reviews for Elsevier: <em>Journal of Environmental Management</em> (35), <em>Agricultural Water Management</em> (8) and <em>Journal of Hydrology</em> (1), covering hydrology, remote sensing and water management.</p>
+      <p><span data-orcid="reviews">45</span> reviews <span data-orcid="reviews-for">for Elsevier</span>: <span data-orcid="reviews-by-journal"><em>Journal of Environmental Management</em> (35), <em>Agricultural Water Management</em> (8) and <em>Journal of Hydrology</em> (2)</span>, covering hydrology, remote sensing and water management.</p>
+      <a class="orcid-live" href="https://orcid.org/0009-0009-5708-7673" target="_blank" rel="noopener"><i></i>Counts update automatically from ORCID ↗</a>
     </div>
   </div></div></section>
 
@@ -797,10 +828,17 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
   <section id="contact"><div class="wrap"><div class="col">
     <h2 class="rv" data-n="07 · DOWNLINK">Contact</h2>
     <p class="sub rv">Open to research, data and engineering roles and collaborations across Europe.</p>
-    <a class="card rv" href="mailto:risarezaei@gmail.com"><div class="kicker">Email</div><h3>risarezaei@gmail.com</h3></a>
-    <a class="card rv" href="https://www.linkedin.com/in/risarezaei" target="_blank" rel="noopener"><div class="kicker">LinkedIn</div><h3>linkedin.com/in/risarezaei</h3></a>
-    <a class="card rv" href="https://orcid.org/0009-0009-5708-7673" target="_blank" rel="noopener"><div class="kicker">ORCID</div><h3>0009-0009-5708-7673</h3></a>
-    <a class="card rv" href="https://github.com/RisaRezaei" target="_blank" rel="noopener"><div class="kicker">GitHub</div><h3>github.com/RisaRezaei</h3></a>
+    <div class="uplink rv">
+      <div class="ul-head"><span class="ul-live"></span>Channel open<em> · choose how to reach me</em></div>
+      <div class="ul-mail"><button class="hb p ul-send js-mail" type="button" data-u="cmlzYXJlemFlaQ==" data-d="Z21haWwuY29t"><span class="roll"><span>Write me an email</span><span>Write me an email</span></span><span class="ar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></button><button class="ul-copy js-copy" type="button" aria-label="Copy my email address" data-t="Copy address" data-u="cmlzYXJlemFlaQ==" data-d="Z21haWwuY29t"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M5 15V6.5A2.5 2.5 0 0 1 7.5 4H15"/></svg></button></div>
+      <div class="ul-grid">
+        <a class="ul-ch" href="https://www.linkedin.com/in/risarezaei" target="_blank" rel="noopener"><span class="ul-ic"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5zM5.25 3.5a1.97 1.97 0 1 0 0 3.94 1.97 1.97 0 0 0 0-3.94zM20.44 13.4c0-3.07-1.64-5.15-4.4-5.15-1.5 0-2.5.7-3.06 1.55V8.5H9.6V20h3.38v-6.2c0-1.5.72-2.47 2-2.47 1.2 0 2.08.86 2.08 2.6V20h3.38v-6.6z"/></svg></span><span class="ul-tx"><b>LinkedIn</b><small>Professional profile</small></span><span class="ul-go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span></a>
+        <a class="ul-ch" href="https://orcid.org/0009-0009-5708-7673" target="_blank" rel="noopener"><span class="ul-ic"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><text x="12" y="16.5" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="12" fill="currentColor">iD</text></svg></span><span class="ul-tx"><b>ORCID</b><small>Publications and peer reviews</small></span><span class="ul-go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span></a>
+        <a class="ul-ch" href="https://github.com/RisaRezaei" target="_blank" rel="noopener"><span class="ul-ic"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></span><span class="ul-tx"><b>GitHub</b><small>Open-source code and tools</small></span><span class="ul-go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span></a>
+        <a class="ul-ch" href="https://www.youtube.com/@ParisaAbbasalizadehrezaei" target="_blank" rel="noopener"><span class="ul-ic"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.76-1.77C18.25 5 12 5 12 5s-6.25 0-7.84.43A2.5 2.5 0 0 0 2.4 7.2C2 8.8 2 12 2 12s0 3.2.4 4.8a2.5 2.5 0 0 0 1.76 1.77C5.75 19 12 19 12 19s6.25 0 7.84-.43a2.5 2.5 0 0 0 1.76-1.77C22 15.2 22 12 22 12s0-3.2-.4-4.8zM10 15V9l5.2 3L10 15z"/></svg></span><span class="ul-tx"><b>YouTube</b><small>Earth-from-space videos</small></span><span class="ul-go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></span></a>
+      </div>
+    </div>
+    <div class="ul-toast" role="status" aria-live="polite"></div>
   </div></div></section>
 
 </main>
@@ -1090,6 +1128,42 @@ function open(b){last=b;var id=b.dataset.yt,t=b.dataset.t;v.innerHTML='<iframe s
 function close(){m.classList.remove("on");m.setAttribute("aria-hidden","true");setTimeout(function(){v.innerHTML=""},260);if(last)last.focus()}
 document.querySelectorAll(".ytc-frame").forEach(function(b){b.addEventListener("click",function(){open(b)})});
 m.addEventListener("click",function(e){if(e.target===m||e.target.closest(".ytm-x"))close()});addEventListener("keydown",function(e){if(e.key==="Escape"&&m.classList.contains("on"))close()});})();
+</script>
+<script>
+/* peer-review numbers follow the ORCID record (public API, no key needed) */
+(function(){
+var API="https://pub.orcid.org/v3.0/0009-0009-5708-7673/";
+var ADD={"0378-3774":1}; /* one Agricultural Water Management review is missing from the ORCID record: always add it */
+var NAMES={"0301-4797":"Journal of Environmental Management","0378-3774":"Agricultural Water Management","0022-1694":"Journal of Hydrology"};
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]})}
+function set(k,f){document.querySelectorAll("[data-orcid=\""+k+"\"]").forEach(f)}
+fetch(API+"peer-reviews",{headers:{Accept:"application/json"}}).then(function(r){if(!r.ok)throw r.status;return r.json()}).then(function(d){
+  var rows=[],orgs={},total=0;
+  (d.group||[]).forEach(function(g){var id=((g["external-ids"]||{})["external-id"]||[]).map(function(e){return e["external-id-value"]})[0]||"",n=(g["peer-review-group"]||[]).length;
+    (g["peer-review-group"]||[]).forEach(function(x){(x["peer-review-summary"]||[]).forEach(function(s){var o=s["convening-organization"];if(o&&o.name)orgs[o.name.replace(/,?\s*(Inc|Ltd|B\.?V|GmbH|LLC)\.?$/i,"")]=1})});
+    if(n){total+=n;rows.push({issn:id.replace(/^issn:/i,""),n:n})}});
+  if(!total)return;
+  Object.keys(ADD).forEach(function(k){var r=rows.filter(function(x){return x.issn===k})[0];if(r)r.n+=ADD[k];else rows.push({issn:k,n:ADD[k]});total+=ADD[k]});
+  return Promise.all(rows.map(function(r){if(NAMES[r.issn]){r.name=NAMES[r.issn];return r}
+    return fetch("https://api.crossref.org/journals/"+encodeURIComponent(r.issn)).then(function(x){return x.json()}).then(function(j){r.name=(j.message&&j.message.title)||r.issn;return r}).catch(function(){r.name=r.issn;return r})}))
+  .then(function(rows){rows.sort(function(a,b){return b.n-a.n});
+    var on=Object.keys(orgs),pub=on.length===1?on[0]:"";
+    var L=rows.map(function(r){return "<em>"+esc(r.name)+"</em> ("+r.n+")"}),txt=L.length>1?L.slice(0,-1).join(", ")+" and "+L[L.length-1]:L[0];
+    set("reviews",function(e){e.textContent=total});
+    set("reviews-label",function(e){e.textContent="Peer reviews for "+(pub?pub+" ":"")+"journals"});
+    set("reviews-for",function(e){e.textContent=pub?"for "+pub:"for journals"});
+    set("reviews-by-journal",function(e){e.innerHTML=txt});});
+}).catch(function(){});
+})();
+</script>
+<script>
+/* email: built from two encoded parts only on click, so the address is never shown or left in the page for scrapers */
+(function(){
+var t=document.querySelector(".ul-toast"),tm;function toast(m){if(!t)return;t.textContent=m;t.classList.add("on");clearTimeout(tm);tm=setTimeout(function(){t.classList.remove("on")},2400)}
+function addr(e){return atob(e.dataset.u)+"@"+atob(e.dataset.d)}
+document.querySelectorAll(".js-mail").forEach(function(e){e.addEventListener("click",function(ev){ev.preventDefault();toast("Opening your email app\u2026");location.href="mailto:"+addr(e)})});
+document.querySelectorAll(".js-copy").forEach(function(e){e.addEventListener("click",function(){var a=addr(e);if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(a).then(function(){toast("Email address copied \u2713")},function(){location.href="mailto:"+a})}else{location.href="mailto:"+a}})});
+})();
 </script>
 <script src="assets/fx.js" data-fx="home" defer></script>
 </body>
