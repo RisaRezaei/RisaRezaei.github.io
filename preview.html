@@ -468,6 +468,28 @@ footer{border-top:1px solid var(--line2);padding:28px 0;font:500 12px/16px "JetB
   .card{padding:20px}
 }
 
+.vids{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.vids .vplay{width:40px;height:40px;margin:-20px 0 0 -20px;box-shadow:0 0 0 5px rgba(255,61,142,.2),0 8px 22px -6px rgba(255,61,142,.9)}
+.vids .vplay::after{left:16px;top:13px;border-width:7px 0 7px 11px}
+.vids .vtag{left:8px;top:8px;font-size:9.5px;padding:4px 6px;border-radius:5px}
+.vids .vmeta{padding:10px 12px 12px}
+.vids .vmeta b{font-size:13.5px;line-height:19px;min-height:38px}
+.vids .vmeta span{font-size:12px;line-height:17px;margin-top:4px}
+@media (max-width:900px){.vids{grid-template-columns:minmax(0,1fr);gap:10px}.vcard{display:grid;grid-template-columns:136px minmax(0,1fr);align-items:center}.vids .vmeta{padding:8px 12px}.vids .vmeta b{min-height:0}}
+.ytc-frame{position:relative;display:block;width:100%;aspect-ratio:16/9;padding:0;border:0;background:#000;cursor:pointer}
+.ytc-frame img{width:100%;height:100%;object-fit:cover;display:block;opacity:.92;transition:opacity .2s}
+.ytc:hover .ytc-frame img,.vcard:hover .ytc-frame img{opacity:1}
+.ytc-len{position:absolute;right:8px;bottom:8px;font:600 10.5px/1 "JetBrains Mono",ui-monospace,monospace;padding:3px 5px;border-radius:4px;background:rgba(7,11,20,.85);color:#e7edf7}
+.ytm{position:fixed;inset:0;z-index:120;display:grid;place-items:center;padding:24px;background:rgba(4,7,14,.86);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .25s}
+.ytm.on{opacity:1;pointer-events:auto}
+.ytm-box{position:relative;width:min(980px,100%)}
+.ytm-v{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#000;border:1px solid var(--line);box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.ytm-v iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.ytm-cap{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-top:12px}
+.ytm-cap b{font:600 15px/1.35 "Space Grotesk",sans-serif;color:var(--ink)}
+.ytm-cap a{font:500 13.5px Inter,sans-serif;white-space:nowrap}
+.ytm-x{position:absolute;right:0;top:-48px;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:rgba(17,26,43,.92);color:var(--ink);font:400 22px/1 Inter,sans-serif;cursor:pointer}
+.ytm-x:hover{border-color:var(--accent)}
 </style>
 <link rel="stylesheet" href="assets/fx.css">
 </head>
@@ -494,7 +516,11 @@ footer{border-top:1px solid var(--line2);padding:28px 0;font:500 12px/16px "JetB
 <div class="body2"><p class="rv">I'm an environmental engineer (MSc, Sharif University of Technology) working at the interface of <strong>hydrology</strong>, <strong>satellite remote sensing</strong> and <strong>machine learning</strong>. I build Earth-observation workflows in Google Earth Engine and Python, model surface water and groundwater with WEAP, MODFLOW and MIKE, and turn model results into decision support for water management.</p><p class="rv">My work on a decision-support system for the Lake Urmia basin, carried out with the University of Delaware, is published in the <em>Journal of Hydrology</em> and was presented at AGU24. I also have hands-on experience in water-quality laboratory analysis and review regularly for Elsevier journals.</p></div>
 <div class="kpis rv"><div><b>44</b><span>Peer reviews for Elsevier journals</span></div><div><b>+31%</b><span>Environmental water supply in optimized allocation scenarios</span></div><div><b>17.71<small>/20</small></b><span>MSc GPA, Sharif University</span></div><div><b>AGU24</b><span>Conference presentation, Washington, D.C.</span></div></div>
 <div class="vhead rv"><span><i></i><em>Earth from space · </em>my YouTube channel</span><a href="https://www.youtube.com/@ParisaAbbasalizadehrezaei" target="_blank" rel="noopener">Visit the channel <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></div>
-<div class="vids"><article class="vcard rv"><button class="yt-frame" type="button" data-yt="bDhEnSg61W8" aria-label="Play video: Three days of rain — Iran’s floods and a record El Niño"><img src="assets/yt/bDhEnSg61W8.jpg" alt="" loading="lazy" decoding="async"><span class="vplay" aria-hidden="true"></span><span class="vtag">NEW</span></button><div class="vmeta"><b>Three days of rain — Iran’s floods and a record El Niño</b><span>Floods across Iran, 6–8 November 2026 · English &amp; Persian subtitles</span></div></article><article class="vcard rv"><button class="yt-frame" type="button" data-yt="rBgaC2yz1hw" aria-label="Play video: A wetland being dug out — 15 years of satellite images"><img src="assets/yt/rBgaC2yz1hw.jpg" alt="" loading="lazy" decoding="async"><span class="vplay" aria-hidden="true"></span></button><div class="vmeta"><b>A wetland being dug out — 15 years of satellite images</b><span>Kiakalayeh wetland, Langarud</span></div></article></div>
+<div class="vids">
+      <article class="vcard rv"><button class="ytc-frame" type="button" data-yt="RGWDGXYPWnY" data-t="How much water did your lake lose?" aria-label="Play video: How much water did your lake lose?"><img src="assets/yt/RGWDGXYPWnY-640.jpg" alt="" loading="lazy" decoding="async"><span class="vplay" aria-hidden="true"></span><span class="vtag">NEW</span><span class="ytc-len">2:22</span></button><div class="vmeta"><b>How much water did your lake lose?</b><span>Any lake, one click · GSW Lake Explorer</span></div></article>
+      <article class="vcard rv"><button class="ytc-frame" type="button" data-yt="bDhEnSg61W8" data-t="Three days of rain — Iran’s floods and a record El Niño" aria-label="Play video: Three days of rain — Iran’s floods and a record El Niño"><img src="assets/yt/bDhEnSg61W8-640.jpg" alt="" loading="lazy" decoding="async"><span class="vplay" aria-hidden="true"></span><span class="ytc-len">2:17</span></button><div class="vmeta"><b>Three days of rain — Iran’s floods and a record El Niño</b><span>Floods across Iran, 6–8 November 2026</span></div></article>
+      <article class="vcard rv"><button class="ytc-frame" type="button" data-yt="rBgaC2yz1hw" data-t="A wetland being dug out — 15 years of satellite images" aria-label="Play video: A wetland being dug out — 15 years of satellite images"><img src="assets/yt/rBgaC2yz1hw-640.jpg" alt="" loading="lazy" decoding="async"><span class="vplay" aria-hidden="true"></span><span class="ytc-len">1:03</span></button><div class="vmeta"><b>A wetland being dug out — 15 years of satellite images</b><span>Kiakalayeh wetland, Langarud</span></div></article>
+    </div>
 </div></div></section>
 
   <!-- 02 SPECTRAL BANDS -->
@@ -1315,6 +1341,14 @@ document.querySelectorAll('.yt-frame').forEach(function(b){b.addEventListener('c
     DIM+=(t-DIM)*.1;if(Math.abs(t-DIM)<.002)DIM=t;st.style.opacity=((innerWidth<=900?.38:1)*(1-.85*DIM)).toFixed(3)};
 })();
 
+</script>
+<div class="ytm" aria-hidden="true" role="dialog" aria-label="Video player"><div class="ytm-box"><button class="ytm-x" type="button" aria-label="Close video">×</button><div class="ytm-v"></div><div class="ytm-cap"><b></b><a target="_blank" rel="noopener">Watch on YouTube ↗</a></div></div></div>
+<script>
+(function(){var m=document.querySelector(".ytm");if(!m)return;var v=m.querySelector(".ytm-v"),cap=m.querySelector(".ytm-cap b"),lk=m.querySelector(".ytm-cap a"),last=null;
+function open(b){last=b;var id=b.dataset.yt,t=b.dataset.t;v.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>';v.firstChild.title=t;cap.textContent=t;lk.href="https://www.youtube.com/watch?v="+id;m.classList.add("on");m.setAttribute("aria-hidden","false");m.querySelector(".ytm-x").focus()}
+function close(){m.classList.remove("on");m.setAttribute("aria-hidden","true");setTimeout(function(){v.innerHTML=""},260);if(last)last.focus()}
+document.querySelectorAll(".ytc-frame").forEach(function(b){b.addEventListener("click",function(){open(b)})});
+m.addEventListener("click",function(e){if(e.target===m||e.target.closest(".ytm-x"))close()});addEventListener("keydown",function(e){if(e.key==="Escape"&&m.classList.contains("on"))close()});})();
 </script>
 <script src="assets/fx.js" data-fx="home" defer></script>
 </body>
