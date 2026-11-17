@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brine Well Siting | Parisa Abbasalizadehrezaei</title>
+<meta name="description" content="A small groundwater study in Python: where a desalination plant can inject brine without contaminating a town supply well.">
+<link rel="icon" href="favicon.ico">
+<meta property="og:title" content="Brine Well Siting: a small groundwater study">
+<meta property="og:description" content="Pumping test, capture zones by particle tracking and contaminant breakthrough, in Python.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/fx.css">
+<style>
+:root{--bg:#070b14;--bg2:#0a101c;--card:#111a2b;--line:#1e2a40;--ink:#e7edf7;--muted:#8d9bb3;--accent:#4fd1c5;--accent2:#60a5fa}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15.5px/1.6 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+h1,h2,h3,h4{font-family:"Space Grotesk",Inter,sans-serif;margin:0}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 22px;border-bottom:1px solid var(--line);background:var(--bg2);position:sticky;top:0;z-index:20}
+header .back{font-size:14px;color:var(--muted)}
+header .tag{font:600 11px "JetBrains Mono",monospace;letter-spacing:.14em;color:var(--accent2)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+.intro{padding:34px 0 8px}
+.kicker{font:600 11.5px "JetBrains Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.intro h1{font-size:clamp(28px,4vw,40px);line-height:1.15;margin:8px 0 10px}
+.intro p{color:var(--muted);max-width:720px;margin:0}
+section{padding:18px 0}
+.panel{background:rgba(17,26,43,.75);border:1px solid var(--line);border-radius:16px;padding:16px}
+.facts{margin:0;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font:500 13.5px/1.9 "JetBrains Mono",ui-monospace,monospace;color:#c3cddd}
+.facts b{font-weight:600;color:var(--accent)}
+.facts em{font-style:normal;font-weight:600;color:#e0a43a}
+.facts i{font-style:normal;color:var(--muted);margin:0 12px}
+.sh{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:0 0 10px}
+.sh h2{font-size:20px}
+.sh span{font:500 12.5px "JetBrains Mono",monospace;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin:0 2px 10px;font-size:13px;color:#c3cddd}
+.legend i{display:inline-block;width:18px;height:0;border-top:2.5px solid;vertical-align:middle;margin-right:6px;border-radius:2px}
+.legend i.dash{border-top-style:dashed;border-top-width:2px;width:24px}
+.legend i.dot{width:9px;height:9px;border:0;border-radius:50%}
+.legend i.dia{width:8px;height:8px;border:0;transform:rotate(45deg);margin:0 8px 0 2px}
+.maps{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.map h4{font:600 14px Inter,sans-serif;margin:0 2px 8px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.map h4 span{font:600 12px "JetBrains Mono",monospace}
+.map h4 .bad{color:#f0b54a}.map h4 .good{color:var(--accent)}
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.chart{position:relative}
+.chart svg,.map svg{display:block;width:100%;height:auto}
+.ttl{font:600 14px Inter,sans-serif;margin:0 2px 6px}
+.tick text,.axl{font:500 11px "JetBrains Mono",monospace;fill:var(--muted)}
+.axl{fill:#c3cddd}
+.reflab{font:500 11px "JetBrains Mono",monospace;fill:#c3cddd}
+.tip{position:absolute;z-index:5;pointer-events:none;background:rgba(7,11,20,.96);border:1px solid rgba(96,165,250,.4);border-radius:10px;
+  padding:7px 10px;font-size:13px;line-height:1.45;opacity:0;transition:opacity .12s;white-space:nowrap}
+.tip.on{opacity:1}
+.tip .h{font:600 12px "JetBrains Mono",monospace;color:var(--muted);margin-bottom:2px}
+.tip .r{display:flex;align-items:center;gap:7px}
+.tip .r i{width:10px;height:3px;border-radius:2px;display:inline-block}
+.tip .r span{color:var(--muted)}
+.foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tags span{font-size:12.5px;padding:3px 10px;border-radius:999px;background:rgba(79,209,197,.1);color:var(--accent);font-weight:500}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent2));color:#04121a;font-weight:600;font-size:14px}
+.btn:hover{text-decoration:none;opacity:.92}
+footer{padding:30px 0 50px;text-align:center;font-size:14px}
+.fx-cur .chart svg,.fx-cur .map svg{cursor:crosshair!important}
+.no-fx-cursor .fx-dot,.no-fx-cursor .fx-ring,.no-fx-cursor .fx-read,.no-fx-cursor .fx-ret{opacity:0!important}
+@media (max-width:900px){.maps,.charts{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <a class="back" href="index.html#projects">← Parisa Abbasalizadehrezaei</a>
+  <span class="tag">GROUNDWATER · CASE STUDY</span>
+</header>
+
+<main class="wrap">
+  <div class="intro">
+    <div class="kicker">Groundwater · Python · Fictional site</div>
+    <h1>Brine Well Siting</h1>
+    <p>Where can a desalination plant inject its brine without contaminating a town's supply well?</p>
+  </div>
+
+  <section>
+    <p class="facts">T = <b>605 m²/day</b><i>·</i>plant's plan: <em>100% of the brine</em> reaches the town well, salty tap water in <em>50 days</em><i>·</i>safe: <b>1.2 km down-gradient</b></p>
+  </section>
+
+  <section>
+    <div class="panel">
+      <div class="sh"><h2>Where does the brine go?</h2><span>particle tracking</span></div>
+      <div class="legend">
+        <span><i style="border-color:#c98500"></i>Brine</span>
+        <span><i style="border-color:#3987e5"></i>Water drawn into the town well</span>
+        <span><i style="border-color:rgba(141,165,205,.6)"></i>Regional flow</span>
+        <span><i class="dia" style="background:#1fa396"></i>Stagnation point</span>
+      </div>
+      <div class="maps">
+        <div class="map"><h4>Plant's plan · 200 m up-gradient<span class="bad" id="mAh"></span></h4><div id="mA"></div></div>
+        <div class="map"><h4>Safe option · 1.2 km down-gradient<span class="good" id="mBh"></span></h4><div id="mB"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="charts">
+      <div class="panel chart" id="c1"></div>
+      <div class="panel chart" id="c2"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="panel foot">
+      <div class="tags"><span>Theis</span><span>Cooper–Jacob</span><span>Well superposition</span><span>Particle tracking</span><span>Ogata–Banks</span><span>Crank–Nicolson</span><span>NumPy · SciPy</span></div>
+      <a class="btn" href="https://github.com/RisaRezaei/wellfield" target="_blank" rel="noopener">Code on GitHub
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+    </div>
+  </section>
+</main>
+
+<footer><a href="index.html#projects">← Back to all projects</a></footer>
+
+<script>
+fetch('assets/data/brine-case.json').then(function(r){return r.json()}).then(function(D){
+'use strict';
+var COL={brine:'#c98500',fresh:'#3987e5',teal:'#1fa396',grid:'rgba(141,165,205,.10)',axis:'rgba(141,165,205,.38)',ink2:'#c3cddd',muted:'#8d9bb3',surf:'#111a2b'};
+var NS='http://www.w3.org/2000/svg';
+function E(tag,attrs,parent,text){var e=document.createElementNS(NS,tag);for(var k in attrs)if(attrs[k]!=null)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;if(parent)parent.appendChild(e);return e}
+function $(id){return document.getElementById(id)}
+function fmt(v,d){return Number(v).toLocaleString('en-US',{minimumFractionDigits:d||0,maximumFractionDigits:d||0})}
+var s3=D.step3,s4=D.step4;
+$('mAh').textContent=s3.map_A.brine_to_tap+'% reaches the town well';
+$('mBh').textContent=s3.map_R.brine_to_tap+'% reaches the town well';
+
+function scale(d0,d1,r0,r1,log){var f=log?Math.log10:function(v){return v},a=f(d0),b=f(d1);
+  var s=function(v){return r0+(f(v)-a)/(b-a)*(r1-r0)};s.inv=function(p){var v=a+(p-r0)/(r1-r0)*(b-a);return log?Math.pow(10,v):v};return s}
+function tickfmt(v){return v>=1000?fmt(v):String(+v.toPrecision(3))}
+
+function lineChart(host,cfg){
+  var avail=(host.clientWidth||560)-32,W=Math.round(Math.max(300,Math.min(560,avail))),H=Math.round(W*0.6),m={l:52,r:22,t:12,b:42};
+  var t=document.createElement('div');t.className='ttl';t.textContent=cfg.title;host.appendChild(t);
+  var lg=document.createElement('div');lg.className='legend';
+  (cfg.legend||cfg.series).forEach(function(s){var sp=document.createElement('span');
+    sp.innerHTML=(s.points?'<i class="dot" style="background:'+s.color+'"></i>':'<i class="'+(s.dash?'dash':'')+'" style="border-color:'+s.color+'"></i>')+s.name;lg.appendChild(sp)});
+  host.appendChild(lg);
+  var svg=E('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':cfg.title},host);
+  var x=scale(cfg.x.d[0],cfg.x.d[1],m.l,W-m.r,cfg.x.log),y=scale(cfg.y.d[0],cfg.y.d[1],H-m.b,m.t,cfg.y.log);
+  var g=E('g',{class:'tick'},svg);
+  cfg.y.ticks.forEach(function(v){var yy=y(v);E('line',{x1:m.l,x2:W-m.r,y1:yy,y2:yy,stroke:COL.grid},g);E('text',{x:m.l-8,y:yy+4,'text-anchor':'end'},g,tickfmt(v))});
+  (W<420&&cfg.x.ticksNarrow?cfg.x.ticksNarrow:cfg.x.ticks).forEach(function(v){var xx=x(v);E('line',{x1:xx,x2:xx,y1:H-m.b,y2:H-m.b+5,stroke:COL.axis},g);E('text',{x:xx,y:H-m.b+18,'text-anchor':'middle'},g,tickfmt(v))});
+  E('line',{x1:m.l,x2:W-m.r,y1:H-m.b,y2:H-m.b,stroke:COL.axis},svg);
+  E('text',{class:'axl',x:(m.l+W-m.r)/2,y:H-6,'text-anchor':'middle'},svg,cfg.x.label);
+  E('text',{class:'axl',x:12,y:(m.t+H-m.b)/2,'text-anchor':'middle',transform:'rotate(-90 12 '+((m.t+H-m.b)/2)+')'},svg,cfg.y.label);
+  (cfg.refs||[]).forEach(function(r){var yy=y(r.y);E('line',{x1:m.l,x2:W-m.r,y1:yy,y2:yy,stroke:COL.ink2,'stroke-dasharray':'4 4',opacity:.5},svg);
+    E('text',{class:'reflab',x:W-m.r-4,y:r.below?yy+14:yy-6,'text-anchor':'end'},svg,(W<420&&r.labelN)?r.labelN:r.label)});
+  (cfg.bands||[]).forEach(function(bd,i){E('rect',{x:x(bd[0]),y:m.t,width:x(bd[1])-x(bd[0]),height:H-m.t-m.b,fill:'rgba(96,165,250,.07)'},svg);
+    if(i===0)E('text',{x:x(bd[0])+6,y:m.t+14,fill:COL.muted,'font-size':11,'font-family':'JetBrains Mono,monospace'},svg,cfg.bandLabel||'')});
+  (cfg.fills||[]).forEach(function(f){var A=cfg.series[f.a].data,B=cfg.series[f.b].data,d='';
+    A.forEach(function(p,i){d+=(i?'L':'M')+x(p[0]).toFixed(1)+' '+y(p[1]).toFixed(1)});
+    for(var i=B.length-1;i>=0;i--)d+='L'+x(B[i][0]).toFixed(1)+' '+y(B[i][1]).toFixed(1);
+    E('path',{d:d+'Z',fill:f.color,'fill-opacity':0.16,stroke:'none'},svg)});
+  cfg.series.forEach(function(s){
+    if(s.points){s.data.forEach(function(p){E('circle',{cx:x(p[0]),cy:y(p[1]),r:4,fill:s.color,stroke:COL.surf,'stroke-width':2},svg)});return}
+    var d='';s.data.forEach(function(p,i){d+=(i?'L':'M')+x(p[0]).toFixed(1)+' '+y(Math.max(p[1],cfg.y.d[0])).toFixed(1)});
+    E('path',{d:d,fill:'none',stroke:s.color,'stroke-width':2.2,'stroke-dasharray':s.dash?'6 5':null,'stroke-linejoin':'round'},svg)});
+  var nar=W<420;
+  (cfg.marks||[]).forEach(function(k){var cx=x(k.x),cy=y(k.y),dx=nar?(k.dxN!=null?k.dxN:k.dx):k.dx,dy=nar?(k.dyN!=null?k.dyN:k.dy):k.dy,tx=cx+dx,ty=cy+dy;
+    E('line',{x1:cx,y1:cy,x2:tx-4,y2:ty-4,stroke:COL.muted,'stroke-width':1},svg);
+    E('circle',{cx:cx,cy:cy,r:5.5,fill:k.color,stroke:COL.surf,'stroke-width':2},svg);
+    E('text',{x:tx,y:ty,fill:'#e7edf7','font-size':nar?11.5:12.5,'font-weight':600,'font-family':'Inter,system-ui,sans-serif'},svg,nar?k.titleN:k.title);
+    if(!nar)E('text',{x:tx,y:ty+15,fill:COL.muted,'font-size':11.5,'font-family':'JetBrains Mono,monospace'},svg,k.sub)});
+  var cross=E('line',{y1:m.t,y2:H-m.b,stroke:COL.ink2,opacity:0},svg);
+  var dots=cfg.series.map(function(s){return E('circle',{r:5,fill:s.color,stroke:COL.surf,'stroke-width':2,opacity:0},svg)});
+  var tip=document.createElement('div');tip.className='tip';host.appendChild(tip);
+  var hit=E('rect',{x:m.l,y:m.t,width:W-m.l-m.r,height:H-m.t-m.b,fill:'transparent'},svg);
+  function near(data,xv){var lo=0,hi=data.length-1;while(hi-lo>1){var mid=(lo+hi)>>1;if(data[mid][0]<xv)lo=mid;else hi=mid}return Math.abs(data[lo][0]-xv)<=Math.abs(data[hi][0]-xv)?data[lo]:data[hi]}
+  function move(ev){var r=svg.getBoundingClientRect(),px=(ev.clientX-r.left)/r.width*W,xv=x.inv(Math.min(Math.max(px,m.l),W-m.r)),rows=[],x0=null;
+    cfg.series.forEach(function(s,i){var p=near(s.data,xv);if(x0===null)x0=p[0];dots[i].setAttribute('cx',x(p[0]));dots[i].setAttribute('cy',y(Math.max(p[1],cfg.y.d[0])));dots[i].setAttribute('opacity',1);rows.push([s,p])});
+    cross.setAttribute('x1',x(x0));cross.setAttribute('x2',x(x0));cross.setAttribute('opacity',.35);
+    tip.innerHTML='<div class="h">'+cfg.x.tip(x0)+'</div>'+rows.map(function(rw){return '<div class="r"><i style="background:'+rw[0].color+'"></i><span>'+rw[0].name+'</span>&nbsp;'+cfg.y.tip(rw[1][1])+'</div>'}).join('');
+    tip.classList.add('on');var hr=host.getBoundingClientRect(),tx=ev.clientX-hr.left+14;if(tx+tip.offsetWidth>hr.width-6)tx=ev.clientX-hr.left-tip.offsetWidth-14;
+    tip.style.left=tx+'px';tip.style.top=Math.max(4,ev.clientY-hr.top-tip.offsetHeight/2)+'px'}
+  hit.addEventListener('pointermove',move);hit.addEventListener('pointerdown',move);
+  hit.addEventListener('pointerleave',function(){tip.classList.remove('on');cross.setAttribute('opacity',0);dots.forEach(function(d){d.setAttribute('opacity',0)})});
+}
+
+function flowMap(host,mp){
+  var x0=mp.xlim[0],x1=mp.xlim[1],y0=mp.ylim[0],y1=mp.ylim[1],W=Math.round(Math.max(320,Math.min(560,host.clientWidth||560))),H=W*(y1-y0)/(x1-x0);
+  var sx=function(v){return (v-x0)/(x1-x0)*W},sy=function(v){return (y1-v)/(y1-y0)*H};
+  var svg=E('svg',{viewBox:'0 0 '+W+' '+H,role:'img','aria-label':'Streamline map: '+host.previousElementSibling.textContent},host);
+  E('rect',{x:0,y:0,width:W,height:H,fill:'rgba(57,135,229,.05)',stroke:COL.axis,rx:8},svg);
+  E('defs',{},svg).innerHTML='<clipPath id="clip'+host.id+'"><rect width="'+W+'" height="'+H+'" rx="8"/></clipPath><marker id="ga'+host.id+'" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#c3cddd"/></marker>';
+  var lay=E('g',{'clip-path':'url(#clip'+host.id+')'},svg);
+  function lines(set,stroke,w,op){var g=E('g',{fill:'none',stroke:stroke,'stroke-width':w,opacity:op},lay);
+    set.forEach(function(p){if(p.length<2)return;var d='';p.forEach(function(q,i){d+=(i?'L':'M')+sx(q[0]).toFixed(1)+' '+sy(q[1]).toFixed(1)});E('path',{d:d},g)})}
+  lines(mp.bg,'rgba(141,165,205,.55)',1,.6);lines(mp.catch,COL.fresh,1.3,.85);lines(mp.brine,COL.brine,1.5,.95);
+  var tip=document.createElement('div');tip.className='tip';host.style.position='relative';host.appendChild(tip);
+  function hov(n,html){n.style.cursor='pointer';n.addEventListener('pointerenter',function(){tip.innerHTML=html;tip.classList.add('on');var hr=host.getBoundingClientRect(),r=n.getBoundingClientRect();
+    var lx=r.right-hr.left+8;if(lx+tip.offsetWidth>hr.width)lx=r.left-hr.left-tip.offsetWidth-8;tip.style.left=lx+'px';tip.style.top=(r.top-hr.top-8)+'px'});n.addEventListener('pointerleave',function(){tip.classList.remove('on')})}
+  mp.stag.forEach(function(s){var d=E('rect',{x:sx(s)-5,y:sy(0)-5,width:10,height:10,fill:COL.teal,stroke:COL.surf,'stroke-width':1.5,transform:'rotate(45 '+sx(s)+' '+sy(0)+')'},svg);
+    hov(d,'<div class="h">Stagnation point</div>'+fmt(Math.abs(s))+' m '+(s<0?'up':'down')+'-gradient of the town well')});
+  hov(E('circle',{cx:sx(0),cy:sy(0),r:6.5,fill:COL.fresh,stroke:'#fff','stroke-width':2},svg),'<div class="h">Town well</div>1,500 m³/day');
+  hov(E('circle',{cx:sx(mp.inj[0]),cy:sy(mp.inj[1]),r:6.5,fill:COL.brine,stroke:'#fff','stroke-width':2},svg),'<div class="h">Brine well</div>1,500 m³/day, 70 g/L');
+  E('text',{x:sx(0),y:sy(0)+22,'text-anchor':'middle','font-size':12,fill:'#cfe1fb','font-family':'Inter,sans-serif','font-weight':600},svg,'Town well');
+  E('text',{x:sx(mp.inj[0]),y:sy(mp.inj[1])-14,'text-anchor':'middle','font-size':12,fill:'#f0d29a','font-family':'Inter,sans-serif','font-weight':600},svg,'Brine well');
+  var bl=500/(x1-x0)*W;E('line',{x1:14,x2:14+bl,y1:H-16,y2:H-16,stroke:COL.ink2,'stroke-width':2},svg);
+  E('text',{x:14,y:H-22,'font-size':10.5,fill:COL.ink2,'font-family':'JetBrains Mono,monospace'},svg,'500 m');
+  E('line',{x1:W-118,x2:W-22,y1:22,y2:22,stroke:COL.ink2,'stroke-width':1.6,'marker-end':'url(#ga'+host.id+')'},svg);
+  E('text',{x:W-118,y:14,'font-size':10.5,fill:COL.ink2,'font-family':'JetBrains Mono,monospace'},svg,'groundwater flow');
+}
+flowMap($('mA'),s3.map_A);flowMap($('mB'),s3.map_R);
+document.querySelectorAll('.chart,.map').forEach(function(el){
+  el.addEventListener('pointerenter',function(){document.body.classList.add('no-fx-cursor')});
+  el.addEventListener('pointerleave',function(){document.body.classList.remove('no-fx-cursor')})});
+
+var HT=D.headtime,bands=[];for(var k=0;k<HT.events.length;k+=2)bands.push([HT.events[k][0],HT.events[k+1][0]]);
+lineChart($('c1'),{title:'Head–time at the town well · '+HT.on_days+' days on, then rest',
+  x:{d:[0,1095],label:'Time (days)',ticks:[0,180,365,545,730,910,1095],ticksNarrow:[0,365,730,1095],tip:function(v){return 'Day '+fmt(v)}},
+  y:{d:[14,20.6],label:'Head (m)',ticks:[14,15,16,17,18,19,20],tip:function(v){return v.toFixed(2)+' m'}},
+  refs:[{y:18,label:''}],
+  legend:[{name:'Head at the well (r = 0.15 m)',color:COL.fresh},{name:'Head at r = 10 m (edge of weak clay)',color:COL.brine,dash:true},{name:'Saline water table (18 m)',color:COL.muted,dash:true}],
+  bands:bands,bandLabel:'pump on',
+  series:[{name:'Head at the well (r = 0.15 m)',color:COL.fresh,data:HT.rw},
+          {name:'Head at r = 10 m (edge of weak clay)',color:COL.brine,dash:true,data:HT.R}]});
+
+
+var CR=D.crtr,cols={'1':COL.fresh,'10':COL.brine,'100':COL.teal},ser=[],fills=[];
+['1','10','100'].forEach(function(pe){
+  var lab='Pe = '+pe+(pe==='10'?' (this site)':'');
+  fills.push({a:ser.length,b:ser.length+1,color:cols[pe]});
+  ser.push({name:lab+' · fixed step',color:cols[pe],data:CR[pe].step});
+  ser.push({name:lab+' · continuous',color:cols[pe],dash:true,data:CR[pe].cont});
+});
+lineChart($('c2'),{title:'tR – CR diagram · breakthrough at the town well',
+  x:{d:[0,6],label:'tR = v·t / L',ticks:[0,1,2,3,4,5,6],tip:function(v){return 'tR = '+v.toFixed(2)}},
+  y:{d:[-0.03,1.06],label:'CR = C / C₀',ticks:[0,0.2,0.4,0.6,0.8,1],tip:function(v){return v.toFixed(3)}},
+  refs:[{y:0,label:''},{y:1,label:''}],
+  legend:[{name:'Pe = 1',color:COL.fresh},{name:'Pe = 10 (this site)',color:COL.brine},{name:'Pe = 100',color:COL.teal},{name:'fixed step',color:COL.muted},{name:'continuous injection',color:COL.muted,dash:true}],
+  fills:fills,series:ser});
+
+
+});
+</script>
+<script src="assets/fx.js" data-fx="page" defer></script>
+</body>
+</html>
