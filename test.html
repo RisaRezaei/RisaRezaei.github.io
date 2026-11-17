@@ -1,0 +1,1126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parisa Abbasalizadehrezaei | Hydrology · Remote Sensing · Machine Learning</title>
+<meta name="description" content="Environmental engineer working at the interface of hydrology, satellite remote sensing and machine learning.">
+<link rel="icon" href="favicon.ico">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://risarezaei.github.io/">
+<meta property="og:title" content="Parisa Abbasalizadehrezaei | Remote Sensing · Hydrology · Machine Learning">
+<meta property="og:description" content="From satellite pixels to water decisions: an interactive scroll-through of my work, with a live 40-year waterbody trend map.">
+<meta property="og:image" content="https://risarezaei.github.io/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="627">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#070b14; --bg2:#0c1220; --card:#111a2b; --line:#1e2a40; --ink:#e7edf7; --muted:#8d9bb3;
+  --accent:#4fd1c5; --accent2:#60a5fa; --soft:rgba(79,209,197,.12);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:"Space Grotesk",Inter,sans-serif}
+
+/* Fixed animated stage behind the whole page */
+#stage{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.hero,nav,main,footer{position:relative;z-index:1}
+
+/* HERO */
+.hero{min-height:92vh;display:flex;align-items:center;overflow:hidden}
+.hero-text{max-width:600px}
+.eyebrow{display:inline-block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);
+  border:1px solid rgba(79,209,197,.35);padding:5px 12px;border-radius:999px;margin-bottom:22px}
+h1{font-size:clamp(30px,5vw,52px);line-height:1.08;margin:0 0 18px;font-weight:700;overflow-wrap:break-word}
+h1 span{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:18px;color:var(--muted);margin:0 0 28px}
+.links{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;padding:10px 18px;border-radius:10px;border:1px solid var(--line);
+  color:var(--ink);font-weight:500;font-size:14.5px;background:rgba(17,26,43,.7);backdrop-filter:blur(6px)}
+.btn:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.btn.primary{background:linear-gradient(90deg,var(--accent),var(--accent2));border:0;color:#04121a;font-weight:600}
+.btn.primary:hover{color:#04121a;opacity:.92}
+.scroll{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:2;color:var(--muted);font-size:13px;letter-spacing:.1em}
+.waves{position:absolute;left:0;right:0;bottom:0;height:96px;pointer-events:none;overflow:hidden}
+.waves svg{position:absolute;bottom:0;left:0;width:200%;height:100%}
+.waves .w1{animation:drift 22s linear infinite}
+.waves .w2{animation:drift 14s linear infinite reverse}
+@keyframes drift{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.hud{display:inline-block;margin-top:30px;font:500 11.5px/1.75 "JetBrains Mono",ui-monospace,monospace;color:var(--muted);
+  background:rgba(12,18,32,.72);border:1px solid var(--line);border-radius:10px;padding:10px 14px;backdrop-filter:blur(6px);min-width:224px}
+.hud b{color:var(--accent);font-weight:600}
+.hud .live{display:inline-block;width:7px;height:7px;border-radius:50%;background:#34d399;margin-right:7px;box-shadow:0 0 8px #34d399;animation:blink 1.6s infinite}
+@keyframes blink{50%{opacity:.3}}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:10;background:rgba(7,11,20,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.tabs{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;padding:16px 16px 14px;color:var(--muted);font:500 15px Inter,sans-serif;border-bottom:2px solid transparent}
+.tab:hover{color:var(--ink);text-decoration:none}
+.tab.on{color:var(--accent);border-bottom-color:var(--accent)}
+
+/* STORY SECTIONS */
+section{min-height:100vh;padding:16vh 0 12vh;scroll-margin-top:40px}
+.col{width:50%;max-width:580px}
+h2{font-size:32px;margin:0 0 8px}
+h2[data-n]::before{content:attr(data-n);display:block;font:600 12px/1 "JetBrains Mono",ui-monospace,monospace;letter-spacing:.2em;color:var(--accent2);margin-bottom:14px}
+.sub{color:var(--muted);margin:0 0 28px}
+h3{font-size:18px;margin:0 0 4px;line-height:1.35}
+p{margin:0 0 14px}
+.card{position:relative;overflow:hidden;background:rgba(17,26,43,.88);backdrop-filter:blur(6px);border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin-bottom:16px;transition:border-color .2s}
+.card:hover{border-color:rgba(79,209,197,.4)}
+.card::after{content:"";position:absolute;left:0;right:0;top:-45%;height:45%;pointer-events:none;opacity:0;
+  background:linear-gradient(180deg,transparent,rgba(79,209,197,.09),transparent)}
+.card:hover::after{opacity:1;animation:scan 1.3s ease-in-out}
+@keyframes scan{from{top:-45%}to{top:100%}}
+a.card{display:block;color:var(--ink)}
+a.card:hover{text-decoration:none}
+.meta{font-size:14px;color:var(--muted);margin-bottom:10px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.tag{font-size:12.5px;padding:3px 10px;border-radius:999px;background:var(--soft);color:var(--accent);font-weight:500}
+.kicker{font:600 12px "JetBrains Mono",ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--accent2);margin-bottom:8px}
+ul{padding-left:20px;margin:8px 0 0}
+li{margin-bottom:6px}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:26px}
+.stat{position:relative;overflow:hidden;background:rgba(17,26,43,.88);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.stat::before{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:.7}
+.stat b{display:block;font:700 26px "Space Grotesk",sans-serif;color:var(--accent)}
+.stat span{font-size:13.5px;color:var(--muted)}
+.yt{margin-top:30px;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--card)}
+.yt-frame{position:relative;display:block;width:100%;aspect-ratio:16/9;padding:0;border:0;background:#000;cursor:pointer}
+.yt-frame img{width:100%;height:100%;object-fit:cover;display:block;opacity:.9;transition:opacity .2s}
+.yt-frame:hover img{opacity:1}
+.yt-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.yt-play{position:absolute;left:50%;top:50%;width:68px;height:48px;transform:translate(-50%,-50%);border-radius:12px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));box-shadow:0 6px 24px rgba(0,0,0,.45)}
+.yt-play::after{content:"";position:absolute;left:28px;top:14px;border-style:solid;border-width:10px 0 10px 16px;border-color:transparent transparent transparent #04121a}
+.yt-meta{padding:14px 16px 16px}
+.yt-kicker{display:block;font:600 11px/1 "JetBrains Mono",ui-monospace,monospace;letter-spacing:.18em;color:var(--accent2);margin-bottom:8px}
+.yt-meta b{display:block;font:600 16px/1.35 "Space Grotesk",sans-serif;color:var(--ink)}
+.yt-meta .yt-sub{display:block;font-size:13.5px;color:var(--muted);margin-top:4px}
+.yt-links{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:10px;font-size:14px}
+.timeline{border-left:2px solid var(--line);padding-left:26px;margin-left:6px}
+.titem{position:relative;margin-bottom:18px}
+.titem::before{content:"";position:absolute;left:-34px;top:28px;width:12px;height:12px;border-radius:50%;
+  background:var(--bg);border:2px solid var(--accent);box-shadow:0 0 0 4px rgba(79,209,197,.12)}
+.pub{border-left:3px solid var(--accent)}
+.pub em{color:var(--ink)}
+.repos{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px}
+.repo{margin:0;padding:18px 20px;display:flex;flex-direction:column}
+.repo h3{font-size:16px;margin:0 0 6px}
+.repo p{font-size:14px;color:var(--muted);margin:0;flex:1}
+.repo .tags{margin-top:12px}
+.repo .go{margin-top:12px;font:600 12px "JetBrains Mono",ui-monospace,monospace;color:var(--accent)}
+.codehead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:38px 0 4px}
+.codehead h3{font-size:22px;margin:0}
+@media (max-width:640px){.repos{grid-template-columns:1fr}}
+.mapcard{position:relative;margin:4px 0 30px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#111a2b}
+.maphead{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;padding:18px 22px}
+.maphead p{margin:4px 0 0;color:var(--muted);font-size:14.5px;max-width:720px}
+.mapcard iframe{display:block;width:100%;height:min(72vh,560px);border:0;border-top:1px solid var(--line);background:#05080f}
+footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-size:14px;background:rgba(7,11,20,.85)}
+
+/* Reveal on scroll */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:none}
+
+@media (max-width:900px){
+  #stage{opacity:.38}
+  .col{width:auto;max-width:none}
+  .hud{display:none}
+  .waves{height:64px}
+  .hero{min-height:84vh}
+  .lead{font-size:16.5px}
+  h2{font-size:27px}
+  section{padding:12vh 0 8vh;min-height:auto}
+  #contact{min-height:80vh}
+}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+/* projects + tools (v2) */
+.subhead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:46px 0 16px;flex-wrap:wrap}
+.subhead h3{font-size:24px;margin:0}
+.subhead span,.subhead a{font:500 13px "JetBrains Mono",ui-monospace,monospace;color:var(--muted)}
+.subhead a{color:var(--accent)}
+.pgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.pcard{padding:0;margin:0;display:flex;flex-direction:column}
+.pvis{height:170px;background:#0b1322;border-bottom:1px solid var(--line);overflow:hidden}
+.pvis svg,.pvis img{display:block;width:100%;height:100%}
+.pvis img{object-fit:cover;object-position:left center}
+.pcard.wide{grid-column:1/-1;flex-direction:row}
+.pcard.wide .pvis{flex:0 0 46%;height:auto;min-height:200px;border-bottom:0;border-right:1px solid var(--line)}
+.pbody{padding:18px 22px 20px;display:flex;flex-direction:column;flex:1}
+.pbody p{font-size:15px}
+.pbody .tags{margin-top:auto;padding-top:4px}
+.rel{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);font-size:13.5px}
+.rel span{font:600 11px "JetBrains Mono",ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.codewrap{scroll-margin-top:60px}
+.ghproof{display:grid;grid-template-columns:1.5fr repeat(4,1fr);gap:12px;margin:6px 0 14px}
+.ghproof>*{background:rgba(17,26,43,.88);border:1px solid var(--line);border-radius:14px;padding:14px 16px;position:relative;overflow:hidden}
+.ghid{display:flex;align-items:center;gap:12px;color:var(--ink)}
+.ghid:hover{border-color:var(--accent);text-decoration:none}
+.ghid b{display:block;font:700 17px "Space Grotesk",sans-serif}
+.ghid small{display:block;color:var(--muted);font-size:12.5px}
+.ghstat::before{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:.7}
+.ghstat b{display:block;font:700 24px "Space Grotesk",sans-serif;color:var(--accent);line-height:1.2}
+.ghstat span{font-size:12.5px;color:var(--muted)}
+.skillrow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 18px}
+.skillrow span{font:600 11px "JetBrains Mono",ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-right:6px}
+.skillrow em{font-style:normal;font-size:12.5px;padding:3px 10px;border-radius:999px;border:1px solid var(--line);color:#c8d3e6;background:rgba(12,18,32,.8)}
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 16px}
+.filters button{background:rgba(17,26,43,.88);color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font:500 13.5px Inter,sans-serif;cursor:pointer}
+.filters button:hover{color:var(--ink);border-color:#33476b}
+.filters button.on{background:var(--accent);border-color:var(--accent);color:#04121a}
+.tgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.tcard{background:rgba(17,26,43,.9);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .2s,transform .2s}
+.tcard:hover{border-color:rgba(79,209,197,.5);transform:translateY(-2px)}
+.tcard.hide{display:none}
+.thumb{position:relative;display:block;aspect-ratio:16/10;background:#0b1120;border-bottom:1px solid var(--line);overflow:hidden}
+.thumb img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.tcard:hover .thumb img{transform:scale(1.04)}
+.thumb .badge,.thumb .lang{position:absolute;top:10px;font:600 11px "JetBrains Mono",ui-monospace,monospace;padding:4px 8px;border-radius:7px;background:rgba(7,11,20,.82);backdrop-filter:blur(4px);border:1px solid var(--line)}
+.thumb .badge{left:10px;color:var(--accent)}
+.thumb .lang{right:10px;color:#c8d3e6}
+.tterm{height:100%;padding:44px 16px 14px;font:12px/1.7 "JetBrains Mono",ui-monospace,monospace;color:#cbd5e1;background:radial-gradient(400px 200px at 80% 0,rgba(96,165,250,.12),transparent),#070c16;white-space:nowrap;overflow:hidden}
+.tterm .ps{color:var(--accent)}
+.tterm .inf{color:#93c5fd}
+.tterm .cur{display:inline-block;width:8px;height:14px;background:var(--accent);vertical-align:-2px;animation:blink 1s steps(1) infinite}
+.tbody{padding:16px 18px 18px;display:flex;flex-direction:column;flex:1}
+.tbody h3{font-size:17px;margin:0 0 6px}
+.tbody h3 a{color:var(--ink)}
+.tbody p{font-size:14px;color:var(--muted);margin:0 0 2px}
+.tbody .tags{margin:10px 0 14px}
+.tact{display:flex;gap:8px;margin-top:auto;flex-wrap:wrap}
+.btn.sm{padding:7px 12px;font-size:13px;border-radius:9px}
+@media (max-width:1000px){.tgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.ghproof{grid-template-columns:repeat(2,1fr)}.ghid{grid-column:1/-1}}
+@media (max-width:640px){.pgrid,.tgrid{grid-template-columns:1fr}.pvis{height:150px}.pcard.wide{flex-direction:column}.pcard.wide .pvis{flex:none;height:150px;min-height:0;border-right:0;border-bottom:1px solid var(--line)}}
+.sw{list-style:none;padding:0;margin:4px 0 0;display:grid;gap:6px}
+.sw li{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 12px;font-size:14px;border-top:1px solid var(--line);padding-top:6px;margin:0}
+.sw em{color:var(--ink)}
+.sw .doi{font:500 12px "JetBrains Mono",ui-monospace,monospace;color:var(--muted)}
+.sw .doi:hover{color:var(--accent)}
+.tourlink{position:relative;display:block}
+.tourlink img{transition:transform .5s}
+.tourlink:hover img{transform:scale(1.04)}
+.tourbadge{position:absolute;left:12px;bottom:12px;font:600 11.5px "JetBrains Mono",ui-monospace,monospace;padding:6px 10px;border-radius:8px;background:rgba(7,11,20,.85);border:1px solid rgba(79,209,197,.6);color:var(--accent);backdrop-filter:blur(4px)}
+.ytrow{margin-top:30px}
+.ytrow-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.ytrow-head .yt-kicker{margin:0}
+.ytrow-head .yt-kicker em{font-style:normal}
+.ytrow-head a{font-size:13.5px;white-space:nowrap}
+.ytgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.ytc{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card);transition:border-color .2s,transform .2s}
+.ytc:hover{border-color:rgba(79,209,197,.5);transform:translateY(-2px)}
+.ytc-play{position:absolute;left:50%;top:50%;width:42px;height:30px;transform:translate(-50%,-50%);border-radius:9px;background:linear-gradient(90deg,var(--accent),var(--accent2));box-shadow:0 4px 16px rgba(0,0,0,.45);transition:transform .2s}
+.ytc-play::after{content:"";position:absolute;left:17px;top:9px;border-style:solid;border-width:6px 0 6px 10px;border-color:transparent transparent transparent #04121a}
+.ytc:hover .ytc-play{transform:translate(-50%,-50%) scale(1.08)}
+.ytc-new{position:absolute;left:8px;top:8px;font:600 10px/1 "JetBrains Mono",ui-monospace,monospace;letter-spacing:.12em;padding:4px 6px;border-radius:5px;background:var(--accent);color:#04121a}
+.ytc-meta{padding:10px 12px 12px}
+.ytc-meta b{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;min-height:4.05em;font:600 13.5px/1.35 "Space Grotesk",sans-serif;color:var(--ink)}
+.ytc-meta span{display:block;margin-top:4px;font-size:12px;line-height:1.4;color:var(--muted)}
+@media (max-width:640px){.ytrow-head .yt-kicker em{display:none}.ytgrid{grid-template-columns:minmax(0,1fr);gap:10px}.ytc{display:grid;grid-template-columns:136px minmax(0,1fr);align-items:center}.ytc-meta{padding:8px 12px}.ytc-meta b{min-height:0}}
+.ytc-frame{position:relative;display:block;width:100%;aspect-ratio:16/9;padding:0;border:0;background:#000;cursor:pointer}
+.ytc-frame img{width:100%;height:100%;object-fit:cover;display:block;opacity:.92;transition:opacity .2s}
+.ytc:hover .ytc-frame img,.vcard:hover .ytc-frame img{opacity:1}
+.ytc-len{position:absolute;right:8px;bottom:8px;font:600 10.5px/1 "JetBrains Mono",ui-monospace,monospace;padding:3px 5px;border-radius:4px;background:rgba(7,11,20,.85);color:#e7edf7}
+.ytm{position:fixed;inset:0;z-index:120;display:grid;place-items:center;padding:24px;background:rgba(4,7,14,.86);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .25s}
+.ytm.on{opacity:1;pointer-events:auto}
+.ytm-box{position:relative;width:min(980px,100%)}
+.ytm-v{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#000;border:1px solid var(--line);box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.ytm-v iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.ytm-cap{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-top:12px}
+.ytm-cap b{font:600 15px/1.35 "Space Grotesk",sans-serif;color:var(--ink)}
+.ytm-cap a{font:500 13.5px Inter,sans-serif;white-space:nowrap}
+.ytm-x{position:absolute;right:0;top:-48px;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:rgba(17,26,43,.92);color:var(--ink);font:400 22px/1 Inter,sans-serif;cursor:pointer}
+.ytm-x:hover{border-color:var(--accent)}
+/* buttons from the new design (Orbit), in the site's teal/blue */
+@property --a{syntax:'<angle>';inherits:false;initial-value:0deg}
+@keyframes spin{to{--a:360deg}}
+.hxl{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
+.hrow{display:flex;flex-wrap:wrap;gap:12px}
+.hb{position:relative;isolation:isolate;display:inline-flex;align-items:center;justify-content:center;gap:12px;height:52px;padding:0 24px;border-radius:999px;border:1.5px solid transparent;color:var(--ink);font:600 15px Inter,sans-serif;letter-spacing:-.005em;white-space:nowrap;cursor:pointer;transition:transform .3s;
+  background:linear-gradient(rgba(17,26,43,.92),rgba(17,26,43,.92)) padding-box,conic-gradient(from var(--a),#2a3a58 0 100%) border-box}
+.hb:hover{text-decoration:none;color:var(--ink)}
+.hb svg,.dk svg{width:18px;height:18px;display:block}
+.roll{display:inline-block;height:20px;line-height:20px;overflow:hidden}
+.roll span{display:block;transition:transform .5s cubic-bezier(.7,0,.2,1)}
+.hb:hover .roll span{transform:translateY(-100%)}
+.hb .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(79,209,197,.22);animation:hpulse 2s infinite}
+@keyframes hpulse{50%{box-shadow:0 0 0 7px rgba(79,209,197,0)}}
+.hb.s:hover{background:linear-gradient(#14213a,#14213a) padding-box,conic-gradient(from var(--a),#2a3a58 0deg 190deg,var(--accent) 280deg,#fff 325deg,var(--accent2) 345deg,#2a3a58 360deg) border-box;animation:spin 2.4s linear infinite}
+.hb.s .ic{opacity:.75}
+.hb.p{padding:0 7px 0 26px;gap:18px;color:#04121a;overflow:hidden;background:linear-gradient(90deg,var(--accent),var(--accent2)) padding-box,conic-gradient(from var(--a),var(--accent) 0deg 220deg,#d6fbf5 295deg,#fff 322deg,var(--accent2) 345deg,var(--accent) 360deg) border-box;animation:spin 3.2s linear infinite;box-shadow:0 12px 34px -12px rgba(79,209,197,.85)}
+.hb.p .roll{position:relative;z-index:2;transition:color .45s}
+.hb.p .ar{position:relative;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--accent);z-index:1}
+.hb.p .ar::before{content:"";position:absolute;inset:0;border-radius:50%;background:#07101d;z-index:-1;transition:transform .6s cubic-bezier(.7,0,.2,1)}
+.hb.p .ar svg{transition:transform .5s cubic-bezier(.7,0,.2,1)}
+.hb.p:hover{color:#04121a;transform:translateY(-2px)}
+.hb.p:hover .ar::before{transform:scale(13)}
+.hb.p:hover .roll{color:#fff}
+.hb.p:hover .ar svg{transform:rotate(-45deg)}
+.hxl .dock{display:flex;align-items:center;gap:4px;height:56px;padding:5px;border-radius:999px;border:1px solid var(--line);background:rgba(17,26,43,.72);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.dk{position:relative;display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;color:#c8d3e6;transform-origin:50% 100%;transition:.3s cubic-bezier(.3,1.4,.5,1)}
+.dk:hover{text-decoration:none;transform:scale(1.32) translateY(-5px);color:var(--accent);background:rgba(79,209,197,.14)}
+.dk:hover+.dk,.dk:has(+.dk:hover){transform:scale(1.12) translateY(-2px)}
+.dk::after{content:attr(data-t);position:absolute;top:calc(100% + 10px);left:50%;transform:translate(-50%,-4px);padding:6px 10px;border-radius:8px;background:#14213a;border:1px solid var(--line);color:var(--ink);font:600 12px Inter,sans-serif;white-space:nowrap;opacity:0;pointer-events:none;transition:.2s}
+.dk:hover::after{opacity:1;transform:translate(-50%,0)}
+/* the rest of the site's buttons get the same pill shape */
+.btn{border-radius:999px;padding:10px 18px;font-weight:600;transition:border-color .25s,color .25s,background .25s,transform .25s}
+.btn:hover{transform:translateY(-1px);background:rgba(20,33,58,.9)}
+.btn.primary:hover{background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:1;box-shadow:0 8px 22px -10px rgba(79,209,197,.9)}
+.btn.sm{border-radius:999px;padding:7px 14px}
+@media (max-width:640px){.hxl{width:100%}.hrow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;width:100%}.hb{height:48px;font-size:14px;padding:0 8px;gap:8px}.hb.p{grid-column:1/-1;justify-content:center;padding:0 52px}.hb.p .ar{position:absolute;right:5px;top:50%;margin-top:-19px}.hxl .dock{height:52px;padding:3px}}
+.orcid-live{display:inline-flex;align-items:center;gap:8px;margin-top:2px;font:500 12.5px Inter,sans-serif;color:var(--muted)}
+.orcid-live i{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px rgba(79,209,197,.2)}
+.orcid-live:hover{color:var(--accent)}
+</style>
+<link rel="stylesheet" href="assets/fx.css">
+</head>
+<body>
+<canvas id="stage" aria-hidden="true"></canvas>
+
+<header class="hero" id="top">
+  <div class="wrap" style="width:100%">
+    <div class="hero-text">
+      <div class="eyebrow">Hydrology · Remote Sensing · Machine Learning</div>
+      <h1>Parisa <span>Abbasalizadehrezaei</span></h1>
+      <p class="lead">Environmental engineer turning satellite data and water models into decisions for water management.</p>
+      <div class="links hxl">
+        <div class="hrow"><a class="hb p" href="#projects"><span class="roll"><span>View projects</span><span>View projects</span></span><span class="ar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a><a class="hb s" href="#wetland-map"><span class="dot"></span><span class="roll"><span>Live demo</span><span>Live demo</span></span></a><a class="hb s" href="#code"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></svg></span><span class="roll"><span>Code &amp; tutorials</span><span>Code &amp; tutorials</span></span></a></div>
+        <div class="dock"><a class="dk" data-t="Email" aria-label="Email" href="mailto:risarezaei@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></svg></a><a class="dk" data-t="LinkedIn" aria-label="LinkedIn" href="https://www.linkedin.com/in/risarezaei" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5zM5.25 3.5a1.97 1.97 0 1 0 0 3.94 1.97 1.97 0 0 0 0-3.94zM20.44 13.4c0-3.07-1.64-5.15-4.4-5.15-1.5 0-2.5.7-3.06 1.55V8.5H9.6V20h3.38v-6.2c0-1.5.72-2.47 2-2.47 1.2 0 2.08.86 2.08 2.6V20h3.38v-6.6z"/></svg></a><a class="dk" data-t="GitHub" aria-label="GitHub" href="https://github.com/RisaRezaei" target="_blank" rel="noopener"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a><a class="dk" data-t="YouTube" aria-label="YouTube" href="https://www.youtube.com/@ParisaAbbasalizadehrezaei" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.76-1.77C18.25 5 12 5 12 5s-6.25 0-7.84.43A2.5 2.5 0 0 0 2.4 7.2C2 8.8 2 12 2 12s0 3.2.4 4.8a2.5 2.5 0 0 0 1.76 1.77C5.75 19 12 19 12 19s6.25 0 7.84-.43a2.5 2.5 0 0 0 1.76-1.77C22 15.2 22 12 22 12s0-3.2-.4-4.8zM10 15V9l5.2 3L10 15z"/></svg></a><a class="dk" data-t="ORCID" aria-label="ORCID" href="https://orcid.org/0009-0009-5708-7673" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><text x="12" y="16.5" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="12" fill="currentColor">iD</text></svg></a></div>
+      </div>
+      <div class="hud" aria-hidden="true">
+        <div><span class="live"></span><b>EO-SAT</b> · nadir scan</div>
+        <div>LAT <span id="hlat">--</span>  LON <span id="hlon">--</span></div>
+        <div>Bands B03 · B08 · B11 · NDWI</div>
+      </div>
+    </div>
+  </div>
+  <div class="waves" aria-hidden="true">
+    <svg class="w1" viewBox="0 0 1440 96" preserveAspectRatio="none"><path d="M0 56 Q90 30 180 56 T360 56 T540 56 T720 56 T900 56 T1080 56 T1260 56 T1440 56 V96 H0Z" fill="rgba(79,209,197,.07)"/></svg>
+    <svg class="w2" viewBox="0 0 1440 96" preserveAspectRatio="none"><path d="M0 70 Q60 52 120 70 T240 70 T360 70 T480 70 T600 70 T720 70 T840 70 T960 70 T1080 70 T1200 70 T1320 70 T1440 70 V96 H0Z" fill="rgba(96,165,250,.07)"/></svg>
+  </div>
+  <div class="scroll">SCROLL ↓</div>
+</header>
+
+<nav aria-label="Sections">
+  <div class="wrap tabs">
+    <a class="tab" href="#about">About</a>
+    <a class="tab" href="#skills">Skills</a>
+    <a class="tab" href="#projects">Projects</a>
+    <a class="tab" href="#code">Code</a>
+    <a class="tab" href="#publications">Publications</a>
+    <a class="tab" href="#experience">Experience</a>
+    <a class="tab" href="#education">Education</a>
+    <a class="tab" href="#contact">Contact</a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- 01 ACQUISITION -->
+  <section id="about"><div class="wrap"><div class="col">
+    <h2 class="rv" data-n="01 · ACQUISITION">About</h2>
+    <p class="sub rv">Water, satellites and data.</p>
+    <p class="rv">I'm an environmental engineer (MSc, Sharif University of Technology) working at the interface of <strong>hydrology</strong>, <strong>satellite remote sensing</strong> and <strong>machine learning</strong>. I build Earth-observation workflows in Google Earth Engine and Python, model surface water and groundwater with WEAP, MODFLOW and MIKE, and turn model results into decision support for water management.</p>
+    <p class="rv">My work on a decision-support system for the Lake Urmia basin, carried out with the University of Delaware, is published in the <em>Journal of Hydrology</em> and was presented at AGU24. I also have hands-on experience in water-quality laboratory analysis and review regularly for Elsevier journals.</p>
+    <div class="stats rv">
+      <div class="stat"><b data-orcid="reviews">44</b><span data-orcid="reviews-label">Peer reviews for Elsevier journals</span></div>
+      <div class="stat"><b>+31%</b><span>Environmental water supply in optimized allocation scenarios</span></div>
+      <div class="stat"><b>17.71/20</b><span>MSc GPA, Sharif University</span></div>
+      <div class="stat"><b>AGU24</b><span>Conference presentation, Washington, D.C.</span></div>
+    </div>
+    <div class="ytrow rv">
+      <div class="ytrow-head"><span class="yt-kicker"><em>EARTH FROM SPACE · </em>MY YOUTUBE CHANNEL</span><a href="https://www.youtube.com/@ParisaAbbasalizadehrezaei" target="_blank" rel="noopener">Visit the channel ↗</a></div>
+      <div class="ytgrid">
+      <article class="ytc"><button class="ytc-frame" type="button" data-yt="RGWDGXYPWnY" data-t="How much water did your lake lose?" aria-label="Play video: How much water did your lake lose?"><img src="assets/yt/RGWDGXYPWnY-640.jpg" alt="" loading="lazy" decoding="async"><span class="ytc-play" aria-hidden="true"></span><span class="ytc-new">NEW</span><span class="ytc-len">2:22</span></button><div class="ytc-meta"><b>How much water did your lake lose?</b><span>Any lake, one click · GSW Lake Explorer</span></div></article>
+      <article class="ytc"><button class="ytc-frame" type="button" data-yt="bDhEnSg61W8" data-t="Three days of rain — Iran’s floods and a record El Niño" aria-label="Play video: Three days of rain — Iran’s floods and a record El Niño"><img src="assets/yt/bDhEnSg61W8-640.jpg" alt="" loading="lazy" decoding="async"><span class="ytc-play" aria-hidden="true"></span><span class="ytc-len">2:17</span></button><div class="ytc-meta"><b>Three days of rain — Iran’s floods and a record El Niño</b><span>Floods across Iran, 6–8 November 2026</span></div></article>
+      <article class="ytc"><button class="ytc-frame" type="button" data-yt="rBgaC2yz1hw" data-t="A wetland being dug out — 15 years of satellite images" aria-label="Play video: A wetland being dug out — 15 years of satellite images"><img src="assets/yt/rBgaC2yz1hw-640.jpg" alt="" loading="lazy" decoding="async"><span class="ytc-play" aria-hidden="true"></span><span class="ytc-len">1:03</span></button><div class="ytc-meta"><b>A wetland being dug out — 15 years of satellite images</b><span>Kiakalayeh wetland, Langarud</span></div></article>
+      </div>
+    </div>
+  </div></div></section>
+
+  <!-- 02 SPECTRAL BANDS -->
+  <section id="skills"><div class="wrap"><div class="col">
+    <h2 class="rv" data-n="02 · SPECTRAL BANDS">Skills</h2>
+    <p class="sub rv">Tools and methods.</p>
+    <div class="card rv"><h3>Remote sensing</h3>
+      <div class="tags"><span class="tag">Google Earth Engine (JS &amp; Python)</span><span class="tag">Landsat</span><span class="tag">Sentinel-2</span><span class="tag">Spectral &amp; water indices</span><span class="tag">Land-cover classification</span><span class="tag">Change detection</span><span class="tag">Accuracy assessment</span><span class="tag">ENVI</span></div></div>
+    <div class="card rv"><h3>Machine learning &amp; data</h3>
+      <div class="tags"><span class="tag">Python</span><span class="tag">pandas</span><span class="tag">NumPy</span><span class="tag">SciPy</span><span class="tag">scikit-learn</span><span class="tag">Matplotlib</span><span class="tag">Random Forest</span><span class="tag">Gradient Boosting</span><span class="tag">K-means</span><span class="tag">Time-series analysis</span><span class="tag">R (basic)</span></div></div>
+    <div class="card rv"><h3>Hydrology &amp; groundwater</h3>
+      <div class="tags"><span class="tag">WEAP</span><span class="tag">MODFLOW</span><span class="tag">MIKE</span><span class="tag">Water balance</span><span class="tag">Scenario analysis</span><span class="tag">Multi-objective optimization</span></div></div>
+    <div class="card rv"><h3>GIS &amp; data management</h3>
+      <div class="tags"><span class="tag">ArcGIS / ArcGIS Pro</span><span class="tag">QGIS</span><span class="tag">Map production</span><span class="tag">Reproducible workflows</span><span class="tag">Git / GitHub</span><span class="tag">HPC (basic)</span></div></div>
+    <div class="card rv"><h3>Water quality</h3>
+      <div class="tags"><span class="tag">Nutrients</span><span class="tag">BOD / COD</span><span class="tag">Alkalinity</span><span class="tag">Hardness</span><span class="tag">Coliforms</span></div></div>
+    <div class="card rv"><h3>Languages</h3>
+      <div class="tags"><span class="tag">English – fluent (TOEFL iBT 90)</span><span class="tag">Persian – native</span><span class="tag">German – basic</span></div></div>
+  </div></div></section>
+
+  <!-- 03 CLASSIFICATION -->
+  <section id="projects"><div class="wrap">
+    <div class="col">
+      <h2 class="rv" data-n="03 · CLASSIFICATION">Projects</h2>
+      <p class="sub rv">Research and engineering projects across water resources and Earth observation, each linked to the open-source code that reproduces its methods.</p>
+    </div>
+    <div class="mapcard rv" id="wetland-map">
+      <div class="maphead">
+        <div>
+          <div class="kicker">Live demo · Earth observation</div>
+          <h3>Global Waterbody Area Trends, 1984–2025</h3>
+          <p>Forty years of Landsat surface-water area for nearly 600 lakes and wetlands. Colour shows each water body's long-term trend; click a point to see its annual water-area curve and fitted trend.</p>
+        </div>
+        <a class="btn" href="wetlands.html">Open full screen →</a>
+      </div>
+      <iframe src="wetlands.html?embed=1" title="Global waterbody area trend map" loading="lazy"></iframe>
+    </div>
+    <div class="mapcard rv" id="lake-explorer">
+      <div class="maphead">
+        <div>
+          <div class="kicker">Live demo · Earth Engine app</div>
+          <h3>GSW Lake Explorer: Lake Razazah, 1984–2021</h3>
+          <p>A public Earth Engine app running inside this page. It opens on Lake Razazah (Iraq), which lost about three quarters of its permanent water between 1984–1993 and 2012–2021, with its yearly JRC Global Surface Water animation, area chart and decade comparison. Click any other lake on the map, or search a name, to explore it. The frames take a few seconds to render.</p>
+        </div>
+        <a class="btn" href="https://risarezaei.projects.earthengine.app/view/gsw-lake-explorer#lake=146;" target="_blank" rel="noopener">Open full screen →</a>
+      </div>
+      <iframe src="https://risarezaei.projects.earthengine.app/view/gsw-lake-explorer#lake=146;" title="GSW Lake Explorer: Lake Razazah surface water 1984–2021" loading="lazy"></iframe>
+    </div>
+
+    <div class="subhead rv"><h3>Research projects</h3><span>8 projects</span></div>
+    <div class="pgrid">
+      <article class="card pcard rv">
+        <div class="pvis"><svg viewBox="0 0 400 160" role="img" aria-label="Decision-support workflow: inflow forecasts feed a daily WEAP model, optimised with NSGA-II and AHP"><defs><linearGradient id="ga" x1="0" x2="1"><stop offset="0" stop-color="#4fd1c5"/><stop offset="1" stop-color="#60a5fa"/></linearGradient></defs><path d="M0 40H400M0 80H400M0 120H400M80 0V160M160 0V160M240 0V160M320 0V160" stroke="#16233a" stroke-width="1"/>
+<g font-family="JetBrains Mono,monospace" font-size="9.5" fill="#cbd5e1" text-anchor="middle">
+<rect x="14" y="30" width="78" height="40" rx="8" fill="#0f1a2e" stroke="#2a3b5a"/><text x="53" y="47" >Inflow</text><text x="53" y="60" >forecast</text>
+<rect x="14" y="90" width="78" height="40" rx="8" fill="#0f1a2e" stroke="#2a3b5a"/><text x="53" y="107" >Demands &amp;</text><text x="53" y="120" >scenarios</text>
+<rect x="122" y="56" width="88" height="48" rx="9" fill="#0f1a2e" stroke="url(#ga)" stroke-width="1.6"/><text x="166" y="76" fill="#4fd1c5" font-weight="600">WEAP</text><text x="166" y="90" >daily balance</text>
+<rect x="240" y="56" width="70" height="48" rx="9" fill="#0f1a2e" stroke="#2a3b5a"/><text x="275" y="76" >MOEA</text><text x="275" y="90" >+ AHP</text>
+</g>
+<g stroke="#60a5fa" stroke-width="1.6" fill="none" marker-end="url(#ar)"><path d="M92 50H101Q107 50 107 56V68Q107 74 113 74H119"/><path d="M92 110H101Q107 110 107 104V92Q107 86 113 86H119"/><path d="M210 80H238"/><path d="M310 80H326"/></g>
+<defs><marker id="ar" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L8 4L0 8z" fill="#60a5fa"/></marker></defs>
+<g font-family="Space Grotesk,sans-serif"><rect x="330" y="30" width="58" height="46" rx="8" fill="rgba(79,209,197,.12)" stroke="#4fd1c5"/><text x="359" y="54" text-anchor="middle" fill="#4fd1c5" font-size="17" font-weight="700">+31%</text><text x="359" y="68" text-anchor="middle" fill="#8d9bb3" font-size="8.5" font-family="Inter,sans-serif">env. water</text>
+<rect x="330" y="86" width="58" height="46" rx="8" fill="rgba(96,165,250,.12)" stroke="#60a5fa"/><text x="359" y="110" text-anchor="middle" fill="#60a5fa" font-size="17" font-weight="700">+26%</text><text x="359" y="124" text-anchor="middle" fill="#8d9bb3" font-size="8.5" font-family="Inter,sans-serif">agri. profit</text></g></svg></div>
+        <div class="pbody">
+          <div class="kicker">Water resources · Decision support</div>
+          <h3>Decision Support System for the Lake Urmia Basin</h3>
+          <p class="meta">University of Delaware (remote) · 2023–2024 · <a href="https://doi.org/10.1016/j.jhydrol.2025.134679" target="_blank" rel="noopener">Journal of Hydrology 2026</a></p>
+          <p>A forecast-informed decision support system for real-time water allocation, coupling a daily WEAP water-balance model with inflow forecasts. Multi-objective evolutionary optimization and AHP were used to compare scenarios; optimized strategies raised environmental water supply by 31% and agricultural profit by 26%.</p>
+          <div class="tags"><span class="tag">WEAP</span><span class="tag">Optimization</span><span class="tag">AHP</span><span class="tag">Forecasting</span></div>
+          <div class="rel"><span>Related code</span><a href="tool.html?r=gee-basin-hydroclimate">Basin Hydroclimate Time Series →</a></div>
+        </div>
+      </article>
+      <article class="card pcard rv">
+        <div class="pvis"><img src="assets/tools/gee-wetland-water-rf.jpg" alt="Lake Urmia water maps classified with Random Forest" loading="lazy"></div>
+        <div class="pbody">
+          <div class="kicker">Earth observation · Machine learning</div>
+          <h3>Wetlands Monitoring System</h3>
+          <p class="meta">Sharif University of Technology · 3-year funded grant · 2021–2023</p>
+          <p>Multi-year satellite monitoring workflows (Landsat, Sentinel-2) for surface water and land cover in Google Earth Engine and Python, using Random Forest and K-means for classification and change detection, with full accuracy assessment.</p>
+          <div class="tags"><span class="tag">Google Earth Engine</span><span class="tag">Sentinel-2</span><span class="tag">Landsat</span><span class="tag">Random Forest</span></div>
+          <div class="rel"><span>Related code</span><a href="tool.html?r=gee-wetland-water-rf">Wetland Water Mapping with Random Forest →</a><a href="tool.html?r=gee-landsat-timelapse">Landsat Timelapse for Lakes and Wetlands →</a></div>
+        </div>
+      </article>
+      <article class="card pcard rv">
+        <div class="pvis"><svg viewBox="0 0 400 160" role="img" aria-label="Pipeline from satellite bands to spectral indices, Random Forest and K-means, to a water map"><defs><linearGradient id="gb" x1="0" x2="1"><stop offset="0" stop-color="#4fd1c5"/><stop offset="1" stop-color="#60a5fa"/></linearGradient></defs><path d="M0 40H400M0 80H400M0 120H400M80 0V160M160 0V160M240 0V160M320 0V160" stroke="#16233a" stroke-width="1"/>
+<g transform="translate(18,34)"><rect x="0" y="0" width="62" height="62" rx="4" fill="#1d3557" stroke="#3b5785"/><rect x="7" y="7" width="62" height="62" rx="4" fill="#22406a" stroke="#3b5785"/><rect x="14" y="14" width="62" height="62" rx="4" fill="#2a4d7d" stroke="#3b5785"/><text x="38" y="96" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#8d9bb3">bands</text></g>
+<g font-family="JetBrains Mono,monospace" font-size="9.5" text-anchor="middle"><rect x="120" y="30" width="64" height="24" rx="12" fill="rgba(79,209,197,.12)" stroke="#4fd1c5"/><text x="152" y="46" fill="#4fd1c5">NDWI</text><rect x="120" y="64" width="64" height="24" rx="12" fill="rgba(79,209,197,.12)" stroke="#4fd1c5"/><text x="152" y="80" fill="#4fd1c5">MNDWI</text><rect x="120" y="98" width="64" height="24" rx="12" fill="rgba(79,209,197,.12)" stroke="#4fd1c5"/><text x="152" y="114" fill="#4fd1c5">AWEI</text>
+<rect x="214" y="36" width="70" height="34" rx="8" fill="#0f1a2e" stroke="#2a3b5a"/><text x="249" y="57" fill="#cbd5e1">Random Forest</text>
+<rect x="214" y="90" width="70" height="34" rx="8" fill="#0f1a2e" stroke="#2a3b5a"/><text x="249" y="111" fill="#cbd5e1">K-means</text></g>
+<g stroke="#60a5fa" stroke-width="1.4" fill="none"><path d="M100 80H116"/><path d="M184 66C200 66 200 53 212 53"/><path d="M184 94C200 94 200 107 212 107"/><path d="M284 53C300 53 300 76 314 78"/><path d="M284 107C300 107 300 84 314 82"/></g>
+<g transform="translate(318,40)"><rect x="0" y="0" width="11" height="11" rx="2" fill="#a3815a" opacity="0.55"/><rect x="12" y="0" width="11" height="11" rx="2" fill="#a3815a" opacity="0.55"/><rect x="24" y="0" width="11" height="11" rx="2" fill="#a3815a" opacity="0.55"/><rect x="36" y="0" width="11" height="11" rx="2" fill="#a3815a" opacity="0.55"/><rect x="48" y="0" width="11" height="11" rx="2" fill="#a3815a" opacity="0.55"/><rect x="60" y="0" width="11" height="11" rx="2" fill="#a3815a" opacity="0.55"/><rect x="0" y="12" width="11" height="11" rx="2" fill="#a3815a" opacity="0.55"/><rect x="12" y="12" width="11" height="11" rx="2" fill="#1e88e5" opacity="0.95"/><rect x="24" y="12" width="11" height="11" rx="2" fill="#1e88e5" opacity="0.95"/><rect x="36" y="12" width="11" height="11" rx="2" fill="#1e88e5" opacity="0.95"/><rect x="48" y="12" width="11" height="11" rx="2" fill="#1e88e5" opacity="0.95"/><rect x="60" y="12" width="11" height="11" rx="2" fill="#a3815a" opacity="0.55"/><rect x="0" y="24" width="11" height="11" rx="2" fill="#a3815a" opacity="0.55"/><rect x="12" y="24" width="11" height="11" rx="2" fill="#1e88e5" opacity="0.95"/><rect x="24" y="24" width="11" height="11" rx="2" fill="#1e88e5" opacity="0.95"/><rect x="36" y="24" width="11" height="11" rx="2" fill="#1e88e5" opacity="0.95"/><rect x="48" y="24" width="11" height="11" rx="2" fill="#1e88e5" opacity="0.95"/><rect x="60" y="24" width="11" height="11" rx="2" fill="#a3815a" opacity="0.55"/><rect x="0" y="36" width="11" height="11" rx="2" fill="#a3815a" opacity="0.55"/><rect x="12" y="36" width="11" height="11" rx="2" fill="#1e88e5" opacity="0.95"/><rect x="24" y="36" width="11" height="11" rx="2" fill="#1e88e5" opacity="0.95"/><rect x="36" y="36" width="11" height="11" rx="2" fill="#1e88e5" opacity="0.95"/><rect x="48" y="36" width="11" height="11" rx="2" fill="#1e88e5" opacity="0.95"/><rect x="60" y="36" width="11" height="11" rx="2" fill="#a3815a" opacity="0.55"/><rect x="0" y="48" width="11" height="11" rx="2" fill="#a3815a" opacity="0.55"/><rect x="12" y="48" width="11" height="11" rx="2" fill="#1e88e5" opacity="0.95"/><rect x="24" y="48" width="11" height="11" rx="2" fill="#1e88e5" opacity="0.95"/><rect x="36" y="48" width="11" height="11" rx="2" fill="#1e88e5" opacity="0.95"/><rect x="48" y="48" width="11" height="11" rx="2" fill="#1e88e5" opacity="0.95"/><rect x="60" y="48" width="11" height="11" rx="2" fill="#a3815a" opacity="0.55"/><rect x="0" y="60" width="11" height="11" rx="2" fill="#a3815a" opacity="0.55"/><rect x="12" y="60" width="11" height="11" rx="2" fill="#a3815a" opacity="0.55"/><rect x="24" y="60" width="11" height="11" rx="2" fill="#a3815a" opacity="0.55"/><rect x="36" y="60" width="11" height="11" rx="2" fill="#a3815a" opacity="0.55"/><rect x="48" y="60" width="11" height="11" rx="2" fill="#a3815a" opacity="0.55"/><rect x="60" y="60" width="11" height="11" rx="2" fill="#a3815a" opacity="0.55"/><text x="36" y="88" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="9" fill="#8d9bb3">water map</text></g></svg></div>
+        <div class="pbody">
+          <div class="kicker">Remote sensing · MSc thesis</div>
+          <h3>Satellite-Based Surface Water Assessment</h3>
+          <p class="meta">MSc thesis · Sharif University of Technology</p>
+          <p>Surface-water mapping combining Random Forest classification, K-means clustering and spectral water indices in Google Earth Engine.</p>
+          <div class="tags"><span class="tag">GEE</span><span class="tag">K-means</span><span class="tag">Spectral indices</span></div>
+          <div class="rel"><span>Related code</span><a href="tool.html?r=gee-wetland-water-rf">Wetland Water Mapping with Random Forest →</a><a href="tool.html?r=gee-water-resources-course">Earth Engine for Water Resources: a Short Course →</a></div>
+        </div>
+      </article>
+      <article class="card pcard rv">
+        <div class="pvis"><svg viewBox="0 0 400 160" role="img" aria-label="Cross-section of a dam, reservoir, aquifer and river with groundwater flow arrows"><defs><linearGradient id="gc" x1="0" x2="1"><stop offset="0" stop-color="#4fd1c5"/><stop offset="1" stop-color="#60a5fa"/></linearGradient></defs>
+<rect width="400" height="160" fill="#0b1322"/>
+<path d="M0 64H120L140 64L140 64V64" fill="none"/>
+<rect x="0" y="62" width="128" height="34" fill="#1e88e5" opacity=".55"/>
+<path d="M128 40L160 40L176 98H112Z" fill="#6b7280" stroke="#9ca3af" stroke-width="1"/>
+<rect x="0" y="96" width="400" height="46" fill="#5b4632" opacity=".55"/>
+<g stroke="#3a2f22" stroke-width=".7"><path d="M4 96V142"/><path d="M26 96V142"/><path d="M48 96V142"/><path d="M70 96V142"/><path d="M92 96V142"/><path d="M114 96V142"/><path d="M136 96V142"/><path d="M158 96V142"/><path d="M180 96V142"/><path d="M202 96V142"/><path d="M224 96V142"/><path d="M246 96V142"/><path d="M268 96V142"/><path d="M290 96V142"/><path d="M312 96V142"/><path d="M334 96V142"/><path d="M356 96V142"/><path d="M378 96V142"/><path d="M400 96V142"/><path d="M0 111H400M0 126H400"/></g>
+<rect x="0" y="142" width="400" height="18" fill="#2b2118"/>
+<path d="M0 62 C120 62 160 80 230 88 S330 92 400 92" fill="none" stroke="url(#gc)" stroke-width="2.2" stroke-dasharray="5 4"/>
+<path d="M330 86 Q350 80 370 86 L370 96 L330 96Z" fill="#1e88e5" opacity=".8"/>
+<g stroke="#4fd1c5" stroke-width="1.6" fill="none" marker-end="url(#ac)"><path d="M150 112 C190 118 230 118 270 112"/><path d="M200 132 C250 136 300 128 340 118"/></g>
+<defs><marker id="ac" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L8 4L0 8z" fill="#4fd1c5"/></marker></defs>
+<g font-family="JetBrains Mono,monospace" font-size="9.5" fill="#cbd5e1"><text x="10" y="56">reservoir</text><text x="132" y="34">dam</text><text x="318" y="78">river</text><text x="210" y="80" fill="#4fd1c5">water table</text><text x="10" y="154" fill="#8d9bb3">MODFLOW grid · leakage → aquifer → river</text></g></svg></div>
+        <div class="pbody">
+          <div class="kicker">Groundwater</div>
+          <h3>Dam Leakage &amp; Aquifer Response</h3>
+          <p class="meta">MSc project</p>
+          <p>MODFLOW simulation of dam leakage and aquifer response to an adjacent river, with analytical and numerical solutions implemented in Python.</p>
+          <div class="tags"><span class="tag">MODFLOW</span><span class="tag">Python</span></div>
+          <div class="rel"><span>Related code</span><a href="tool.html?r=gee-elevation-cross-section">Elevation Along a Cross-Section →</a></div>
+        </div>
+      </article>
+      <article class="card pcard rv">
+        <div class="pvis"><svg viewBox="0 0 400 160" role="img" aria-label="Sub-basin water balance with precipitation, evapotranspiration, outflow and storage, and a chloride time series"><defs><linearGradient id="gd" x1="0" x2="1"><stop offset="0" stop-color="#4fd1c5"/><stop offset="1" stop-color="#60a5fa"/></linearGradient></defs><path d="M0 40H400M0 80H400M0 120H400M80 0V160M160 0V160M240 0V160M320 0V160" stroke="#16233a" stroke-width="1"/>
+<path d="M20 120 L50 54 L95 38 L150 60 L170 112 L120 134 L60 136Z" fill="rgba(79,209,197,.10)" stroke="#4fd1c5" stroke-width="1.6"/>
+<g stroke="#60a5fa" stroke-width="1.6" fill="none" marker-end="url(#ad)"><path d="M70 6V36"/><path d="M110 50V14" stroke="#f59e0b" marker-end="url(#ad2)"/><path d="M168 112H196"/></g>
+<defs><marker id="ad" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L8 4L0 8z" fill="#60a5fa"/></marker><marker id="ad2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L8 4L0 8z" fill="#f59e0b"/></marker></defs>
+<g font-family="JetBrains Mono,monospace" font-size="9.5" fill="#cbd5e1"><text x="40" y="16">P</text><text x="116" y="18" fill="#f59e0b">ET</text><text x="176" y="106">Q</text><text x="74" y="96" fill="#4fd1c5">ΔS</text></g>
+<g transform="translate(222,18)"><rect width="164" height="118" rx="8" fill="#0f1a2e" stroke="#2a3b5a"/>
+<path d="M12 96 L28 88 L40 92 L54 74 L68 80 L82 62 L96 66 L110 48 L124 54 L138 36 L152 40" fill="none" stroke="url(#gd)" stroke-width="2"/>
+<circle cx="12" cy="96" r="2.2" fill="#e7edf7"/><circle cx="28" cy="88" r="2.2" fill="#e7edf7"/><circle cx="40" cy="92" r="2.2" fill="#e7edf7"/><circle cx="54" cy="74" r="2.2" fill="#e7edf7"/><circle cx="68" cy="80" r="2.2" fill="#e7edf7"/><circle cx="82" cy="62" r="2.2" fill="#e7edf7"/><circle cx="96" cy="66" r="2.2" fill="#e7edf7"/><circle cx="110" cy="48" r="2.2" fill="#e7edf7"/><circle cx="124" cy="54" r="2.2" fill="#e7edf7"/><circle cx="138" cy="36" r="2.2" fill="#e7edf7"/><circle cx="152" cy="40" r="2.2" fill="#e7edf7"/>
+<text x="12" y="16" font-family="JetBrains Mono,monospace" font-size="9" fill="#8d9bb3">chloride (salinity)</text><path d="M12 106H152" stroke="#2a3b5a"/></g></svg></div>
+        <div class="pbody">
+          <div class="kicker">Hydrology</div>
+          <h3>Fallat-e-Markazi Sub-Basin Water Balance</h3>
+          <p class="meta">MSc project</p>
+          <p>Water balance of the sub-basin in ArcGIS and Python, with a chloride (salinity) time series modelled in Python.</p>
+          <div class="tags"><span class="tag">ArcGIS</span><span class="tag">Time series</span><span class="tag">Salinity</span></div>
+          <div class="rel"><span>Related code</span><a href="tool.html?r=gee-basin-hydroclimate">Basin Hydroclimate Time Series →</a><a href="tool.html?r=raster-point-sampler">Raster Values at Point Locations →</a></div>
+        </div>
+      </article>
+      <article class="card pcard rv">
+        <div class="pvis"><svg viewBox="0 0 400 160" role="img" aria-label="Reservoir with an oil slick spreading downstream over three time steps"><defs><linearGradient id="ge" x1="0" x2="1"><stop offset="0" stop-color="#4fd1c5"/><stop offset="1" stop-color="#60a5fa"/></linearGradient></defs>
+<rect width="400" height="160" fill="#0b1322"/>
+<path d="M0 70 C40 40 90 30 140 44 C190 58 220 30 270 34 C320 38 360 70 400 64 L400 120 C350 128 320 104 270 112 C220 120 190 136 140 126 C90 116 40 132 0 112Z" fill="#12406b" stroke="#1e88e5" stroke-width="1.2"/>
+<g stroke="#60a5fa" stroke-width="1" fill="none" opacity=".55"><path d="M30 84 q16 -6 32 0" marker-end="url(#ae)"/><path d="M100 90 q16 -6 32 0" marker-end="url(#ae)"/><path d="M170 84 q16 -6 32 0" marker-end="url(#ae)"/><path d="M240 90 q16 -6 32 0" marker-end="url(#ae)"/><path d="M310 84 q16 -6 32 0" marker-end="url(#ae)"/></g>
+<defs><marker id="ae" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L8 4L0 8z" fill="#60a5fa"/></marker>
+<radialGradient id="sl"><stop offset="0" stop-color="#111" stop-opacity=".95"/><stop offset=".6" stop-color="#3b2f1e" stop-opacity=".75"/><stop offset="1" stop-color="#f59e0b" stop-opacity=".0"/></radialGradient></defs>
+<ellipse cx="96" cy="78" rx="16" ry="9" fill="url(#sl)"/><ellipse cx="190" cy="82" rx="30" ry="14" fill="url(#sl)" opacity=".85"/><ellipse cx="300" cy="84" rx="48" ry="20" fill="url(#sl)" opacity=".7"/>
+<g font-family="JetBrains Mono,monospace" font-size="9.5" fill="#f59e0b" text-anchor="middle"><text x="96" y="62">t₀</text><text x="190" y="60">t₁</text><text x="300" y="56">t₂</text></g>
+<text x="10" y="150" font-family="JetBrains Mono,monospace" font-size="9.5" fill="#8d9bb3">MIKE hydrodynamics · advection + spreading</text></svg></div>
+        <div class="pbody">
+          <div class="kicker">Hydrodynamics</div>
+          <h3>Oil-Slick Transport in the Karkheh Reservoir</h3>
+          <p class="meta">MSc project</p>
+          <p>Hydrodynamic modelling of oil-slick transport in the Karkheh reservoir using MIKE.</p>
+          <div class="tags"><span class="tag">MIKE</span><span class="tag">Transport modelling</span></div>
+          
+        </div>
+      </article>
+      <article class="card pcard rv">
+        <div class="pvis"><svg viewBox="0 0 400 160" role="img" aria-label="Watershed boundary with a stream network over classified land cover"><defs><linearGradient id="gf" x1="0" x2="1"><stop offset="0" stop-color="#4fd1c5"/><stop offset="1" stop-color="#60a5fa"/></linearGradient></defs>
+<rect width="400" height="160" fill="#0b1322"/>
+<clipPath id="ws"><path d="M60 140 C30 100 40 40 100 22 C150 8 220 14 270 28 C330 44 370 80 350 118 C330 150 260 150 200 146 C140 142 90 156 60 140Z"/></clipPath>
+<g clip-path="url(#ws)"><rect x="30" y="0" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="53" y="0" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="76" y="0" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="99" y="0" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="122" y="0" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="145" y="0" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="168" y="0" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="191" y="0" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="214" y="0" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="237" y="0" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="260" y="0" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="283" y="0" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="306" y="0" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="329" y="0" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="352" y="0" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="30" y="20" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="53" y="20" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="76" y="20" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="99" y="20" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="122" y="20" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="145" y="20" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="168" y="20" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="191" y="20" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="214" y="20" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="237" y="20" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="260" y="20" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="283" y="20" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="306" y="20" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="329" y="20" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="352" y="20" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="30" y="40" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="53" y="40" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="76" y="40" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="99" y="40" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="122" y="40" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="145" y="40" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="168" y="40" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="191" y="40" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="214" y="40" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="237" y="40" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="260" y="40" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="283" y="40" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="306" y="40" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="329" y="40" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="352" y="40" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="30" y="60" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="53" y="60" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="76" y="60" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="99" y="60" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="122" y="60" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="145" y="60" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="168" y="60" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="191" y="60" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="214" y="60" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="237" y="60" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="260" y="60" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="283" y="60" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="306" y="60" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="329" y="60" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="352" y="60" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="30" y="80" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="53" y="80" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="76" y="80" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="99" y="80" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="122" y="80" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="145" y="80" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="168" y="80" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="191" y="80" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="214" y="80" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="237" y="80" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="260" y="80" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="283" y="80" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="306" y="80" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="329" y="80" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="352" y="80" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="30" y="100" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="53" y="100" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="76" y="100" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="99" y="100" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="122" y="100" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="145" y="100" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="168" y="100" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="191" y="100" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="214" y="100" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="237" y="100" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="260" y="100" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="283" y="100" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="306" y="100" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="329" y="100" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="352" y="100" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="30" y="120" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="53" y="120" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="76" y="120" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="99" y="120" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="122" y="120" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="145" y="120" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="168" y="120" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="191" y="120" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="214" y="120" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="237" y="120" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="260" y="120" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="283" y="120" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="306" y="120" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="329" y="120" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="352" y="120" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="30" y="140" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="53" y="140" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="76" y="140" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="99" y="140" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="122" y="140" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="145" y="140" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="168" y="140" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="191" y="140" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="214" y="140" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="237" y="140" width="23" height="20" fill="#2e7d32" opacity=".55"/><rect x="260" y="140" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="283" y="140" width="23" height="20" fill="#c2a36b" opacity=".55"/><rect x="306" y="140" width="23" height="20" fill="#9ccc65" opacity=".55"/><rect x="329" y="140" width="23" height="20" fill="#78909c" opacity=".55"/><rect x="352" y="140" width="23" height="20" fill="#78909c" opacity=".55"/></g>
+<path d="M60 140 C30 100 40 40 100 22 C150 8 220 14 270 28 C330 44 370 80 350 118 C330 150 260 150 200 146 C140 142 90 156 60 140Z" fill="none" stroke="#4fd1c5" stroke-width="2"/>
+<g stroke="#1e88e5" fill="none" stroke-linecap="round"><path d="M200 146 C204 120 196 100 204 80 C210 62 230 50 262 40" stroke-width="3"/><path d="M204 80 C180 66 150 52 112 40" stroke-width="2.2"/><path d="M200 112 C240 106 290 96 330 76" stroke-width="2.2"/><path d="M200 120 C170 114 120 112 76 104" stroke-width="1.8"/><path d="M150 54 C146 40 140 30 132 22" stroke-width="1.3"/><path d="M262 92 C270 78 290 66 304 54" stroke-width="1.3"/></g>
+<circle cx="200" cy="146" r="4" fill="#e7edf7"/><text x="210" y="156" font-family="JetBrains Mono,monospace" font-size="9" fill="#cbd5e1">outlet</text></svg></div>
+        <div class="pbody">
+          <div class="kicker">Remote sensing &amp; GIS</div>
+          <h3>Land Cover &amp; Watershed Mapping</h3>
+          <p class="meta">MSc project</p>
+          <p>Land-cover classification in ENVI and Python, surface-water mapping with K-means in Google Earth Engine, and watershed delineation in ArcGIS.</p>
+          <div class="tags"><span class="tag">ENVI</span><span class="tag">ArcGIS</span><span class="tag">Classification</span></div>
+          <div class="rel"><span>Related code</span><a href="tool.html?r=gee-cropland-dynamics">Global Cropland Dynamics, 2003–2019 →</a><a href="tool.html?r=gee-water-resources-course">Earth Engine for Water Resources: a Short Course →</a></div>
+        </div>
+      </article>
+      <article class="card pcard rv">
+        <a class="pvis tourlink" href="zamzam.html" aria-label="Open the interactive plant tour"><img src="assets/images/zamzam-aeration-tank.jpg" alt="Activated sludge aeration tank with diffused-air boil at the Zamzam Tehran wastewater treatment plant" loading="lazy" style="object-position:center 40%"><span class="tourbadge">▶ Interactive plant tour</span></a>
+        <div class="pbody">
+          <div class="kicker">Wastewater treatment · Field visit</div>
+          <h3>Industrial Wastewater Treatment Design &amp; Zamzam Plant Visit</h3>
+          <p class="meta">Industrial Wastewater and Effluent Treatment · Sharif University of Technology · Summer 2021</p>
+          <p>Final course project designing a treatment tank for industrial wastewater. To ground the design in a real system, I arranged a site visit, on my own initiative, to the on-site treatment plant of Zamzam Tehran, a soft-drink producer, and studied its activated sludge aeration basins, secondary clarifiers and routine process control such as the SV30 settleability test.</p>
+          <div class="tags"><span class="tag">Activated sludge</span><span class="tag">Industrial wastewater</span><span class="tag">Process design</span><span class="tag">SV30</span></div>
+          <div class="rel"><span>Explore</span><a href="zamzam.html">Annotated photo tour &amp; SV30 simulator →</a></div>
+        </div>
+      </article>
+      <article class="card pcard rv">
+        <div class="pvis"><img src="assets/images/brine-well-siting.jpg" style="object-position:center" alt="Brine paths from the injection well and water drawn into the town well, for the plant's plan and the safe option" loading="lazy"></div>
+        <div class="pbody">
+          <div class="kicker">Groundwater</div>
+          <h3>Brine Well Siting</h3>
+          <p class="meta">Small case study · fictional site · Python</p>
+          <p>Where a desalination plant can inject brine without contaminating a town supply well: pumping test, capture zones by particle tracking and contaminant breakthrough.</p>
+          <div class="tags"><span class="tag">Theis</span><span class="tag">Particle tracking</span><span class="tag">Ogata–Banks</span><span class="tag">Python</span></div>
+          <div class="rel"><span>Case study</span><a href="groundwater.html">Open →</a><a href="https://github.com/RisaRezaei/wellfield" target="_blank" rel="noopener">Code ↗</a></div>
+        </div>
+      </article>
+    </div>
+
+    <div id="code" class="codewrap">
+      <div class="subhead rv"><h3>Open-source tools &amp; tutorials</h3><a href="https://github.com/RisaRezaei?tab=repositories" target="_blank" rel="noopener">github.com/RisaRezaei ↗</a></div>
+      <p class="sub rv" style="max-width:820px">Everything below is my own code, public on GitHub under the MIT licence. Each tool has a tutorial page with its demo output, the method, and a step-by-step walkthrough of the source.</p>
+      <div class="ghproof rv">
+        <a class="ghid" href="https://github.com/RisaRezaei" target="_blank" rel="noopener">
+          <svg viewBox="0 0 16 16" width="34" height="34" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          <span><b>@RisaRezaei</b><small id="gh-upd">public repositories on GitHub</small></span>
+        </a>
+        <div class="ghstat"><b id="gh-repos">12</b><span>public repositories</span></div>
+        <div class="ghstat"><b>11</b><span>Earth Engine tools &amp; course</span></div>
+        <div class="ghstat"><b>2</b><span>Python command-line tools</span></div>
+        <div class="ghstat"><b>2,446</b><span>lines of documented code</span></div>
+      </div>
+      <div class="skillrow rv"><span>Techniques in the code</span><em>Cloud masking &amp; QA bits</em><em>Multi-sensor harmonisation</em><em>Random Forest (classification &amp; regression)</em><em>Accuracy assessment</em><em>Sen’s slope &amp; Mann-Kendall</em><em>Zonal statistics</em><em>Time-series compositing</em><em>Unit conversion</em><em>Batch exports</em><em>Python CLIs</em><em>rasterio / GeoPandas</em><em>Resumable API downloads</em></div>
+      <div class="filters rv" role="toolbar" aria-label="Filter tools"><button class="on" data-f="all">All</button><button class="" data-f="water">Water</button><button class="" data-f="air">Air quality</button><button class="" data-f="climate">Climate</button><button class="" data-f="land">Land & terrain</button><button class="" data-f="ml">Machine learning</button><button class="" data-f="teaching">Teaching</button><button class="" data-f="python">Python</button></div>
+      <div class="tgrid">
+        <article class="tcard rv" data-cat="water">
+          <a class="thumb" href="tool.html?r=gee-gsw-lake-explorer" aria-label="Tutorial: GSW Lake Explorer"><img src="assets/tools/gee-gsw-lake-explorer.jpg" alt="Lake Urmia in 1998, 2015 and 2021 from JRC Global Surface Water" loading="lazy" width="720" height="450"><span class="badge">9 steps</span><span class="lang">Earth Engine JS</span></a>
+          <div class="tbody">
+            <div class="kicker">Earth Engine · Live app</div>
+            <h3><a href="tool.html?r=gee-gsw-lake-explorer">GSW Lake Explorer: Any Lake on Earth, 1984–2021</a></h3>
+            <p>A public Earth Engine app: click any lake on Earth and watch its JRC Global Surface Water history, with a yearly area chart, a decade comparison and a shareable link. No sign-up.</p>
+            <div class="tags"><span class="tag">Earth Engine App</span><span class="tag">JRC Global Surface Water</span><span class="tag">HydroLAKES</span></div>
+            <div class="tact"><a class="btn sm primary" href="https://risarezaei.projects.earthengine.app/view/gsw-lake-explorer" target="_blank" rel="noopener">Open the app ↗</a><a class="btn sm" href="tool.html?r=gee-gsw-lake-explorer">Tutorial →</a><a class="btn sm" href="https://github.com/RisaRezaei/gee-gsw-lake-explorer" target="_blank" rel="noopener">GitHub ↗</a></div>
+          </div>
+        </article>
+        <article class="tcard rv" data-cat="water ml">
+          <a class="thumb" href="tool.html?r=gee-wetland-water-rf" aria-label="Tutorial: Wetland Water Mapping with Random Forest"><img src="assets/tools/gee-wetland-water-rf.jpg" alt="Example output of Wetland Water Mapping with Random Forest" loading="lazy" width="720" height="450"><span class="badge">9 steps</span><span class="lang">Earth Engine JS</span></a>
+          <div class="tbody">
+            <div class="kicker">Earth Engine · Machine learning</div>
+            <h3><a href="tool.html?r=gee-wetland-water-rf">Wetland Water Mapping with Random Forest</a></h3>
+            <p>Landsat 5–9 open-water classification on eight spectral water indices, with hold-out accuracy, variable importance and a water-area series since 1984.</p>
+            <div class="tags"><span class="tag">Random Forest</span><span class="tag">Landsat 5–9</span><span class="tag">Accuracy assessment</span></div>
+            <div class="tact"><a class="btn sm primary" href="tool.html?r=gee-wetland-water-rf">Tutorial &amp; demo →</a><a class="btn sm" href="https://github.com/RisaRezaei/gee-wetland-water-rf" target="_blank" rel="noopener">GitHub ↗</a></div>
+          </div>
+        </article>
+        <article class="tcard rv" data-cat="air">
+          <a class="thumb" href="tool.html?r=gee-air-quality-toolkit" aria-label="Tutorial: Air-Quality Toolkit"><img src="assets/tools/gee-air-quality-toolkit.jpg" alt="Example output of Air-Quality Toolkit" loading="lazy" width="720" height="450"><span class="badge">7 steps</span><span class="lang">Earth Engine JS</span></a>
+          <div class="tbody">
+            <div class="kicker">Earth Engine · Atmosphere</div>
+            <h3><a href="tool.html?r=gee-air-quality-toolkit">Air-Quality Toolkit</a></h3>
+            <p>Monthly NO₂, SO₂, CO, O₃, HCHO (Sentinel-5P) and aerosol optical depth (MODIS) for a region and its stations, in one tidy CSV.</p>
+            <div class="tags"><span class="tag">Sentinel-5P</span><span class="tag">MODIS MAIAC AOD</span><span class="tag">Air quality</span></div>
+            <div class="tact"><a class="btn sm primary" href="tool.html?r=gee-air-quality-toolkit">Tutorial &amp; demo →</a><a class="btn sm" href="https://github.com/RisaRezaei/gee-air-quality-toolkit" target="_blank" rel="noopener">GitHub ↗</a></div>
+          </div>
+        </article>
+        <article class="tcard rv" data-cat="water">
+          <a class="thumb" href="tool.html?r=gee-lake-chlorophyll" aria-label="Tutorial: Lake Chlorophyll-a Monitor"><img src="assets/tools/gee-lake-chlorophyll.jpg" alt="Example output of Lake Chlorophyll-a Monitor" loading="lazy" width="720" height="450"><span class="badge">8 steps</span><span class="lang">Earth Engine JS</span></a>
+          <div class="tbody">
+            <div class="kicker">Earth Engine · Water quality</div>
+            <h3><a href="tool.html?r=gee-lake-chlorophyll">Lake Chlorophyll-a Monitor</a></h3>
+            <p>Sentinel-2 NDCI chlorophyll-a for lakes and reservoirs with Cloud Score+ masking, monthly lake statistics and a MODIS-Aqua comparison.</p>
+            <div class="tags"><span class="tag">Sentinel-2</span><span class="tag">Cloud Score+</span><span class="tag">Algal blooms</span></div>
+            <div class="tact"><a class="btn sm primary" href="tool.html?r=gee-lake-chlorophyll">Tutorial &amp; demo →</a><a class="btn sm" href="https://github.com/RisaRezaei/gee-lake-chlorophyll" target="_blank" rel="noopener">GitHub ↗</a></div>
+          </div>
+        </article>
+        <article class="tcard rv" data-cat="water climate">
+          <a class="thumb" href="tool.html?r=gee-basin-hydroclimate" aria-label="Tutorial: Basin Hydroclimate Time Series"><img src="assets/tools/gee-basin-hydroclimate.jpg" alt="Example output of Basin Hydroclimate Time Series" loading="lazy" width="720" height="450"><span class="badge">7 steps</span><span class="lang">Earth Engine JS</span></a>
+          <div class="tbody">
+            <div class="kicker">Earth Engine · Hydrology</div>
+            <h3><a href="tool.html?r=gee-basin-hydroclimate">Basin Hydroclimate Time Series</a></h3>
+            <p>Monthly precipitation, evaporation, MODIS ET, temperature and GRACE water storage averaged over any river basin, as one table.</p>
+            <div class="tags"><span class="tag">ERA5-Land</span><span class="tag">GRACE / GRACE-FO</span><span class="tag">Water balance</span></div>
+            <div class="tact"><a class="btn sm primary" href="tool.html?r=gee-basin-hydroclimate">Tutorial &amp; demo →</a><a class="btn sm" href="https://github.com/RisaRezaei/gee-basin-hydroclimate" target="_blank" rel="noopener">GitHub ↗</a></div>
+          </div>
+        </article>
+        <article class="tcard rv" data-cat="water">
+          <a class="thumb" href="tool.html?r=gee-landsat-timelapse" aria-label="Tutorial: Landsat Timelapse for Lakes and Wetlands"><img src="assets/tools/gee-landsat-timelapse.jpg" alt="Example output of Landsat Timelapse for Lakes and Wetlands" loading="lazy" width="720" height="450"><span class="badge">5 steps</span><span class="lang">Earth Engine JS</span></a>
+          <div class="tbody">
+            <div class="kicker">Earth Engine · Visualisation</div>
+            <h3><a href="tool.html?r=gee-landsat-timelapse">Landsat Timelapse for Lakes and Wetlands</a></h3>
+            <p>Forty years of cloud-free summer composites turned into an animated GIF, with the shoreline traced on every frame.</p>
+            <div class="tags"><span class="tag">Landsat</span><span class="tag">Animation</span><span class="tag">Shoreline change</span></div>
+            <div class="tact"><a class="btn sm primary" href="tool.html?r=gee-landsat-timelapse">Tutorial &amp; demo →</a><a class="btn sm" href="https://github.com/RisaRezaei/gee-landsat-timelapse" target="_blank" rel="noopener">GitHub ↗</a></div>
+          </div>
+        </article>
+        <article class="tcard rv" data-cat="teaching water ml">
+          <a class="thumb" href="tool.html?r=gee-water-resources-course" aria-label="Tutorial: Earth Engine for Water Resources: a Short Course"><img src="assets/tools/gee-water-resources-course.jpg" alt="Example output of Earth Engine for Water Resources: a Short Course" loading="lazy" width="720" height="450"><span class="badge">6 lessons · 35 steps</span><span class="lang">Earth Engine JS</span></a>
+          <div class="tbody">
+            <div class="kicker">Earth Engine · Teaching</div>
+            <h3><a href="tool.html?r=gee-water-resources-course">Earth Engine for Water Resources: a Short Course</a></h3>
+            <p>Six commented lessons for students: water frequency, multi-temporal water maps, soil-moisture downscaling and rainfall trend tests.</p>
+            <div class="tags"><span class="tag">Course</span><span class="tag">Hydrology</span><span class="tag">Random Forest regression</span></div>
+            <div class="tact"><a class="btn sm primary" href="tool.html?r=gee-water-resources-course">Tutorial &amp; demo →</a><a class="btn sm" href="https://github.com/RisaRezaei/gee-water-resources-course" target="_blank" rel="noopener">GitHub ↗</a></div>
+          </div>
+        </article>
+        <article class="tcard rv" data-cat="air">
+          <a class="thumb" href="tool.html?r=gee-no2-station-tracker" aria-label="Tutorial: NO₂ Tracking at Air-Quality Stations"><img src="assets/tools/gee-no2-station-tracker.jpg" alt="Example output of NO₂ Tracking at Air-Quality Stations" loading="lazy" width="720" height="450"><span class="badge">6 steps</span><span class="lang">Earth Engine JS</span></a>
+          <div class="tbody">
+            <div class="kicker">Earth Engine · Atmosphere</div>
+            <h3><a href="tool.html?r=gee-no2-station-tracker">NO₂ Tracking at Air-Quality Stations</a></h3>
+            <p>Daily or monthly tropospheric NO₂ from Sentinel-5P TROPOMI at many monitoring stations, with a multi-station chart, a mean NO₂ map and a tidy CSV export.</p>
+            <div class="tags"><span class="tag">Sentinel-5P</span><span class="tag">Air quality</span><span class="tag">Time series</span></div>
+            <div class="tact"><a class="btn sm primary" href="tool.html?r=gee-no2-station-tracker">Tutorial &amp; demo →</a><a class="btn sm" href="https://github.com/RisaRezaei/gee-no2-station-tracker" target="_blank" rel="noopener">GitHub ↗</a></div>
+          </div>
+        </article>
+        <article class="tcard rv" data-cat="land">
+          <a class="thumb" href="tool.html?r=gee-cropland-dynamics" aria-label="Tutorial: Global Cropland Dynamics, 2003–2019"><img src="assets/tools/gee-cropland-dynamics.jpg" alt="Example output of Global Cropland Dynamics, 2003–2019" loading="lazy" width="720" height="450"><span class="badge">6 steps</span><span class="lang">Earth Engine JS</span></a>
+          <div class="tbody">
+            <div class="kicker">Earth Engine · Land cover</div>
+            <h3><a href="tool.html?r=gee-cropland-dynamics">Global Cropland Dynamics, 2003–2019</a></h3>
+            <p>Maps stable cropland, gains and losses at 30 m from the GLAD global cropland maps, reports the area of each class and exports GeoTIFFs.</p>
+            <div class="tags"><span class="tag">Land-cover change</span><span class="tag">Global</span><span class="tag">GeoTIFF</span></div>
+            <div class="tact"><a class="btn sm primary" href="tool.html?r=gee-cropland-dynamics">Tutorial &amp; demo →</a><a class="btn sm" href="https://github.com/RisaRezaei/gee-cropland-dynamics" target="_blank" rel="noopener">GitHub ↗</a></div>
+          </div>
+        </article>
+        <article class="tcard rv" data-cat="climate">
+          <a class="thumb" href="tool.html?r=gee-station-temperature-timeseries" aria-label="Tutorial: Daily Temperature at Multiple Stations"><img src="assets/tools/gee-station-temperature-timeseries.jpg" alt="Example output of Daily Temperature at Multiple Stations" loading="lazy" width="720" height="450"><span class="badge">6 steps</span><span class="lang">Earth Engine JS</span></a>
+          <div class="tbody">
+            <div class="kicker">Earth Engine · Climate</div>
+            <h3><a href="tool.html?r=gee-station-temperature-timeseries">Daily Temperature at Multiple Stations</a></h3>
+            <p>Daily mean, minimum and maximum 2 m temperature from ERA5-Land at any number of stations, exported as one tidy CSV in °C.</p>
+            <div class="tags"><span class="tag">ERA5-Land</span><span class="tag">Climate</span><span class="tag">Time series</span></div>
+            <div class="tact"><a class="btn sm primary" href="tool.html?r=gee-station-temperature-timeseries">Tutorial &amp; demo →</a><a class="btn sm" href="https://github.com/RisaRezaei/gee-station-temperature-timeseries" target="_blank" rel="noopener">GitHub ↗</a></div>
+          </div>
+        </article>
+        <article class="tcard rv" data-cat="land">
+          <a class="thumb" href="tool.html?r=gee-elevation-cross-section" aria-label="Tutorial: Elevation Along a Cross-Section"><img src="assets/tools/gee-elevation-cross-section.jpg" alt="Example output of Elevation Along a Cross-Section" loading="lazy" width="720" height="450"><span class="badge">6 steps</span><span class="lang">Earth Engine JS</span></a>
+          <div class="tbody">
+            <div class="kicker">Earth Engine · Terrain</div>
+            <h3><a href="tool.html?r=gee-elevation-cross-section">Elevation Along a Cross-Section</a></h3>
+            <p>Samples SRTM or Copernicus DEM every n metres along any line or polyline, charts the terrain profile and exports it as CSV.</p>
+            <div class="tags"><span class="tag">SRTM</span><span class="tag">Copernicus DEM</span><span class="tag">Terrain profile</span></div>
+            <div class="tact"><a class="btn sm primary" href="tool.html?r=gee-elevation-cross-section">Tutorial &amp; demo →</a><a class="btn sm" href="https://github.com/RisaRezaei/gee-elevation-cross-section" target="_blank" rel="noopener">GitHub ↗</a></div>
+          </div>
+        </article>
+        <article class="tcard rv" data-cat="climate python">
+          <a class="thumb" href="tool.html?r=era5-pressure-level-downloader" aria-label="Tutorial: ERA5 Pressure-Level Downloads via CDS API"><div class="tterm"><div><span class="ps">$</span> python era5_download.py …</div><div class="inf">INFO 2 request(s) planned -&gt; data/era5</div><div><span class="cur"></span></div></div><span class="badge">7 steps</span><span class="lang">Python</span></a>
+          <div class="tbody">
+            <div class="kicker">Python · Command-line tool</div>
+            <h3><a href="tool.html?r=era5-pressure-level-downloader">ERA5 Pressure-Level Downloads via CDS API</a></h3>
+            <p>Command-line tool for ERA5 monthly-mean humidity, winds and other pressure-level variables from the Climate Data Store, with config files, sub-regions and resumable downloads.</p>
+            <div class="tags"><span class="tag">ERA5</span><span class="tag">CDS API</span><span class="tag">NetCDF</span></div>
+            <div class="tact"><a class="btn sm primary" href="tool.html?r=era5-pressure-level-downloader">Tutorial &amp; demo →</a><a class="btn sm" href="https://github.com/RisaRezaei/era5-pressure-level-downloader" target="_blank" rel="noopener">GitHub ↗</a></div>
+          </div>
+        </article>
+        <article class="tcard rv" data-cat="land python">
+          <a class="thumb" href="tool.html?r=raster-point-sampler" aria-label="Tutorial: Raster Values at Point Locations"><div class="tterm"><div><span class="ps">$</span> python sample_rasters.py …</div><div class="inf">INFO 5 points, 4 rasters</div><div class="inf">INFO [1/4] t2m_20230115.tif</div><div class="inf">INFO [2/4] t2m_20230415.tif</div><div><span class="cur"></span></div></div><span class="badge">6 steps</span><span class="lang">Python</span></a>
+          <div class="tbody">
+            <div class="kicker">Python · Command-line tool</div>
+            <h3><a href="tool.html?r=raster-point-sampler">Raster Values at Point Locations</a></h3>
+            <p>Command-line tool that samples a stack of rasters at points, with automatic reprojection and nodata handling, into one Excel, CSV or GeoPackage table.</p>
+            <div class="tags"><span class="tag">rasterio</span><span class="tag">GeoPandas</span><span class="tag">Excel / CSV</span></div>
+            <div class="tact"><a class="btn sm primary" href="tool.html?r=raster-point-sampler">Tutorial &amp; demo →</a><a class="btn sm" href="https://github.com/RisaRezaei/raster-point-sampler" target="_blank" rel="noopener">GitHub ↗</a></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div></section>
+
+  <!-- 04 CHANGE DETECTION -->
+  <section id="publications"><div class="wrap"><div class="col">
+    <h2 class="rv" data-n="04 · CHANGE DETECTION">Publications &amp; Peer Review</h2>
+    <p class="sub rv">Selected outputs.</p>
+    <div class="card pub rv">
+      <div class="kicker">Journal article · 2026</div>
+      <p>Meydani, A., <strong>Abbasalizadehrezaei, P.</strong>, Javadian, M., Khodaei, H., Tajrishy, M., Levia, D.F. (2026). Scenario-driven decision support system for assessing water balance to support agricultural and ecosystem sustainability. <em>Journal of Hydrology</em>, 665, 134679.</p>
+      <a href="https://doi.org/10.1016/j.jhydrol.2025.134679" target="_blank" rel="noopener">doi:10.1016/j.jhydrol.2025.134679 →</a>
+    </div>
+    <div class="card pub rv">
+      <div class="kicker">Conference · 2024</div>
+      <p><strong>Abbasalizadehrezaei, P.</strong>, Meydani, A., Khodaei, H., Tajrishy, M., Levia, D.F. (2024). An integrated decision support system for balancing agricultural and environmental water use in the Urmia Lake Basin. <em>AGU24 Annual Meeting</em>, Washington, D.C.</p>
+    </div>
+    <div class="card pub rv">
+      <div class="kicker">Software · 2026 · Zenodo</div>
+      <p><strong>Abbasalizadehrezaei, P.</strong> (2026). Twelve open-source tools for Earth-observation, water and climate data (Version 1.0.0) [Software]. Zenodo. MIT licence.</p>
+      <ul class="sw">
+        <li><a href="tool.html?r=gee-wetland-water-rf"><em>Wetland Water Mapping with Random Forest</em></a> <a class="doi" href="https://doi.org/10.5281/zenodo.23646350" target="_blank" rel="noopener">10.5281/zenodo.23646350</a></li>
+        <li><a href="tool.html?r=gee-air-quality-toolkit"><em>Air-Quality Toolkit (Sentinel-5P and MODIS MAIAC)</em></a> <a class="doi" href="https://doi.org/10.5281/zenodo.23646371" target="_blank" rel="noopener">10.5281/zenodo.23646371</a></li>
+        <li><a href="tool.html?r=gee-lake-chlorophyll"><em>Lake Chlorophyll-a Monitor</em></a> <a class="doi" href="https://doi.org/10.5281/zenodo.23646373" target="_blank" rel="noopener">10.5281/zenodo.23646373</a></li>
+        <li><a href="tool.html?r=gee-basin-hydroclimate"><em>Basin Hydroclimate Time Series</em></a> <a class="doi" href="https://doi.org/10.5281/zenodo.23646375" target="_blank" rel="noopener">10.5281/zenodo.23646375</a></li>
+        <li><a href="tool.html?r=gee-landsat-timelapse"><em>Landsat Timelapse for Lakes and Wetlands</em></a> <a class="doi" href="https://doi.org/10.5281/zenodo.23646377" target="_blank" rel="noopener">10.5281/zenodo.23646377</a></li>
+        <li><a href="tool.html?r=gee-water-resources-course"><em>Earth Engine for Water Resources: a Short Course</em></a> <a class="doi" href="https://doi.org/10.5281/zenodo.23646381" target="_blank" rel="noopener">10.5281/zenodo.23646381</a></li>
+        <li><a href="tool.html?r=gee-no2-station-tracker"><em>NO₂ Tracking at Air-Quality Stations</em></a> <a class="doi" href="https://doi.org/10.5281/zenodo.23646385" target="_blank" rel="noopener">10.5281/zenodo.23646385</a></li>
+        <li><a href="tool.html?r=gee-cropland-dynamics"><em>Global Cropland Dynamics, 2003–2019</em></a> <a class="doi" href="https://doi.org/10.5281/zenodo.23646395" target="_blank" rel="noopener">10.5281/zenodo.23646395</a></li>
+        <li><a href="tool.html?r=gee-station-temperature-timeseries"><em>Daily Temperature at Multiple Stations</em></a> <a class="doi" href="https://doi.org/10.5281/zenodo.23646400" target="_blank" rel="noopener">10.5281/zenodo.23646400</a></li>
+        <li><a href="tool.html?r=gee-elevation-cross-section"><em>Elevation Along a Cross-Section</em></a> <a class="doi" href="https://doi.org/10.5281/zenodo.23646404" target="_blank" rel="noopener">10.5281/zenodo.23646404</a></li>
+        <li><a href="tool.html?r=era5-pressure-level-downloader"><em>ERA5 Pressure-Level Downloader</em></a> <a class="doi" href="https://doi.org/10.5281/zenodo.23646410" target="_blank" rel="noopener">10.5281/zenodo.23646410</a></li>
+        <li><a href="tool.html?r=raster-point-sampler"><em>Raster Point Sampler</em></a> <a class="doi" href="https://doi.org/10.5281/zenodo.23646412" target="_blank" rel="noopener">10.5281/zenodo.23646412</a></li>
+      </ul>
+    </div>
+    <div class="card pub rv">
+      <div class="kicker">Peer review · 12/2024 – present</div>
+      <p><span data-orcid="reviews">44</span> reviews <span data-orcid="reviews-for">for Elsevier</span>: <span data-orcid="reviews-by-journal"><em>Journal of Environmental Management</em> (35), <em>Agricultural Water Management</em> (7) and <em>Journal of Hydrology</em> (2)</span>, covering hydrology, remote sensing and water management.</p>
+      <a class="orcid-live" href="https://orcid.org/0009-0009-5708-7673" target="_blank" rel="noopener"><i></i>Counts update automatically from ORCID ↗</a>
+    </div>
+  </div></div></section>
+
+  <!-- 05 DECISION SUPPORT -->
+  <section id="experience"><div class="wrap"><div class="col">
+    <h2 class="rv" data-n="05 · DECISION SUPPORT">Experience</h2>
+    <p class="sub rv">Research and teaching.</p>
+    <div class="timeline">
+      <div class="titem card rv">
+        <h3>Research Collaborator, University of Delaware, USA (remote)</h3>
+        <p class="meta">09/2023 – 12/2024 · Prof. Delphis F. Levia, Prof. Massoud Tajrishy</p>
+        <ul>
+          <li>Co-developed a forecast-informed decision support system for real-time water allocation in the Lake Urmia basin, coupling a daily WEAP water-balance model with inflow forecasts.</li>
+          <li>Applied multi-objective evolutionary optimization and AHP to compare allocation scenarios; optimized strategies raised environmental water supply by 31% and agricultural profit by 26%.</li>
+          <li>Results published in the <em>Journal of Hydrology</em> and presented at AGU24.</li>
+        </ul>
+      </div>
+      <div class="titem card rv">
+        <h3>Teaching Assistant, Water Environment Analysis Laboratory</h3>
+        <p class="meta">Sharif University of Technology · 02/2023 – 04/2023</p>
+        <ul><li>Guided students through water-quality and hydrochemical experiments and assessed their lab reports.</li></ul>
+      </div>
+      <div class="titem card rv">
+        <h3>Research Assistant, Sharif University of Technology</h3>
+        <p class="meta">04/2021 – 04/2023 · Development of a Wetlands Monitoring System (3-year funded grant)</p>
+        <ul>
+          <li>Built multi-year satellite monitoring workflows (Landsat, Sentinel-2) for surface water and land cover in Google Earth Engine and Python.</li>
+          <li>Applied Random Forest and K-means for classification and change detection, including accuracy assessment.</li>
+        </ul>
+      </div>
+    </div>
+  </div></div></section>
+
+  <!-- 06 GROUND TRUTH -->
+  <section id="education"><div class="wrap"><div class="col">
+    <h2 class="rv" data-n="06 · GROUND TRUTH">Education</h2>
+    <p class="sub rv">Degrees, distinctions and training.</p>
+    <div class="timeline">
+      <div class="titem card rv">
+        <h3>MSc, Environmental Engineering</h3>
+        <p class="meta">Sharif University of Technology, Tehran · 09/2020 – 04/2023 · GPA 17.71/20</p>
+        <p style="margin:0">Thesis: satellite-based assessment of surface water using Random Forest classification, K-means clustering and spectral indices in Google Earth Engine.</p>
+      </div>
+      <div class="titem card rv">
+        <h3>BSc, Civil Engineering</h3>
+        <p class="meta" style="margin:0">Kharazmi University, Tehran · 09/2016 – 07/2020</p>
+      </div>
+    </div>
+    <div class="card rv">
+      <div class="kicker">Distinctions</div>
+      <ul>
+        <li>Member of the winning team for the 3-year grant "Development of a Wetlands Monitoring System", Sharif.</li>
+        <li>Ranked 1st in Groundwater Contamination, Advanced Hydrology and Water Environment Analysis Laboratory (MSc).</li>
+        <li>Elsevier reviewer recognition: <em>J. Environmental Management</em>, <em>Agricultural Water Management</em>, <em>J. Hydrology</em>.</li>
+      </ul>
+    </div>
+    <div class="card rv">
+      <div class="kicker">Workshops</div>
+      <ul>
+        <li>Remote Sensing for Water Accounting Plus (WA+), IHE Delft (2021)</li>
+        <li>Remote sensing with Google Earth Engine, UNESCO Chair workshop (2020)</li>
+      </ul>
+    </div>
+  </div></div></section>
+
+  <!-- 07 DOWNLINK -->
+  <section id="contact"><div class="wrap"><div class="col">
+    <h2 class="rv" data-n="07 · DOWNLINK">Contact</h2>
+    <p class="sub rv">Open to research, data and engineering roles and collaborations across Europe.</p>
+    <a class="card rv" href="mailto:risarezaei@gmail.com"><div class="kicker">Email</div><h3>risarezaei@gmail.com</h3></a>
+    <a class="card rv" href="https://www.linkedin.com/in/risarezaei" target="_blank" rel="noopener"><div class="kicker">LinkedIn</div><h3>linkedin.com/in/risarezaei</h3></a>
+    <a class="card rv" href="https://orcid.org/0009-0009-5708-7673" target="_blank" rel="noopener"><div class="kicker">ORCID</div><h3>0009-0009-5708-7673</h3></a>
+    <a class="card rv" href="https://github.com/RisaRezaei" target="_blank" rel="noopener"><div class="kicker">GitHub</div><h3>github.com/RisaRezaei</h3></a>
+  </div></div></section>
+
+</main>
+
+<footer><div class="wrap">© <span id="yr"></span> Parisa Abbasalizadehrezaei</div></footer>
+
+<script>
+document.getElementById('yr').textContent=new Date().getFullYear();
+
+/* Reveal content blocks as they enter the viewport */
+(function(){
+  var els=[].slice.call(document.querySelectorAll('.rv'));
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});
+  els.forEach(function(e){io.observe(e)});
+})();
+
+/* Scroll story: one fixed canvas, each section's scene morphs into the next.
+   0 orbit -> 1 acquisition -> 2 spectral bands -> 3 classification -> 4 change detection
+   -> 5 decision support -> 6 ground truth -> 7 downlink */
+(function(){
+  var c=document.getElementById('stage'),x=c.getContext('2d');
+  var IDS=['top','about','skills','projects','publications','experience','education','contact'];
+  var secs=IDS.map(function(id){return document.getElementById(id)});
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W,H,mob,P=0,Pt=0,T0=performance.now();
+  var D2R=Math.PI/180;
+  function cl(v,a,b){return v<(a||0)?(a||0):v>(b===undefined?1:b)?(b===undefined?1:b):v}
+  function ez(t){t=cl(t);return t*t*(3-2*t)}
+  function lerp(a,b,t){return a+(b-a)*t}
+  function rgba(c,a){return 'rgba('+Math.round(c[0])+','+Math.round(c[1])+','+Math.round(c[2])+','+a+')'}
+  function mixc(a,b,t){return [lerp(a[0],b[0],t),lerp(a[1],b[1],t),lerp(a[2],b[2],t)]}
+  var seed=11;function rnd(){seed=(seed*16807)%2147483647;return seed/2147483647}
+
+  /* ---------- stars ---------- */
+  var ST=[];for(var i=0;i<170;i++)ST.push([rnd(),rnd(),rnd()*1.2+.2,rnd()*6]);
+
+  /* ---------- globe (Natural Earth land dots) ---------- */
+  var N=4200,G=[],gold=Math.PI*(3-Math.sqrt(5));
+  for(i=0;i<N;i++){var gy=1-2*(i+.5)/N,gr=Math.sqrt(1-gy*gy),gt=gold*i,px=Math.cos(gt)*gr,pz=Math.sin(gt)*gr;
+    G.push([px,gy,pz,Math.asin(gy)/D2R,Math.atan2(-pz,px)/D2R,0,0]);}
+  function loadLand(){
+    if(!window.topojson)return;
+    fetch('https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/land-110m.json').then(function(r){return r.json()}).then(function(topo){
+      var land=topojson.feature(topo,topo.objects.land),MW=720,MH=360,m=document.createElement('canvas');m.width=MW;m.height=MH;var mx=m.getContext('2d');
+      mx.fillStyle='#fff';
+      (land.features||[land]).forEach(function(f){var g=f.geometry,polys=g.type==='Polygon'?[g.coordinates]:g.coordinates;
+        polys.forEach(function(poly){mx.beginPath();poly.forEach(function(ring){ring.forEach(function(pt,j){var X=(pt[0]+180)/360*MW,Y=(90-pt[1])/180*MH;j?mx.lineTo(X,Y):mx.moveTo(X,Y)});mx.closePath()});mx.fill('evenodd')})});
+      var d=mx.getImageData(0,0,MW,MH).data;
+      G.forEach(function(p){var X=Math.min(MW-1,Math.floor((p[4]+180)/360*MW)),Y=Math.min(MH-1,Math.floor((90-p[3])/180*MH));p[5]=d[(Y*MW+X)*4+3]>128?1:0});
+    }).catch(function(){});
+  }
+  var sc=document.createElement('script');sc.src='https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js';sc.onload=loadLand;document.head.appendChild(sc);
+  var th=1.0,inc=32*D2R,SW=Math.cos(9*D2R),tilt=0.38,rot=2.0,fn=0,hlat=document.getElementById('hlat'),hlon=document.getElementById('hlon');
+  function sat(t){var b=Math.sin(t);return [Math.cos(t),b*Math.sin(inc),b*Math.cos(inc)]}
+  function proj(X,Y,Z,cr,sr,ct,st){var X1=X*cr-Z*sr,Z1=X*sr+Z*cr;return [X1,Y*ct-Z1*st,Y*st+Z1*ct]}
+  function satIcon(sx,sy,ang,al){x.save();x.translate(sx,sy);x.rotate(ang);x.globalAlpha=al;
+    x.fillStyle='rgba(96,165,250,.95)';x.fillRect(-16,-2.5,11,5);x.fillRect(5,-2.5,11,5);
+    x.fillStyle='#e7edf7';x.fillRect(-3.5,-4.5,7,9);x.restore();x.globalAlpha=1}
+  function fmt(v,a,b){return Math.abs(v).toFixed(2)+'°'+(v>=0?a:b)}
+  function globe(cx,cy,R,al,station){
+    if(al<=.003)return;
+    var s=sat(th),k=1.22,cr=Math.cos(rot),sr=Math.sin(rot),ct=Math.cos(tilt),st=Math.sin(tilt);
+    x.globalAlpha=al;
+    var glow=x.createRadialGradient(cx,cy,R*.6,cx,cy,R*1.35);glow.addColorStop(0,'rgba(79,209,197,.10)');glow.addColorStop(1,'rgba(79,209,197,0)');
+    x.fillStyle=glow;x.beginPath();x.arc(cx,cy,R*1.35,0,7);x.fill();
+    var sx=cx+s[0]*R*k,sy=cy-s[1]*R*k,s2=sat(th+.03),ang=Math.atan2(-(s2[1]-s[1]),s2[0]-s[0])+Math.PI/2;
+    if(s[2]<0)satIcon(sx,sy,ang,al*.45);
+    x.globalAlpha=al;
+    var body=x.createRadialGradient(cx-R*.35,cy-R*.35,R*.1,cx,cy,R);body.addColorStop(0,'#13233c');body.addColorStop(1,'#070d18');
+    x.fillStyle=body;x.beginPath();x.arc(cx,cy,R,0,7);x.fill();x.strokeStyle='rgba(96,165,250,.35)';x.lineWidth=1;x.stroke();
+    x.strokeStyle='rgba(96,165,250,.10)';
+    for(var la=-60;la<=60;la+=30){x.beginPath();var first=true;
+      for(var lo=0;lo<=360;lo+=6){var a=la*D2R,b=lo*D2R,q=proj(Math.cos(a)*Math.cos(b),Math.sin(a),Math.cos(a)*Math.sin(b),cr,sr,ct,st);
+        if(q[2]<0){first=true;continue}if(first){x.moveTo(cx+q[0]*R,cy-q[1]*R);first=false}else x.lineTo(cx+q[0]*R,cy-q[1]*R);}
+      x.stroke();}
+    var dz=Math.min(1.9,Math.max(1.1,R/170));
+    for(var j=0;j<G.length;j++){var p=G[j],q=proj(p[0],p[1],p[2],cr,sr,ct,st);
+      if(q[0]*s[0]+q[1]*s[1]+q[2]*s[2]>SW)p[6]=1;else if(p[6]>0)p[6]*=.997;
+      if(q[2]<0)continue;var aa=.2+.8*q[2],X=cx+q[0]*R,Y=cy-q[1]*R;
+      if(p[5]){x.fillStyle='rgba(79,209,197,'+aa+')';x.fillRect(X-dz,Y-dz,2*dz,2*dz);}
+      else{x.fillStyle='rgba(96,165,250,'+(aa*.18)+')';x.fillRect(X-dz*.55,Y-dz*.55,dz*1.1,dz*1.1);}
+      if(p[6]>.03){x.fillStyle=p[5]?'rgba(209,250,229,'+Math.min(1,p[6]*aa*1.2)+')':'rgba(125,211,252,'+Math.min(1,p[6]*aa*1.1)+')';x.fillRect(X-dz*1.45,Y-dz*1.45,dz*2.9,dz*2.9);}
+    }
+    if(s[2]>=0){var fx=cx+s[0]*R,fy=cy-s[1]*R,dx=fx-sx,dy=fy-sy,L=Math.hypot(dx,dy)||1,w=R*.15*(.35+.65*s[2]);
+      var gb=x.createLinearGradient(sx,sy,fx,fy);gb.addColorStop(0,'rgba(79,209,197,.38)');gb.addColorStop(1,'rgba(79,209,197,.03)');
+      x.fillStyle=gb;x.beginPath();x.moveTo(sx,sy);x.lineTo(fx-dy/L*w,fy+dx/L*w);x.lineTo(fx+dy/L*w,fy-dx/L*w);x.closePath();x.fill();
+      satIcon(sx,sy,ang,al);}
+    if(station>0){ /* ground station receiving the downlink */
+      var gx=cx-R*.34,gy2=cy+R*.62,now=performance.now();
+      x.globalAlpha=al*station;
+      x.strokeStyle='rgba(231,237,247,.9)';x.lineWidth=1.5;x.beginPath();x.arc(gx,gy2,7,Math.PI*1.1,Math.PI*1.9);x.stroke();
+      x.beginPath();x.moveTo(gx,gy2);x.lineTo(gx,gy2+9);x.moveTo(gx-5,gy2+9);x.lineTo(gx+5,gy2+9);x.stroke();
+      for(var r=0;r<3;r++){var ph=((now/1400)+r/3)%1;x.strokeStyle='rgba(79,209,197,'+(.6*(1-ph))+')';x.beginPath();x.arc(gx,gy2-3,8+ph*26,Math.PI*1.15,Math.PI*1.85);x.stroke();}
+      if(s[2]>=0){x.setLineDash([3,5]);x.lineDashOffset=-now/40;x.strokeStyle='rgba(79,209,197,.55)';x.beginPath();x.moveTo(sx,sy);x.lineTo(gx,gy2-4);x.stroke();x.setLineDash([]);
+        var u=(now/900)%1;x.fillStyle='#d1fae5';x.beginPath();x.arc(lerp(sx,gx,u),lerp(sy,gy2-4,u),2.2,0,7);x.fill();}
+      x.lineWidth=1;
+    }
+    x.globalAlpha=1;
+    if(hlat&&fn++%8===0){var Yg=s[1]*ct+s[2]*st,Z1=-s[1]*st+s[2]*ct,Xg=s[0]*cr+Z1*sr,Zg=-s[0]*sr+Z1*cr;
+      hlat.textContent=fmt(Math.asin(cl(Yg,-1,1))/D2R,'N','S');hlon.textContent=fmt(Math.atan2(-Zg,Xg)/D2R,'E','W');}
+  }
+
+  /* ---------- the scene tile: a 28x28 grid of 30 m "pixels" around a wetland ---------- */
+  var n=28,CELL=[];
+  function hsh(a,b,s){var v=Math.sin(a*127.1+b*311.7+s*74.7)*43758.5453;return v-Math.floor(v)}
+  function vn(a,b,s){var ia=Math.floor(a),ib=Math.floor(b),fa=a-ia,fb=b-ib;fa=fa*fa*(3-2*fa);fb=fb*fb*(3-2*fb);
+    var p=hsh(ia,ib,s),q=hsh(ia+1,ib,s),r=hsh(ia,ib+1,s),t=hsh(ia+1,ib+1,s);return p+(q-p)*fa+(r-p)*fb+(p-q-r+t)*fa*fb}
+  for(var a=0;a<n;a++)for(var b=0;b<n;b++){var u=(a+.5)/n-.5,v=(b+.5)/n-.5;
+    var f=Math.pow((u+.04)/.31,2)+Math.pow((v-.02)/.23,2)+.55*(vn(a*.28,b*.28,3)-.5);
+    CELL.push({a:a,b:b,f:f,g:vn(a*.35,b*.35,9),j:hsh(a,b,5)});}
+  function klass(cc,r){return cc.f<r?0:(cc.f<r+.85||cc.g>.64)?1:2}
+  var RGB=[[22,56,92],[46,88,58],[118,104,84]],CLS=[[56,189,248],[52,211,153],[71,85,105]];
+  var BAND=[[.35,.3,.5],[.05,.78,.45],[.03,.3,.72]];       /* B03, B08, B11 reflectance for water/veg/land */
+  var BT=[[79,209,197],[96,165,250],[196,181,253]],BN=['B03 · Green','B08 · NIR','B11 · SWIR'];
+  /* corner position of grid point (i,j) for a tile centred at (cx,cy), size S, tilt t */
+  function cpt(i,j,cx,cy,S,t){var u=i/n-.5,v=j/n-.5;return [cx+S*lerp(u,(u-v)*.8,t),cy+S*lerp(v,(u+v)*.42,t)]}
+  function quad(i,j,cx,cy,S,t,g){var p1=cpt(i+g,j+g,cx,cy,S,t),p2=cpt(i+1-g,j+g,cx,cy,S,t),p3=cpt(i+1-g,j+1-g,cx,cy,S,t),p4=cpt(i+g,j+1-g,cx,cy,S,t);
+    x.beginPath();x.moveTo(p1[0],p1[1]);x.lineTo(p2[0],p2[1]);x.lineTo(p3[0],p3[1]);x.lineTo(p4[0],p4[1]);x.closePath();x.fill()}
+  /* layer: -1 = colour image (RGB->classes by k), 0..2 = band */
+  function tile(cx,cy,S,t,layer,k,r,al,reveal){
+    if(al<=.003||S<2)return;
+    var gap=S/n>5?.06:0;
+    for(var q=0;q<CELL.length;q++){var cc=CELL[q],cls=klass(cc,r),col,A=al;
+      if(layer<0){
+        if(reveal!==undefined&&(cc.b+.5)/n>reveal){x.fillStyle='rgba(30,42,64,'+(.55*al)+')';quad(cc.a,cc.b,cx,cy,S,t,.42);continue}
+        col=mixc(RGB[cls].map(function(v){return v*(.82+.36*cc.j)}),CLS[cls],k);A=al*lerp(.95,.9,k);
+      }else{var bv=BAND[layer][cls]*(.8+.4*cc.j);col=BT[layer].map(function(v){return 14+v*bv});}
+      x.fillStyle=rgba(col,A);quad(cc.a,cc.b,cx,cy,S,t,gap);
+    }
+    x.strokeStyle='rgba(96,165,250,'+(.35*al)+')';x.lineWidth=1;
+    var p1=cpt(0,0,cx,cy,S,t),p2=cpt(n,0,cx,cy,S,t),p3=cpt(n,n,cx,cy,S,t),p4=cpt(0,n,cx,cy,S,t);
+    x.beginPath();x.moveTo(p1[0],p1[1]);x.lineTo(p2[0],p2[1]);x.lineTo(p3[0],p3[1]);x.lineTo(p4[0],p4[1]);x.closePath();x.stroke();
+  }
+  function txt(s,X,Y,al,align,col,size){if(al<=.01||mob)return;x.globalAlpha=al;x.fillStyle=col||'#8d9bb3';x.font='600 '+(size||10.5)+'px "JetBrains Mono",monospace';x.textAlign=align||'left';x.fillText(s,X,Y);x.globalAlpha=1}
+
+  /* time series used for the change-detection and river scenes (illustrative) */
+  var YRS=[],VAL=[];for(i=0;i<=40;i++){YRS.push(1984+i);VAL.push(1-.4*i/40+.07*Math.sin(i*1.3)+.045*Math.sin(i*.55+1)+.03*Math.sin(i*2.7));}
+  var SL=[[0,1.05],[10,.78],[20,.56],[30,.38],[40,.22]];          /* five annual snapshots: year index, lake extent */
+  /* ground-truth samples */
+  var GT=[];seed=29;for(i=0;i<16;i++){var cc0=CELL[Math.floor(rnd()*CELL.length)];GT.push({c:cc0,ok:i!==5&&i!==12})}
+
+  function size(){var d=Math.min(2,devicePixelRatio||1);W=innerWidth;H=innerHeight;c.width=W*d;c.height=H*d;x.setTransform(d,0,0,d,0,0);mob=W<=900;}
+  function progress(){
+    var vh=innerHeight,p=0;
+    for(var k=1;k<secs.length;k++){var top=secs[k].getBoundingClientRect().top,t=cl((vh*.92-top)/(vh*.62));p=k-1+t;if(t<1)break;}
+    return p;
+  }
+
+  function frame(now){
+    var tm=reduce?0:(now-T0);
+    Pt=progress();P+=(Pt-P)*(reduce?1:.12);if(Math.abs(Pt-P)<.0005)P=Pt;
+    var p=P,ai=Math.round(Pt);
+    var cdE=document.getElementById('code'),inCode=ai===3&&cdE&&cdE.getBoundingClientRect().top<innerHeight*.5;
+    tabs.forEach(function(tb){var h=tb.getAttribute('href').slice(1);tb.classList.toggle('on',h==='code'?inCode:(ai>=1&&h===IDS[ai]&&!(h==='projects'&&inCode)))});
+    x.clearRect(0,0,W,H);
+    /* layout: visual on the right on desktop, centred behind the text on phones */
+    var vx=mob?W*.5:W*.75,vy=mob?H*.5:H*.55,S=mob?Math.min(W*.82,H*.5):Math.min(W*.32,H*.56);
+    var gx=mob?W*.7:W*.74,gyy=mob?H*.42:H*.46,R0=mob?Math.min(W*1.2,H)*.4:Math.min(W*.62,H*.92,760)*.4;
+    var e1=ez(p),e2=ez(p-1),e3=ez(p-2),e4=ez(p-3),e5=ez(p-4),e6=ez(p-5),e7=ez(p-6);
+
+    /* stars */
+    var sa=lerp(1,.45,e1);
+    for(var k=0;k<ST.length;k++){var s0=ST[k];x.globalAlpha=sa*(.25+.35*Math.abs(Math.sin(tm/1800+s0[3])));x.fillStyle='#cfe3ff';x.beginPath();x.arc(s0[0]*W,s0[1]*H,s0[2],0,7);x.fill();}
+    x.globalAlpha=1;
+
+    /* 0 -> 1 : dive from orbit into one scene;  6 -> 7 : pull back out to orbit */
+    if(p<1.001){var zg=1+Math.pow(e1,1.6)*4;globe(lerp(gx,vx,e1),lerp(gyy,vy,e1),R0*zg,1-ez(p*1.7),0);}
+    if(p>6){var zb=1+Math.pow(1-e7,1.6)*4;globe(vx,vy,S*.46*zb,ez((p-6)*1.7-.7),e7);}
+
+    /* the scene tile (stages 1-3), then five annual snapshots (stage 4) */
+    if(p>0&&p<5){
+      var tilt=ez(e2*1.5)*(1-ez(e3*1.5)),sep=ez(e2*1.7-.7)*(1-ez(e3*1.7));
+      var dive=lerp(.1,1,e1),Sz=S*dive*lerp(1,.62,tilt),ta=p<1?ez(p*1.6-.3):1;
+      var reveal=p<1?cl(e1*1.25-.1):undefined,dS=S*.19*sep;
+      if(sep>.005){ /* spectral layers fan out beneath the colour image */
+        for(var bi=2;bi>=0;bi--){var by=vy+(bi-.5)*dS;
+          tile(vx,by,Sz,tilt,bi,0,1,ta*sep,undefined);
+          var lp=cpt(0,n,vx,by,Sz,tilt);txt(BN[bi],lp[0]-14,lp[1]+4,sep,'right',rgba(BT[bi],.95));}
+      }
+      if(p<4){var ry=vy-1.5*dS;
+        tile(vx,ry,Sz,tilt,-1,e3,1,ta,reveal);
+        if(sep>.05){var lp2=cpt(0,n,vx,ry,Sz,tilt);txt('RGB COMPOSITE',lp2[0]-14,lp2[1]+4,sep,'right','#e7edf7');}
+      }
+      if(p>3){ /* snapshots spread into a row of years */
+        var rs=S*.19,rowy=vy-S*.34;
+        for(var q=4;q>=0;q--){var tx=lerp(vx,vx+(q-2)*S*.235,e4),tyy=lerp(vy,rowy,e4),ts=lerp(S,rs,e4);
+          tile(tx,tyy,ts,0,-1,1,lerp(1,SL[q][1],e4),(1-e5)*(q===0?1:ez(e4*2.2-.8)),undefined);
+          txt(String(YRS[SL[q][0]]),tx,tyy+ts/2+14,e4*(1-e5),'center');}
+      }
+      if(p<1.4&&p>.05){ /* satellite imaging the scene */
+        var sa2=ez(p*2-.6)*(1-ez((p-1)*2.5)),stx=vx,sty=vy-Sz/2-46,sw=(tm/3600)%1,rowY=vy-Sz/2+Sz*sw;
+        x.globalAlpha=sa2*.9;var gb2=x.createLinearGradient(stx,sty,stx,rowY);gb2.addColorStop(0,'rgba(79,209,197,.32)');gb2.addColorStop(1,'rgba(79,209,197,.05)');
+        x.fillStyle=gb2;x.beginPath();x.moveTo(stx,sty);x.lineTo(vx+Sz/2,rowY);x.lineTo(vx-Sz/2,rowY);x.closePath();x.fill();
+        x.fillStyle='rgba(209,250,229,.5)';x.fillRect(vx-Sz/2,rowY-1,Sz,2);x.globalAlpha=1;
+        satIcon(stx,sty,0,sa2);
+      }
+    }
+
+    /* 4 -> 5 : the time series is drawn, then becomes a river */
+    if(p>3&&p<6){
+      var X0=vx-S*.5,X1=vx+S*.5,Y0=vy-S*.02,Y1=vy+S*.42,pts=[],m=e5,ca=e4*(1-e5);
+      var rs0=[vx-S*.52,vy-S*.42],rs1=[vx+S*.36,vy+S*.38],dx0=rs1[0]-rs0[0],dy0=rs1[1]-rs0[1],ll=Math.hypot(dx0,dy0),nx=-dy0/ll,ny=dx0/ll;
+      for(var ii=0;ii<=40;ii++){var cx0=X0+ii/40*(X1-X0),cy0=Y1-(VAL[ii]-.5)/.62*(Y1-Y0),s1=ii/40,off=S*.075*Math.sin(s1*9.5)+S*.03*Math.sin(s1*23);
+        pts.push([lerp(cx0,rs0[0]+dx0*s1+nx*off,m),lerp(cy0,rs0[1]+dy0*s1+ny*off,m)]);}
+      var shown=Math.max(2,Math.round(41*cl(e4*1.15)));
+      if(ca>.01){x.strokeStyle='rgba(30,42,64,'+ca+')';x.beginPath();x.moveTo(X0,Y1);x.lineTo(X1,Y1);x.moveTo(X0,Y0);x.lineTo(X0,Y1);x.stroke();
+        txt('1984',X0,Y1+14,ca,'left');txt('2024',X1,Y1+14,ca,'right');txt('WATER AREA',X0,Y0-10,ca,'left');
+        /* fitted trend */
+        var tb=e4;x.setLineDash([5,4]);x.strokeStyle='rgba(248,113,113,'+(ca*.9)+')';x.lineWidth=1.6;x.beginPath();
+        x.moveTo(X0,Y1-(1.005-.5)/.62*(Y1-Y0));x.lineTo(lerp(X0,X1,tb),Y1-(lerp(1.005,.605,tb)-.5)/.62*(Y1-Y0));x.stroke();x.setLineDash([]);}
+      var la=p<5?1:1-e6;
+      x.strokeStyle='rgba(125,211,252,'+(.95*la)+')';x.lineWidth=lerp(1.5,3.2,m);x.lineJoin='round';x.beginPath();
+      for(ii=0;ii<(m>0?41:shown);ii++){ii?x.lineTo(pts[ii][0],pts[ii][1]):x.moveTo(pts[ii][0],pts[ii][1])}x.stroke();x.lineWidth=1;
+      if(m>.02&&la>.01){ /* water-allocation network */
+        var na=m*la,pt=function(s1){var fi=s1*40,i0=Math.min(39,Math.floor(fi)),fr=fi-i0;return [lerp(pts[i0][0],pts[i0+1][0],fr),lerp(pts[i0][1],pts[i0+1][1],fr)]};
+        var res=pt(.3),ag=pt(.55),en=pt(.8),wl=pts[40],agN=[ag[0]+S*.26,ag[1]-S*.1],ciN=[pt(.42)[0]-S*.24,pt(.42)[1]+S*.12];
+        x.globalAlpha=na;x.strokeStyle='rgba(96,165,250,.6)';x.setLineDash([4,4]);x.beginPath();x.moveTo(ag[0],ag[1]);x.lineTo(agN[0],agN[1]);var ci0=pt(.42);x.moveTo(ci0[0],ci0[1]);x.lineTo(ciN[0],ciN[1]);x.stroke();x.setLineDash([]);
+        x.fillStyle='#4fd1c5';x.beginPath();x.moveTo(res[0],res[1]-9);x.lineTo(res[0]+9,res[1]+7);x.lineTo(res[0]-9,res[1]+7);x.closePath();x.fill();
+        x.fillStyle='#34d399';x.fillRect(agN[0]-7,agN[1]-7,14,14);x.fillStyle='#60a5fa';x.fillRect(ciN[0]-7,ciN[1]-7,14,14);
+        x.fillStyle='rgba(56,189,248,.55)';x.beginPath();x.ellipse(wl[0],wl[1],22,12,.5,0,7);x.fill();x.strokeStyle='#7dd3fc';x.stroke();
+        x.fillStyle='#e7edf7';x.beginPath();x.arc(pts[0][0],pts[0][1],4,0,7);x.fill();x.globalAlpha=1;
+        txt('INFLOW FORECAST',pts[0][0]+10,pts[0][1]-8,na);txt('RESERVOIR',res[0]+14,res[1]+4,na);txt('AGRICULTURE',agN[0]+12,agN[1]+4,na);
+        txt('URBAN',ciN[0]-12,ciN[1]+4,na,'right');txt('WETLAND',wl[0],wl[1]+28,na,'center');
+        /* flow particles */
+        x.fillStyle='#d1fae5';
+        for(var fpi=0;fpi<22;fpi++){var fs=((tm/9000)+fpi/22)%1,fp=pt(fs);x.globalAlpha=na*(.4+.6*Math.sin(fs*Math.PI));x.beginPath();x.arc(fp[0],fp[1],1.8,0,7);x.fill();}
+        for(fpi=0;fpi<5;fpi++){var fb=((tm/3000)+fpi/5)%1;x.globalAlpha=na*.8;x.beginPath();x.arc(lerp(ag[0],agN[0],fb),lerp(ag[1],agN[1],fb),1.5,0,7);x.arc(lerp(ci0[0],ciN[0],fb),lerp(ci0[1],ciN[1],fb),1.5,0,7);x.fill();}
+        x.globalAlpha=1;
+      }
+    }
+
+    /* 5 -> 6 : ground truth on the classified map; 6 -> 7 it shrinks back to a point on Earth */
+    if(p>5){
+      var gS=S*.74*(1-ez(e7*1.1)*.92),gxx=lerp(vx-S*.12,vx,e7),ga=e6*(1-ez(e7*1.3));
+      tile(gxx,vy,gS,0,-1,1,.8,ga*.85,undefined);
+      for(var gi=0;gi<GT.length;gi++){var g=GT[gi],gp=cpt(g.c.a+.5,g.c.b+.5,gxx,vy,gS,0),gal=ga*ez(e6*2.2-gi/GT.length*1.2);
+        if(gal<.01)continue;x.globalAlpha=gal;x.strokeStyle=g.ok?'#e7edf7':'#f87171';x.lineWidth=1.3;
+        x.beginPath();x.arc(gp[0],gp[1],5.5,0,7);x.moveTo(gp[0]-9,gp[1]);x.lineTo(gp[0]-3,gp[1]);x.moveTo(gp[0]+3,gp[1]);x.lineTo(gp[0]+9,gp[1]);
+        x.moveTo(gp[0],gp[1]-9);x.lineTo(gp[0],gp[1]-3);x.moveTo(gp[0],gp[1]+3);x.lineTo(gp[0],gp[1]+9);x.stroke();}
+      x.globalAlpha=1;x.lineWidth=1;
+      var mx0=gxx+gS/2+22,my0=vy-30,cs=18,ma=ga*ez(e6*1.6-.5);
+      if(ma>.01){txt('ACCURACY',mx0,my0-10,ma);
+        for(var mi=0;mi<3;mi++)for(var mj=0;mj<3;mj++){x.globalAlpha=ma;x.fillStyle=mi===mj?'rgba(79,209,197,'+(.55+.15*mi)+')':'rgba(96,165,250,'+((mi+mj)%3===1?.12:.06)+')';x.fillRect(mx0+mj*cs,my0+mi*cs,cs-2,cs-2);}
+        x.globalAlpha=1;['W','V','L'].forEach(function(lb,li){txt(lb,mx0+li*cs+cs/2-1,my0+3*cs+11,ma,'center');txt(lb,mx0-6,my0+li*cs+cs/2+3,ma,'right')});}
+    }
+
+    /* stage caption */
+    var CAP=['','ACQUISITION · Landsat / Sentinel-2 · 30 m pixels','SPECTRAL BANDS · green · near-infrared · shortwave-infrared',
+      'CLASSIFICATION · water indices + Random Forest · water / vegetation / land','CHANGE DETECTION · annual water extent → trend',
+      'DECISION SUPPORT · water-allocation network','GROUND TRUTH · validation samples · accuracy assessment','DOWNLINK · data to the ground station'];
+    if(!mob){var ci=Math.round(p),cap=CAP[ci]||'',caa=cl(1-Math.abs(p-ci)*3.2);txt(cap,vx,vy+S*.5+(ci===7?S*.12:0)+46,caa*.95,'center','#8d9bb3',11);}
+
+    if(!reduce){rot+=0.0018;th+=0.0042;}
+    requestAnimationFrame(frame);
+  }
+  addEventListener('resize',size);size();requestAnimationFrame(frame);
+})();
+
+/* tools: filters + live GitHub numbers */
+(function(){
+  var bs=[].slice.call(document.querySelectorAll('.filters button')),cs=[].slice.call(document.querySelectorAll('.tcard'));
+  bs.forEach(function(b){b.addEventListener('click',function(){var f=b.getAttribute('data-f');
+    bs.forEach(function(x){x.classList.toggle('on',x===b)});
+    cs.forEach(function(c){var ok=f==='all'||(' '+c.getAttribute('data-cat')+' ').indexOf(' '+f+' ')>=0;c.classList.toggle('hide',!ok);if(ok)c.classList.add('in')})})});
+  if(!window.fetch)return;
+  fetch('https://api.github.com/users/RisaRezaei').then(function(r){return r.ok?r.json():null}).then(function(u){
+    if(!u)return;document.getElementById('gh-repos').textContent=u.public_repos;
+    var d=new Date(u.updated_at);document.getElementById('gh-upd').textContent='profile updated '+d.toLocaleDateString('en-GB',{month:'short',year:'numeric'});
+  }).catch(function(){});
+})();
+</script>
+<script>
+document.querySelectorAll('.yt-frame').forEach(function(b){b.addEventListener('click',function(){
+  var f=document.createElement('iframe');
+  f.src='https://www.youtube-nocookie.com/embed/'+b.dataset.yt+'?autoplay=1&rel=0';
+  f.title=b.getAttribute('aria-label');f.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+  f.allowFullscreen=true;f.referrerPolicy='strict-origin-when-cross-origin';
+  var d=document.createElement('div');d.className='yt-frame';d.appendChild(f);b.replaceWith(d);
+},{once:true});});
+</script>
+<div class="ytm" aria-hidden="true" role="dialog" aria-label="Video player"><div class="ytm-box"><button class="ytm-x" type="button" aria-label="Close video">×</button><div class="ytm-v"></div><div class="ytm-cap"><b></b><a target="_blank" rel="noopener">Watch on YouTube ↗</a></div></div></div>
+<script>
+(function(){var m=document.querySelector(".ytm");if(!m)return;var v=m.querySelector(".ytm-v"),cap=m.querySelector(".ytm-cap b"),lk=m.querySelector(".ytm-cap a"),last=null;
+function open(b){last=b;var id=b.dataset.yt,t=b.dataset.t;v.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>';v.firstChild.title=t;cap.textContent=t;lk.href="https://www.youtube.com/watch?v="+id;m.classList.add("on");m.setAttribute("aria-hidden","false");m.querySelector(".ytm-x").focus()}
+function close(){m.classList.remove("on");m.setAttribute("aria-hidden","true");setTimeout(function(){v.innerHTML=""},260);if(last)last.focus()}
+document.querySelectorAll(".ytc-frame").forEach(function(b){b.addEventListener("click",function(){open(b)})});
+m.addEventListener("click",function(e){if(e.target===m||e.target.closest(".ytm-x"))close()});addEventListener("keydown",function(e){if(e.key==="Escape"&&m.classList.contains("on"))close()});})();
+</script>
+<script>
+/* peer-review numbers follow the ORCID record (public API, no key needed) */
+(function(){
+var API="https://pub.orcid.org/v3.0/0009-0009-5708-7673/";
+var NAMES={"0301-4797":"Journal of Environmental Management","0378-3774":"Agricultural Water Management","0022-1694":"Journal of Hydrology"};
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]})}
+function set(k,f){document.querySelectorAll("[data-orcid=\""+k+"\"]").forEach(f)}
+fetch(API+"peer-reviews",{headers:{Accept:"application/json"}}).then(function(r){if(!r.ok)throw r.status;return r.json()}).then(function(d){
+  var rows=[],orgs={},total=0;
+  (d.group||[]).forEach(function(g){var id=((g["external-ids"]||{})["external-id"]||[]).map(function(e){return e["external-id-value"]})[0]||"",n=(g["peer-review-group"]||[]).length;
+    (g["peer-review-group"]||[]).forEach(function(x){(x["peer-review-summary"]||[]).forEach(function(s){var o=s["convening-organization"];if(o&&o.name)orgs[o.name.replace(/,?\s*(Inc|Ltd|B\.?V|GmbH|LLC)\.?$/i,"")]=1})});
+    if(n){total+=n;rows.push({issn:id.replace(/^issn:/i,""),n:n})}});
+  if(!total)return;
+  return Promise.all(rows.map(function(r){if(NAMES[r.issn]){r.name=NAMES[r.issn];return r}
+    return fetch("https://api.crossref.org/journals/"+encodeURIComponent(r.issn)).then(function(x){return x.json()}).then(function(j){r.name=(j.message&&j.message.title)||r.issn;return r}).catch(function(){r.name=r.issn;return r})}))
+  .then(function(rows){rows.sort(function(a,b){return b.n-a.n});
+    var on=Object.keys(orgs),pub=on.length===1?on[0]:"";
+    var L=rows.map(function(r){return "<em>"+esc(r.name)+"</em> ("+r.n+")"}),txt=L.length>1?L.slice(0,-1).join(", ")+" and "+L[L.length-1]:L[0];
+    set("reviews",function(e){e.textContent=total});
+    set("reviews-label",function(e){e.textContent="Peer reviews for "+(pub?pub+" ":"")+"journals"});
+    set("reviews-for",function(e){e.textContent=pub?"for "+pub:"for journals"});
+    set("reviews-by-journal",function(e){e.innerHTML=txt});});
+}).catch(function(){});
+})();
+</script>
+<script src="assets/fx.js" data-fx="home" defer></script>
+</body>
+</html>
