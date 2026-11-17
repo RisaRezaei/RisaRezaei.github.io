@@ -333,7 +333,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
     <p class="rv">I'm an environmental engineer (MSc, Sharif University of Technology) working at the interface of <strong>hydrology</strong>, <strong>satellite remote sensing</strong> and <strong>machine learning</strong>. I build Earth-observation workflows in Google Earth Engine and Python, model surface water and groundwater with WEAP, MODFLOW and MIKE, and turn model results into decision support for water management.</p>
     <p class="rv">My work on a decision-support system for the Lake Urmia basin, carried out with the University of Delaware, is published in the <em>Journal of Hydrology</em> and was presented at AGU24. I also have hands-on experience in water-quality laboratory analysis and review regularly for Elsevier journals.</p>
     <div class="stats rv">
-      <div class="stat"><b data-orcid="reviews">44</b><span data-orcid="reviews-label">Peer reviews for Elsevier journals</span></div>
+      <div class="stat"><b data-orcid="reviews">45</b><span data-orcid="reviews-label">Peer reviews for Elsevier journals</span></div>
       <div class="stat"><b>+31%</b><span>Environmental water supply in optimized allocation scenarios</span></div>
       <div class="stat"><b>17.71/20</b><span>MSc GPA, Sharif University</span></div>
       <div class="stat"><b>AGU24</b><span>Conference presentation, Washington, D.C.</span></div>
@@ -731,7 +731,7 @@ footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-s
     </div>
     <div class="card pub rv">
       <div class="kicker">Peer review · 12/2024 – present</div>
-      <p><span data-orcid="reviews">44</span> reviews <span data-orcid="reviews-for">for Elsevier</span>: <span data-orcid="reviews-by-journal"><em>Journal of Environmental Management</em> (35), <em>Agricultural Water Management</em> (7) and <em>Journal of Hydrology</em> (2)</span>, covering hydrology, remote sensing and water management.</p>
+      <p><span data-orcid="reviews">45</span> reviews <span data-orcid="reviews-for">for Elsevier</span>: <span data-orcid="reviews-by-journal"><em>Journal of Environmental Management</em> (35), <em>Agricultural Water Management</em> (8) and <em>Journal of Hydrology</em> (2)</span>, covering hydrology, remote sensing and water management.</p>
       <a class="orcid-live" href="https://orcid.org/0009-0009-5708-7673" target="_blank" rel="noopener"><i></i>Counts update automatically from ORCID ↗</a>
     </div>
   </div></div></section>
@@ -1100,6 +1100,7 @@ m.addEventListener("click",function(e){if(e.target===m||e.target.closest(".ytm-x
 /* peer-review numbers follow the ORCID record (public API, no key needed) */
 (function(){
 var API="https://pub.orcid.org/v3.0/0009-0009-5708-7673/";
+var ADD={"0378-3774":1}; /* one Agricultural Water Management review is missing from the ORCID record: always add it */
 var NAMES={"0301-4797":"Journal of Environmental Management","0378-3774":"Agricultural Water Management","0022-1694":"Journal of Hydrology"};
 function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]})}
 function set(k,f){document.querySelectorAll("[data-orcid=\""+k+"\"]").forEach(f)}
@@ -1109,6 +1110,7 @@ fetch(API+"peer-reviews",{headers:{Accept:"application/json"}}).then(function(r)
     (g["peer-review-group"]||[]).forEach(function(x){(x["peer-review-summary"]||[]).forEach(function(s){var o=s["convening-organization"];if(o&&o.name)orgs[o.name.replace(/,?\s*(Inc|Ltd|B\.?V|GmbH|LLC)\.?$/i,"")]=1})});
     if(n){total+=n;rows.push({issn:id.replace(/^issn:/i,""),n:n})}});
   if(!total)return;
+  Object.keys(ADD).forEach(function(k){var r=rows.filter(function(x){return x.issn===k})[0];if(r)r.n+=ADD[k];else rows.push({issn:k,n:ADD[k]});total+=ADD[k]});
   return Promise.all(rows.map(function(r){if(NAMES[r.issn]){r.name=NAMES[r.issn];return r}
     return fetch("https://api.crossref.org/journals/"+encodeURIComponent(r.issn)).then(function(x){return x.json()}).then(function(j){r.name=(j.message&&j.message.title)||r.issn;return r}).catch(function(){r.name=r.issn;return r})}))
   .then(function(rows){rows.sort(function(a,b){return b.n-a.n});
