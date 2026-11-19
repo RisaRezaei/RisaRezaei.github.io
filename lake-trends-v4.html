@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Global Lake Area Trends | Parisa Abbasalizadehrezaei</title>
+<meta name="description" content="Interactive atlas of permanent and seasonal water in 563 lakes worldwide, 1984–2021: trends, abrupt shifts, seasonality and lake behaviour, from JRC Global Surface Water (Landsat) and HydroLAKES.">
+<link rel="icon" href="favicon.ico">
+<script>if(/[?&]embed/.test(location.search))document.documentElement.classList.add('embed')</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+:root{--bg:#070b14;--panel:#0a101c;--card:#111a2b;--card2:#0d1524;--line:#1e2a40;--ink:#e7edf7;--muted:#8d9bb3;--accent:#4fd1c5;--accent2:#60a5fa;
+  --dec:#e66767;--inc:#3987e5;--neu:#64748b;--perm:#199e70;--seas:#9085e9}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Inter,system-ui,sans-serif;display:flex;flex-direction:column}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+button{font:inherit;color:inherit}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 22px;border-bottom:1px solid var(--line);background:var(--panel)}
+header .back{font-size:14px;color:var(--muted)}
+header h1{margin:0;font:700 19px "Space Grotesk",sans-serif}
+header .tag{font:600 11px "JetBrains Mono",monospace;letter-spacing:.14em;color:var(--accent2)}
+.wrap{flex:1;display:flex;min-height:0}
+aside{width:340px;flex:none;overflow-y:auto;padding:20px 20px 28px;border-right:1px solid var(--line);background:var(--panel)}
+aside h2{font:700 15px "Space Grotesk",sans-serif;margin:24px 0 10px;letter-spacing:.02em}
+aside h2:first-child{margin-top:0}
+aside p{margin:0 0 10px;color:var(--muted);font-size:13.5px}
+.vhead{margin-top:18px;padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+.vhead b{display:block;font:700 15px "Space Grotesk",sans-serif}
+.vhead span{display:block;margin-top:4px;font-size:12.5px;line-height:1.45;color:var(--muted)}
+.distbar{display:flex;gap:2px;height:10px;margin:14px 0 10px}
+.distbar i{display:block;border-radius:3px;min-width:2px}
+.drow{display:flex;align-items:center;gap:9px;width:100%;padding:5px 8px;margin:0;border:0;border-radius:8px;background:none;text-align:left;font-size:13px;cursor:default}
+.drow .sw{width:10px;height:10px;border-radius:50%;flex:none}
+.drow .lb{flex:1;min-width:0}
+.drow .ct{font:600 12px "JetBrains Mono",monospace;color:var(--muted)}
+.drow.pick{cursor:pointer}.drow.pick:hover{background:var(--card)}
+.drow.on{background:var(--card);box-shadow:inset 0 0 0 1px var(--line)}
+.drow.off{opacity:.45}
+.fam{font:600 10.5px "JetBrains Mono",monospace;letter-spacing:.12em;color:var(--muted);margin:10px 8px 2px;text-transform:uppercase}
+.seg{display:flex;gap:4px;padding:3px;border:1px solid var(--line);border-radius:999px;background:var(--card2)}
+.seg button{flex:1;padding:6px 8px;border:0;border-radius:999px;background:none;color:var(--muted);font-size:12.5px;cursor:pointer}
+.seg button.on{background:var(--card);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+select{width:100%;margin-top:8px;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font:inherit;font-size:13.5px}
+ol{padding-left:0;margin:0;list-style:none;counter-reset:i}
+ol li{counter-increment:i;display:flex;justify-content:space-between;gap:10px;padding:6px 8px;border-radius:8px;cursor:pointer;font-size:13.5px}
+ol li:hover{background:var(--card)}
+ol li::before{content:counter(i);font:600 11px "JetBrains Mono",monospace;color:var(--muted);width:14px;padding-top:2px}
+ol li .n{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ol li .v{font:600 12px "JetBrains Mono",monospace;color:var(--ink)}
+ol .empty{color:var(--muted);font-size:13px;padding:4px 8px;cursor:default}ol .empty::before{content:none}
+.dl{display:inline-flex;align-items:center;gap:8px;margin-top:22px;padding:8px 14px;border:1px solid var(--line);border-radius:999px;font-size:13px;color:var(--ink)}
+.dl:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+details.note{font-size:12px;color:var(--muted);border-top:1px solid var(--line);margin-top:22px;padding-top:12px}
+details.note summary{cursor:pointer;color:var(--ink);font:600 13px Inter,sans-serif;margin-bottom:8px}
+details.note p{font-size:12px;margin:0 0 8px}
+/* map area */
+.mapwrap{position:relative;flex:1;min-width:0;display:flex}
+#map{flex:1;min-height:420px;background:#05080f}
+.views{position:absolute;z-index:500;top:12px;left:56px;right:12px;display:flex;justify-content:center;pointer-events:none}
+.views .seg{pointer-events:auto;flex:none;max-width:100%;overflow-x:auto;scrollbar-width:none;background:rgba(10,16,28,.92);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.views .seg::-webkit-scrollbar{display:none}
+.views .seg button{flex:none;white-space:nowrap;padding:7px 13px;font-size:13px}
+.legend{position:absolute;z-index:500;left:12px;bottom:26px;max-width:280px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:rgba(10,16,28,.92);font-size:12px;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.legend b{display:block;font:600 11px "JetBrains Mono",monospace;letter-spacing:.08em;color:var(--muted);margin-bottom:6px;text-transform:uppercase}
+.legend .li{display:flex;align-items:center;gap:7px;margin:3px 0;color:var(--ink)}
+.legend .li i{width:9px;height:9px;border-radius:50%;flex:none}
+.legend .hint{margin-top:6px;color:var(--muted);font-size:11px}
+.leaflet-container{font:inherit;background:#05080f}
+.leaflet-tooltip.tip{background:#111a2b;color:var(--ink);border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.5);font-size:12.5px;padding:6px 9px}
+.leaflet-tooltip.tip::before{display:none}
+.tip b{font-weight:600}.tip span{color:var(--muted)}
+.leaflet-control-attribution{background:rgba(7,11,20,.75)!important;color:#8d9bb3!important;font-size:11px}
+.leaflet-control-attribution a{color:#8d9bb3!important}
+.leaflet-bar a{background:#111a2b;color:#e7edf7;border-color:#1e2a40}
+/* lake profile: compact floating card, full profile on demand */
+.dos{position:absolute;z-index:1100;top:64px;right:12px;width:340px;max-width:calc(100% - 24px);max-height:calc(100% - 76px);overflow-y:auto;background:#0a101c;border:1px solid var(--line);border-radius:16px;box-shadow:0 18px 44px rgba(0,0,0,.55);transform:translateX(calc(100% + 30px));opacity:0;transition:transform .35s cubic-bezier(.3,.7,.2,1),opacity .25s;overscroll-behavior:contain}
+.dos.open{transform:none;opacity:1}
+.dos-in{padding:0 16px 14px}
+.dtop{position:sticky;top:0;z-index:3;display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin:0 -16px;padding:12px 16px 8px;background:#0a101c}
+.dtt{min-width:0}
+.dx{flex:none;width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:16px;line-height:1;cursor:pointer}
+.dx:hover{border-color:var(--accent);color:var(--accent)}
+.eyebrow{font:600 10px "JetBrains Mono",monospace;letter-spacing:.12em;color:var(--accent2);text-transform:uppercase}
+.dos h3{margin:2px 0 0;font:700 18px/1.2 "Space Grotesk",sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.coord{margin-top:10px;font:500 11px "JetBrains Mono",monospace;color:var(--muted)}
+.rline{display:flex;gap:9px;align-items:flex-start;padding:9px 10px;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+.rline i{width:9px;height:9px;border-radius:50%;flex:none;margin-top:5px}
+.rline b{display:block;font:700 14px/1.3 "Space Grotesk",sans-serif}
+.rline span{display:block;font-size:11.5px;line-height:1.4;color:var(--muted)}
+.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:8px}
+.kpi{padding:7px 8px;border:1px solid var(--line);border-radius:10px;background:var(--card2)}
+.kpi small{display:block;font:600 9.5px "JetBrains Mono",monospace;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
+.kpi b{display:block;margin-top:2px;font:700 15px/1.2 "Space Grotesk",sans-serif}
+.kpi b .ns{font:500 12px Inter,sans-serif;color:var(--muted)}
+.kpi span{display:flex;align-items:center;gap:5px;margin-top:2px;font-size:10.5px;color:var(--muted)}
+.kpi span i{width:7px;height:7px;border-radius:50%}
+.cmain{margin-top:10px}
+.more{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:10px;padding:8px;border:1px solid var(--line);border-radius:999px;background:none;color:var(--ink);font-size:12.5px;cursor:pointer}
+.more:hover{border-color:var(--accent);color:var(--accent)}
+.more svg{width:12px;height:12px;transition:transform .25s}
+.more[aria-expanded="true"] svg{transform:rotate(180deg)}
+.full{margin-top:12px}
+.tabs{margin-bottom:10px}
+.tabs button{padding:5px 6px;font-size:12px}
+.tp h4{margin:14px 0 6px;font:600 10px "JetBrains Mono",monospace;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+.story{margin:0;font-size:13px;line-height:1.6;color:#c8d3e6}
+.keys{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;margin-top:4px;font-size:11px;color:var(--ink)}
+.keys .u{margin-left:auto;color:var(--muted)}
+.keys span{display:inline-flex;align-items:center;gap:6px}
+.keys i{width:9px;height:9px;border-radius:2px}
+.keys .ln{width:14px;height:0;border-top:2px dashed var(--ink);border-radius:0}
+.keys .ln.m{border-top:2px dotted var(--muted)}
+.chart{position:relative}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.chart text{font:500 9.5px "JetBrains Mono",monospace;fill:#8d9bb3}
+.ctip{position:absolute;z-index:3;pointer-events:none;min-width:150px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:#111a2b;box-shadow:0 10px 26px rgba(0,0,0,.5);font-size:12px;line-height:1.5;opacity:0;transition:opacity .12s}
+.ctip b{display:block;font:700 13px "Space Grotesk",sans-serif;margin-bottom:2px}
+.ctip .r{display:flex;justify-content:space-between;gap:12px;color:var(--muted)}
+.ctip .r em{font-style:normal;color:var(--ink);font-weight:600}
+.ctip .r i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px}
+table.tt{width:100%;border-collapse:collapse;font-size:12px}
+.tt th{font:600 10.5px "JetBrains Mono",monospace;letter-spacing:.06em;color:var(--muted);text-align:right;padding:0 0 6px;font-weight:600}
+.tt th:first-child,.tt td:first-child{text-align:left}
+.tt td{padding:6px 0;border-top:1px solid var(--line);text-align:right;white-space:nowrap}
+.tt td:first-child{display:flex;align-items:center;gap:7px}
+.tt td:first-child i{width:9px;height:9px;border-radius:2px}
+.tt .v{font-weight:600}
+.tt .ok{color:var(--muted)}
+.tnote{margin-top:6px;font-size:11px;color:var(--muted);line-height:1.45}
+.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.tile{padding:8px 10px;border:1px solid var(--line);border-radius:12px;background:var(--card2)}
+.tile small{display:block;font:600 10px "JetBrains Mono",monospace;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+.tile b{display:block;margin-top:2px;font:700 15px/1.2 "Space Grotesk",sans-serif}
+.tile span{display:block;margin-top:2px;font-size:11px;color:var(--muted);line-height:1.4}
+.bud{display:grid;grid-template-columns:64px minmax(0,1fr) 118px;gap:7px 8px;align-items:center;font-size:12px}
+.bud .bt{position:relative;height:16px}
+.bud .bt::before{content:"";position:absolute;left:50%;top:-4px;bottom:-4px;border-left:1px solid #2a3a55}
+.bud .bt i{position:absolute;top:2px;height:12px;border-radius:3px}
+.bud em{font:600 11px "JetBrains Mono",monospace;font-style:normal;color:var(--ink);text-align:right;white-space:nowrap}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 14px;font-size:12px}
+.facts div{display:flex;justify-content:space-between;gap:8px;padding:5px 0;border-top:1px solid var(--line);color:var(--muted)}
+.facts b{color:var(--ink);font-weight:600;text-align:right}
+.rankline{font-size:12.5px;color:var(--muted);margin-top:6px}
+.rankline b{color:var(--ink)}
+.dfoot{margin-top:10px;font-size:12px;color:var(--muted)}
+.embed header,.embed aside{display:none}
+.embed #map{min-height:0}
+.embed .dos{width:320px}
+@media (max-width:820px){
+  .wrap{flex-direction:column}
+  aside{width:auto;border-right:0;border-top:1px solid var(--line);order:2}
+  .mapwrap{flex:none;height:64vh}
+  #map{min-height:0}
+  header h1{font-size:16px}
+  .views{left:52px;right:10px;top:10px;justify-content:flex-start}
+  .legend{bottom:40px;max-width:62vw;font-size:11.5px}
+  .legend .hint{display:none}
+  .dos{position:fixed;top:auto;left:0;right:0;bottom:0;width:auto;max-width:none;max-height:58vh;border:0;border-top:1px solid var(--line);border-radius:18px 18px 0 0;transform:translateY(102%);box-shadow:0 -18px 40px rgba(0,0,0,.5)}
+  .dos.expanded{max-height:84vh}
+  .dos-in{max-width:560px;margin:0 auto}
+  .cmain svg{max-height:170px}
+  .embed .dos{width:auto}
+  .dos.open{transform:none}
+}
+</style>
+<link rel="stylesheet" href="assets/fx.css">
+</head>
+<body>
+<header>
+  <div>
+    <div class="tag">RESEARCH DEMO</div>
+    <h1>Global Lake Area Trends, 1984–2021</h1>
+  </div>
+  <a class="back" href="index.html#projects">← Back to site</a>
+</header>
+<div class="wrap">
+  <aside>
+    <h2>38 years of lake water, seen from space</h2>
+    <p>Yearly permanent and seasonal water from JRC Global Surface Water (Landsat) for <b id="nAll" style="color:var(--ink)">563</b> lakes worldwide, measured with the same code as my <a href="https://risarezaei.projects.earthengine.app/view/gsw-lake-explorer" target="_blank" rel="noopener">GSW Lake Explorer</a>. Pick a view above the map, then click any lake for its full profile.</p>
+    <div class="vhead"><b id="vT"></b><span id="vD"></span></div>
+    <div class="distbar" id="dbar"></div>
+    <div id="drows"></div>
+
+    <h2>Filter</h2>
+    <div class="seg" id="ftype"><button data-t="" class="on">All lakes</button><button data-t="1">Natural</button><button data-t="2">Reservoirs</button></div>
+    <select id="cont" aria-label="Continent"><option value="">All continents</option></select>
+
+    <h2 id="l1h"></h2><ol id="l1"></ol>
+    <h2 id="l2h"></h2><ol id="l2"></ol>
+
+    <a class="dl" href="assets/data/gsw-lake-trends.csv" download>↓ Download the data (CSV)</a>
+
+    <details class="note">
+      <summary>Method</summary>
+      <p>Same code as my GSW Lake Explorer: lake outlines from HydroLAKES v1.0; yearly water classes from JRC Global Surface Water v1.4 (Landsat, 1984–2021). For each lake, permanent water (water in every observed month of a year) and seasonal water (water in only some of those months) are summed inside its outline plus a buffer of 50·√A metres (at least 300 m; A = lake area in km²), at a pixel size adapted to lake size: 30 m for lakes under 225 km², coarser for larger ones.</p>
+      <p>Years in which more than 5% of this area had no Landsat observation are left out; each lake needs at least 10 such years and a mean permanent water area of at least 0.05 km².</p>
+      <p>Trends: least-squares linear regression, significant at p &lt; 0.05, given per decade: permanent water as % of the lake's mean permanent area, seasonal and total water as % of its mean total area. Every trend is cross-checked with the Mann–Kendall test and Sen's slope. Abrupt shifts: Pettitt change-point test on total water (p &lt; 0.05, at least 3 years on each side).</p>
+      <p>Behaviour follows the signs of the significant permanent, seasonal and total trends. Lakes with none are a "Step change" if a shift of 10% or more is significant, "Pulsing" if total water varies by 20% or more between years (coefficient of variation) or over 30% of it is seasonal, and otherwise "Stable".</p>
+      <p>Lake facts (type, depth, volume, residence time, watershed) come from HydroLAKES. Marker size scales with mean total water area.</p>
+    </details>
+  </aside>
+
+  <main class="mapwrap">
+    <div class="views"><div class="seg" id="views" role="tablist" aria-label="Map view">
+      <button data-v="perm" class="on" role="tab">Permanent</button><button data-v="seas" role="tab">Seasonal</button><button data-v="total" role="tab">Total</button><button data-v="share" role="tab">Seasonality</button><button data-v="reg" role="tab">Behaviour</button><button data-v="shift" role="tab">Abrupt shifts</button>
+    </div></div>
+    <div id="map"></div>
+    <div class="legend" id="legend"></div>
+    <section class="dos" id="dos" aria-label="Lake profile" aria-hidden="true"><div class="dos-in" id="dosIn"></div></section>
+  </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+(function(){
+  var C={dec:'#e66767',inc:'#3987e5',neu:'#64748b',perm:'#199e70',seas:'#9085e9',ink:'#e7edf7',muted:'#8d9bb3',line:'#1e2a40',grid:'#1a2538',surface:'#0a101c'};
+  var RAMP=['#256abf','#3987e5','#6da7ec','#9ec5f4','#cde2fb'];
+  var Y0=1984,Y1=2021;
+  var VIEWS={
+    perm:{t:'Permanent water trend',d:'Change in water that is present all year, as % of the lake’s mean permanent area per decade.'},
+    seas:{t:'Seasonal water trend',d:'Change in water present only part of the year, as % of the lake’s mean total area per decade.'},
+    total:{t:'Total water trend',d:'Permanent plus seasonal water, as % of the lake’s mean total area per decade.'},
+    share:{t:'Seasonality',d:'Average share of each lake’s water that comes and goes within the year rather than staying all year.'},
+    reg:{t:'Lake behaviour',d:'Each lake classed by how its permanent, seasonal and total water changed together. Click a class to highlight it.'},
+    shift:{t:'Abrupt shifts',d:'Lakes whose total water jumped or dropped in one step (Pettitt test, p < 0.05). Pick a period to see when it happened.'}
+  };
+  var REG={
+    drying:{n:'Drying out',f:-1,d:'Permanent and total water are both shrinking.'},
+    seasonalizing:{n:'Turning seasonal',f:-1,d:'Permanent water is shrinking while total water holds: parts of the lake now carry water only part of the year.'},
+    seasonal_loss:{n:'Losing seasonal water',f:-1,d:'Permanent water is steady, but the area flooded only part of the year is shrinking.'},
+    expanding:{n:'Expanding',f:1,d:'Total water is growing and permanent water is not shrinking.'},
+    consolidating:{n:'Becoming permanent',f:1,d:'Permanent water is growing while total water holds: areas that used to dry out now carry water all year.'},
+    seasonal_gain:{n:'Gaining seasonal water',f:1,d:'Permanent water is steady, but the area flooded only part of the year is growing.'},
+    step:{n:'Step change',f:0,d:'No steady trend, but one significant jump or drop in total water.'},
+    pulsing:{n:'Pulsing',f:0,d:'No trend, but large swings between years or a large seasonal share.'},
+    stable:{n:'Stable',f:0,d:'No significant change in permanent, seasonal or total water.'}
+  };
+  var REGORDER=['drying','seasonalizing','seasonal_loss','expanding','consolidating','seasonal_gain','step','pulsing','stable'];
+  var FAM={'-1':['Losing water',C.dec],'1':['Gaining water',C.inc],'0':['No clear trend',C.neu]};
+  var TYPE={1:'Natural lake',2:'Reservoir',3:'Regulated lake'};
+  var SHARE_B=[5,10,20,35],SHARE_L=['under 5%','5–10%','10–20%','20–35%','35% or more'];
+  var SHIFT_L=['1985–1994','1995–2004','2005–2014','2015–2021'];
+  var isEmbed=document.documentElement.classList.contains('embed');
+  var state={v:'perm',cont:'',type:'',reg:null,dec:null,open:null};
+  var LAKES=[],markers=[],map;
+
+  function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function sg(x,d){d=d==null?1:d;return (x>0?'+':x<0?'−':'')+Math.abs(x).toFixed(d)}
+  function km(x){x=Math.abs(x);if(x===0)return '0';return x>=100?Math.round(x).toLocaleString('en'):x>=10?x.toFixed(1):x>=1?x.toFixed(2):x.toFixed(3)}
+  function skm(x){return (x>0?'+':x<0?'−':'')+km(x)}
+  function pv(p){return p<0.001?'p < 0.001':'p = '+(p<0.01?p.toFixed(3):p.toFixed(2))}
+  function nm(l){return l.name||'Unnamed lake'}
+  function dirCol(d){return d<0?C.dec:d>0?C.inc:C.neu}
+  function shareBin(s){var i=0;while(i<SHARE_B.length&&s>=SHARE_B[i])i++;return i}
+  function shiftBin(y){return y<1995?0:y<2005?1:y<2015?2:3}
+  function rad(a){return Math.max(3.2,Math.min(14,2.3*Math.log10(a+1)+1.6))}
+  function tkey(v){return v==='perm'||v==='seas'||v==='total'?v:null}
+
+  /* ---------- marker style for the current view ---------- */
+  function style(l){
+    var v=state.v,r=rad(l.mT),fill=C.neu,op=.85,w=0,k=tkey(v);
+    if(k){var d=l.tr[k].d;fill=dirCol(d);op=d?.9:.42;w=d?1:0;if(!d)r*=.78}
+    else if(v==='share'){fill=RAMP[shareBin(l.share)];op=.88;w=1}
+    else if(v==='reg'){var f=REG[l.reg].f;fill=FAM[f][1];op=.9;w=f?1:0;if(state.reg&&l.reg!==state.reg){op=.07;w=0}}
+    else if(v==='shift'){if(l.cp.sig){fill=l.cp.chg<0?C.dec:C.inc;op=.9;w=1;if(state.dec!=null&&shiftBin(l.cp.y)!==state.dec){op=.07;w=0}}else{op=state.dec!=null?.07:.22;r*=.75}}
+    return {radius:r,fillColor:fill,fillOpacity:op,color:'rgba(255,255,255,.55)',weight:w,opacity:w?1:0};
+  }
+  function tipText(l){
+    var v=state.v,k=tkey(v),s='<b>'+esc(nm(l))+'</b><br>';
+    if(k){var t=l.tr[k];s+=t.d?sg(t.pct)+'% per decade <span>('+pv(t.p)+')</span>':'<span>No significant trend</span>'}
+    else if(v==='share')s+=l.share.toFixed(0)+'% <span>seasonal on average</span>';
+    else if(v==='reg')s+=REG[l.reg].n;
+    else if(v==='shift')s+=l.cp.sig?'Shift around '+l.cp.y+' <span>('+sg(l.cp.chg,0)+'%)</span>':'<span>No significant shift</span>';
+    return s;
+  }
+  function visible(l){return (!state.cont||l.cont===state.cont)&&(!state.type||String(l.type)===state.type)}
+
+  /* ---------- categories per view (legend, distribution, counts) ---------- */
+  function cats(){
+    var v=state.v,k=tkey(v);
+    if(k)return [{id:-1,l:'Significant decrease',c:C.dec,f:function(l){return l.tr[k].d<0}},{id:0,l:'No significant trend',c:C.neu,f:function(l){return l.tr[k].d===0}},{id:1,l:'Significant increase',c:C.inc,f:function(l){return l.tr[k].d>0}}];
+    if(v==='share')return SHARE_L.map(function(t,i){return {id:i,l:t+' seasonal',c:RAMP[i],f:function(l){return shareBin(l.share)===i}}});
+    if(v==='shift')return [{id:'d',l:'Abrupt drop',c:C.dec,f:function(l){return l.cp.sig&&l.cp.chg<0&&(state.dec==null||shiftBin(l.cp.y)===state.dec)}},{id:'u',l:'Abrupt rise',c:C.inc,f:function(l){return l.cp.sig&&l.cp.chg>0&&(state.dec==null||shiftBin(l.cp.y)===state.dec)}},{id:'n',l:'No significant shift',c:C.neu,f:function(l){return !l.cp.sig}}];
+    return REGORDER.map(function(r){return {id:r,l:REG[r].n,c:FAM[REG[r].f][1],fam:REG[r].f,f:function(l){return l.reg===r}}});
+  }
+  function renderSide(){
+    var V=VIEWS[state.v],cs=cats(),pool=LAKES.filter(visible),tot=pool.length||1;
+    document.getElementById('vT').textContent=V.t;document.getElementById('vD').textContent=V.d;
+    cs.forEach(function(c){c.n=pool.filter(c.f).length});
+    document.getElementById('dbar').innerHTML=cs.filter(function(c){return c.n}).map(function(c){return '<i style="flex:'+c.n+';background:'+c.c+'" title="'+esc(c.l)+': '+c.n+'"></i>'}).join('');
+    var h='',lastFam=null;
+    cs.forEach(function(c){
+      if(state.v==='reg'&&c.fam!==lastFam){lastFam=c.fam;h+='<div class="fam">'+FAM[c.fam][0]+'</div>'}
+      var pick=state.v==='reg',cls='drow'+(pick?' pick':'')+(pick&&state.reg===c.id?' on':'')+(pick&&state.reg&&state.reg!==c.id?' off':'');
+      h+='<'+(pick?'button':'div')+' class="'+cls+'"'+(pick?' data-r="'+c.id+'"':'')+'><i class="sw" style="background:'+c.c+'"></i><span class="lb">'+esc(c.l)+'</span><span class="ct">'+c.n+' · '+Math.round(100*c.n/tot)+'%</span></'+(pick?'button':'div')+'>';
+    });
+    if(state.v==='shift'){h+='<div class="fam">When did it happen?</div>';
+      SHIFT_L.forEach(function(t,i){var n=pool.filter(function(l){return l.cp.sig&&shiftBin(l.cp.y)===i}).length,dn=pool.filter(function(l){return l.cp.sig&&l.cp.chg<0&&shiftBin(l.cp.y)===i}).length;
+        h+='<button class="drow pick'+(state.dec===i?' on':'')+(state.dec!=null&&state.dec!==i?' off':'')+'" data-dec="'+i+'"><span class="lb">'+t+'</span><span class="ct">'+dn+' drops · '+(n-dn)+' rises</span></button>'})}
+    var dr=document.getElementById('drows');dr.innerHTML=h;
+    dr.querySelectorAll('[data-dec]').forEach(function(b){b.onclick=function(){var i=+b.dataset.dec;state.dec=state.dec===i?null:i;refresh()}});
+    dr.querySelectorAll('[data-r]').forEach(function(b){b.onclick=function(){state.reg=state.reg===b.dataset.r?null:b.dataset.r;refresh()}});
+    renderLegend(cs);renderLists(pool);
+  }
+  function renderLegend(cs){
+    var h='<b>'+VIEWS[state.v].t+'</b>';
+    if(state.v==='reg'){[-1,1,0].forEach(function(f){h+='<div class="li"><i style="background:'+FAM[f][1]+'"></i>'+FAM[f][0]+'</div>'});
+      h+='<div class="hint">'+(state.reg?'Showing: '+REG[state.reg].n:'Pick a class in the side panel')+'</div>'}
+    else cs.forEach(function(c){h+='<div class="li"><i style="background:'+c.c+'"></i>'+esc(c.l)+'</div>'});
+    if(state.v==='shift')h+='<div class="hint">'+(state.dec!=null?'Showing shifts in '+SHIFT_L[state.dec]:'All periods · pick one in the side panel')+'</div>';
+    if(tkey(state.v))h+='<div class="hint">Size = mean water area · zoom in for real outlines</div>';
+    document.getElementById('legend').innerHTML=h;
+  }
+  function renderLists(pool){
+    var v=state.v,k=tkey(v),L1,L2,h1,h2,f1,f2;
+    function by(fn,dir){return function(a,b){return dir*(fn(a)-fn(b))}}
+    if(k){var lab={perm:['Fastest loss of permanent water','Fastest gain of permanent water'],seas:['Strongest loss of seasonal water','Strongest gain of seasonal water'],total:['Fastest shrinking overall','Fastest growing overall']}[k];
+      h1=lab[0];h2=lab[1];
+      L1=pool.filter(function(l){return l.tr[k].d<0}).sort(by(function(l){return l.tr[k].pct},1));
+      L2=pool.filter(function(l){return l.tr[k].d>0}).sort(by(function(l){return l.tr[k].pct},-1));
+      f1=f2=function(l){return sg(l.tr[k].pct)+'%'}}
+    else if(v==='share'){h1='Most seasonal lakes';h2='Turning seasonal fastest';
+      L1=pool.slice().sort(by(function(l){return l.share},-1));f1=function(l){return l.share.toFixed(0)+'%'};
+      L2=pool.filter(function(l){return l.shtr.d>0}).sort(by(function(l){return l.shtr.pp},-1));f2=function(l){return sg(l.shtr.pp)+' pp'}}
+    else if(v==='shift'){h1='Biggest abrupt drops';h2='Biggest abrupt rises';
+      var inDec=function(l){return state.dec==null||shiftBin(l.cp.y)===state.dec};
+      L1=pool.filter(function(l){return l.cp.sig&&l.cp.chg<0&&inDec(l)}).sort(by(function(l){return l.cp.chg},1));
+      L2=pool.filter(function(l){return l.cp.sig&&l.cp.chg>0&&inDec(l)}).sort(by(function(l){return l.cp.chg},-1));
+      f1=f2=function(l){return l.cp.y+' · '+sg(l.cp.chg,0)+'%'}}
+    else{var r1=state.reg||'drying',r2=state.reg?null:'seasonalizing';
+      h1='Largest lakes: '+REG[r1].n;L1=pool.filter(function(l){return l.reg===r1}).sort(by(function(l){return l.mT},-1));
+      f1=f2=function(l){return km(l.mT)+' km²'};
+      if(r2){h2='Largest lakes: '+REG[r2].n;L2=pool.filter(function(l){return l.reg===r2}).sort(by(function(l){return l.mT},-1))}else{h2='';L2=null}}
+    fill('l1',h1,L1,f1);fill('l2',h2,L2,f2);
+  }
+  function fill(id,head,arr,fmt){
+    var hEl=document.getElementById(id+'h'),ol=document.getElementById(id);
+    hEl.textContent=head;hEl.style.display=head?'':'none';ol.innerHTML='';if(!arr)return;
+    var named=arr.filter(function(l){return l.name});
+    if(!named.length){ol.innerHTML='<li class="empty">None with the current filters</li>';return}
+    named.slice(0,6).forEach(function(l){var li=document.createElement('li');
+      li.innerHTML='<span class="n">'+esc(l.name)+'</span><span class="v">'+fmt(l)+'</span>';
+      li.onclick=function(){focusLake(l)};ol.appendChild(li)});
+  }
+
+  /* ---------- map ---------- */
+  function initMap(){
+    map=L.map('map',{worldCopyJump:true,minZoom:2,zoomControl:true,scrollWheelZoom:!isEmbed}).setView([30,10],2);
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',{maxZoom:12,
+      attribution:'Basemap &copy; Esri, HERE, Garmin, &copy; OpenStreetMap contributors · Lake outlines: HydroLAKES'}).addTo(map);
+    map.createPane('shapes').style.zIndex=390;
+    LAKES.slice().sort(function(a,b){return b.mT-a.mT}).forEach(function(l){
+      var m=L.circleMarker([l.lat,l.lon],style(l));
+      m.bindTooltip(function(){return tipText(l)},{className:'tip',direction:'top',offset:[0,-6]});
+      m.on('click',function(){openLake(l)});
+      m.l=l;l.m=m;markers.push(m);m.addTo(map);
+    });
+    map.on('zoomend moveend',function(){if(map.getZoom()>=5)loadShapes();placeAll()});
+  }
+  /* ---------- real lake outlines (HydroLAKES), shown once a lake is big enough on screen ---------- */
+  var SH=null,shLoading=null;
+  function loadShapes(){
+    if(SH||shLoading)return shLoading;
+    shLoading=fetch('assets/data/lake-shapes.json').then(function(r){return r.json()}).then(function(J){SH=J.s;SH.q=J.q;placeAll()}).catch(function(){shLoading=null});
+    return shLoading;
+  }
+  function decode(arr,q){ /* polygons -> rings -> delta-encoded [lon,lat] integers */
+    return arr.map(function(poly){return poly.map(function(ring){var out=[],x=0,y=0;
+      for(var i=0;i<ring.length;i+=2){x+=ring[i];y+=ring[i+1];out.push([y/q,x/q])}return out})});
+  }
+  function makePoly(l){
+    var g=L.polygon(decode(SH[l.id].p,SH.q),{pane:'shapes',smoothFactor:1});
+    g.bindTooltip(function(){return tipText(l)},{className:'tip',sticky:true});
+    g.on('click',function(){openLake(l)});l.g=g;
+  }
+  function wantPoly(l){
+    if(!SH||!SH[l.id]||map.getZoom()<5)return false;
+    var b=SH[l.id].b,q=SH.q;if(!VIEWB.intersects([[b[1]/q,b[0]/q],[b[3]/q,b[2]/q]]))return false;
+    var p1=map.latLngToContainerPoint([b[1]/q,b[0]/q]),p2=map.latLngToContainerPoint([b[3]/q,b[2]/q]);
+    return Math.max(Math.abs(p2.x-p1.x),Math.abs(p2.y-p1.y))>=18;
+  }
+  function polyStyle(l){var s=style(l),dim=s.fillOpacity<.15;
+    return {fillColor:s.fillColor,fillOpacity:dim?.03:(s.weight?.36:.2),color:s.fillColor,weight:1.6,opacity:dim?.15:.95}}
+  function place(l){
+    var vis=visible(l),poly=vis&&wantPoly(l);
+    if(poly){if(!l.g)makePoly(l);l.g.setStyle(polyStyle(l));if(!map.hasLayer(l.g))l.g.addTo(map)}
+    else if(l.g&&map.hasLayer(l.g))map.removeLayer(l.g);
+    if(vis&&!poly){l.m.setStyle(style(l));if(!map.hasLayer(l.m))l.m.addTo(map)}
+    else if(map.hasLayer(l.m))map.removeLayer(l.m);
+  }
+  function hl(l){if(!l)return;if(l.g&&map.hasLayer(l.g))l.g.setStyle({weight:3,color:'#ffffff',opacity:1}).bringToFront();
+    if(map.hasLayer(l.m))l.m.setStyle({weight:2.5,color:'#ffffff',opacity:1}).bringToFront()}
+  var VIEWB=null;
+  function placeAll(){
+    VIEWB=map.getBounds().pad(.3);
+    LAKES.forEach(place);
+    if(state.v==='reg'&&state.reg)markers.forEach(function(m){if(m.l.reg===state.reg&&map.hasLayer(m))m.bringToFront()});
+    hl(state.open);
+  }
+  function refresh(){placeAll();renderSide()}
+  function drawerW(){var d=document.getElementById('dos');return innerWidth>820?d.offsetWidth+24:0}
+  function focusLake(l){
+    openLake(l);
+    loadShapes();
+    Promise.resolve(shLoading).then(function(){
+      var mob=innerWidth<=820,padTL=[40,64],padBR=[drawerW()+30,40];
+      if(mob){ /* keep the lake in the strip of map that the bottom sheet leaves visible */
+        var mr=document.getElementById('map').getBoundingClientRect(),sheetTop=innerHeight-document.getElementById('dos').offsetHeight;
+        padTL=[30,56];padBR=[30,Math.max(16,Math.round(mr.bottom-sheetTop+12))];
+        var room=mr.height-padTL[1]-padBR[1];if(room<120)padBR[1]=Math.max(16,Math.round(mr.height-padTL[1]-120))}
+      if(SH&&SH[l.id]){var b=SH[l.id].b,q=SH.q;
+        map.flyToBounds([[b[1]/q,b[0]/q],[b[3]/q,b[2]/q]],{paddingTopLeft:padTL,paddingBottomRight:padBR,maxZoom:11,duration:1.1});return}
+      var z=Math.max(map.getZoom(),Math.min(8,Math.max(5,9-Math.round(Math.log10(l.mT+1)*1.6))));
+      var p=map.project([l.lat,l.lon],z).add([drawerW()/2,mob?map.getSize().y*.18:0]);
+      map.flyTo(map.unproject(p,z),z,{duration:1.1});
+    });
+  }
+
+  /* ---------- lake profile ---------- */
+  function story(l){
+    var t=l.tr,s=[],n=esc(nm(l));
+    if(t.perm.d)s.push(n+(t.perm.d<0?' lost':' gained')+' permanent water at about <b>'+Math.abs(t.perm.pct).toFixed(1)+'% of its mean area per decade</b> ('+km(Math.abs(t.perm.km))+' km² per decade).');
+    else s.push(n+'’s permanent water showed no significant trend over 1984–2021.');
+    var se=t.seas.d>0?'Its seasonal water grew':t.seas.d<0?'Its seasonal water shrank':'Its seasonal water did not change significantly';
+    var to=t.total.d>0?'total water rose':t.total.d<0?'total water fell':'total water held steady';
+    s.push(se+' and '+to+(t.total.d?' ('+sg(t.total.pct)+'% per decade)':'')+'.');
+    if(l.dec&&Math.abs(l.dec.sh1-l.dec.sh0)>=5)s.push('The seasonal share of its water went from '+l.dec.sh0.toFixed(0)+'% in 1984–93 to '+l.dec.sh1.toFixed(0)+'% in 2012–21.');
+    if(l.cp.sig)s.push('The sharpest change came around <b>'+l.cp.y+'</b>, when average total water '+(l.cp.chg<0?'dropped':'rose')+' by '+Math.abs(l.cp.chg).toFixed(0)+'% compared with the years before.');
+    var p=l.last[2],ph=p>=100?'its highest on record':p<=0?'its lowest on record':'more than in '+p.toFixed(0)+'% of its other recorded years';
+    s.push('In '+l.last[0]+' it held '+km(l.last[1])+' km² of water, '+ph+'.');
+    return s.join(' ');
+  }
+  function yrs(){var a=[];for(var y=Y0;y<=Y1;y++)a.push(y);return a}
+  function ols(pts){var n=pts.length,sx=0,sy=0,sxx=0,sxy=0;pts.forEach(function(p){sx+=p[0];sy+=p[1];sxx+=p[0]*p[0];sxy+=p[0]*p[1]});var b=(n*sxy-sx*sy)/(n*sxx-sx*sx);return {b:b,a:(sy-b*sx)/n}}
+  function nice(v){if(v<=0)return 1;var e=Math.pow(10,Math.floor(Math.log10(v))),f=v/e;return (f<=1?1:f<=2?2:f<=2.5?2.5:f<=5?5:10)*e}
+
+  function mainChart(l){
+    var W=320,H=128,Lm=34,R=4,T=10,B=18,iw=W-Lm-R,ih=H-T-B,YS=yrs(),step=iw/YS.length,bw=Math.max(3,step-1.6);
+    var pts=[],ptsP=[],mx=0;
+    l.ser.forEach(function(s,i){if(s){var t=s[0]+s[1];pts.push([Y0+i,t]);ptsP.push([Y0+i,s[0]]);if(t>mx)mx=t}});
+    var ft=ols(pts),fp=ols(ptsP);
+    [ft.a+ft.b*Y0,ft.a+ft.b*Y1].forEach(function(v){if(v>mx)mx=v});
+    var top=nice(mx*1.04);
+    function X(y){return Lm+(y-Y0)*step+step/2}function Y(v){return T+ih-(Math.max(0,v)/top)*ih}
+    var g='';
+    [0,.5,1].forEach(function(f){var y=T+ih-f*ih;g+='<line x1="'+Lm+'" x2="'+(W-R)+'" y1="'+y+'" y2="'+y+'" stroke="'+(f?C.grid:'#2a3a55')+'"/><text x="'+(Lm-6)+'" y="'+(y+3.5)+'" text-anchor="end">'+(f===.5?'':km(top*f))+'</text>'});
+    [1984,2000,2021].forEach(function(y){g+='<text x="'+X(y)+'" y="'+(H-5)+'" text-anchor="'+(y===Y1?'end':y===Y0?'start':'middle')+'">'+y+'</text>'});
+    var bars='';
+    l.ser.forEach(function(s,i){var x=X(Y0+i)-bw/2,y0=T+ih;
+      if(!s){bars+='<rect x="'+x+'" y="'+(y0-2)+'" width="'+bw+'" height="2" rx="1" fill="#2a3a55"/>';return}
+      var yp=Y(s[0]),yt=Y(s[0]+s[1]),hp=y0-yp,hs=yp-yt;
+      if(hp>0.3)bars+='<path d="'+barPath(x,yp,bw,hp,hs>1.5?0:Math.min(2,bw/2))+'" fill="'+C.perm+'"/>';
+      if(hs>1.5)bars+='<path d="'+barPath(x,yt,bw,Math.max(0,hs-2),Math.min(2,bw/2))+'" fill="'+C.seas+'"/>';
+    });
+    var cp='';
+    if(l.cp.sig&&l.cp.y){var xc=X(l.cp.y)-step/2;cp='<line x1="'+xc+'" x2="'+xc+'" y1="'+(T-2)+'" y2="'+(T+ih)+'" stroke="'+C.muted+'" stroke-dasharray="3 3"/><text x="'+(xc+(xc>W-80?-4:4))+'" y="'+(T+8)+'" text-anchor="'+(xc>W-80?'end':'start')+'" style="fill:#c8d3e6">shift '+l.cp.y+'</text>'}
+    var tl='<line x1="'+X(Y0)+'" x2="'+X(Y1)+'" y1="'+Y(ft.a+ft.b*Y0)+'" y2="'+Y(ft.a+ft.b*Y1)+'" stroke="'+C.ink+'" stroke-width="1.6" stroke-dasharray="6 4"/>';
+    var hit='';YS.forEach(function(y,i){hit+='<rect class="hit" data-i="'+i+'" x="'+(X(y)-step/2)+'" y="'+T+'" width="'+step+'" height="'+ih+'" fill="transparent"/>'});
+    return '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Yearly permanent and seasonal water of '+esc(nm(l))+', 1984 to 2021">'+g+bars+tl+cp+'<line class="xh" x1="0" x2="0" y1="'+T+'" y2="'+(T+ih)+'" stroke="#c8d3e6" stroke-opacity="0" />'+hit+'</svg>';
+  }
+  function barPath(x,y,w,h,r){if(h<=0)return '';r=Math.min(r,h);return 'M'+x+' '+(y+h)+'V'+(y+r)+'Q'+x+' '+y+' '+(x+r)+' '+y+'H'+(x+w-r)+'Q'+(x+w)+' '+y+' '+(x+w)+' '+(y+r)+'V'+(y+h)+'Z'}
+
+  function shareChart(l){
+    var W=320,H=74,Lm=34,R=4,T=8,B=18,iw=W-Lm-R,ih=H-T-B,step=iw/(Y1-Y0+1);
+    var vals=l.ser.map(function(s){return s&&(s[0]+s[1])>0?100*s[1]/(s[0]+s[1]):null});
+    var mx=0;vals.forEach(function(v){if(v!=null&&v>mx)mx=v});var top=Math.max(10,Math.ceil(mx/10)*10);
+    function X(i){return Lm+i*step+step/2}function Y(v){return T+ih-v/top*ih}
+    var g='<line x1="'+Lm+'" x2="'+(W-R)+'" y1="'+(T+ih)+'" y2="'+(T+ih)+'" stroke="#2a3a55"/><line x1="'+Lm+'" x2="'+(W-R)+'" y1="'+T+'" y2="'+T+'" stroke="'+C.grid+'"/>'+
+      '<text x="'+(Lm-6)+'" y="'+(T+3.5)+'" text-anchor="end">'+top+'%</text><text x="'+(Lm-6)+'" y="'+(T+ih+3.5)+'" text-anchor="end">0%</text>';
+    [1984,2000,2021].forEach(function(y){g+='<text x="'+X(y-Y0)+'" y="'+(H-4)+'" text-anchor="'+(y===Y1?'end':y===Y0?'start':'middle')+'">'+y+'</text>'});
+    var d='',dots='';vals.forEach(function(v,i){if(v==null){return}var prev=i>0&&vals[i-1]!=null,next=i<vals.length-1&&vals[i+1]!=null;
+      d+=(prev?'L':'M')+X(i).toFixed(1)+' '+Y(v).toFixed(1);if(!prev&&!next)dots+='<circle cx="'+X(i)+'" cy="'+Y(v)+'" r="2.4" fill="'+C.seas+'"/>'});
+    var hit='';vals.forEach(function(v,i){hit+='<rect class="hit" data-i="'+i+'" x="'+(X(i)-step/2)+'" y="'+T+'" width="'+step+'" height="'+ih+'" fill="transparent"/>'});
+    return '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Seasonal share of water per year">'+g+'<path d="'+d+'" fill="none" stroke="'+C.seas+'" stroke-width="2" stroke-linejoin="round"/>'+dots+'<line class="xh" x1="0" x2="0" y1="'+T+'" y2="'+(T+ih)+'" stroke="#c8d3e6" stroke-opacity="0"/>'+hit+'</svg>';
+  }
+  function hookCharts(root,l){root.querySelectorAll('.chart').forEach(function(c){if(c.querySelector('.hit')&&c.querySelector('.ctip'))hookChart(c,l)})}
+  function hookChart(root,l){
+    var tip=root.querySelector('.ctip'),wrap=root;
+    function show(i,ev){var s=l.ser[i],y=Y0+i;
+      root.querySelectorAll('svg').forEach(function(svg){var r=svg.querySelector('.hit[data-i="'+i+'"]'),xh=svg.querySelector('.xh');if(r&&xh){var x=+r.getAttribute('x')+(+r.getAttribute('width'))/2;xh.setAttribute('x1',x);xh.setAttribute('x2',x);xh.setAttribute('stroke-opacity','.5')}});
+      tip.innerHTML='<b>'+y+'</b>'+(s?('<div class="r"><span><i style="background:'+C.perm+'"></i>Permanent</span><em>'+km(s[0])+' km²</em></div>'+
+        '<div class="r"><span><i style="background:'+C.seas+'"></i>Seasonal</span><em>'+km(s[1])+' km²</em></div>'+
+        '<div class="r"><span>Total</span><em>'+km(s[0]+s[1])+' km²</em></div>'+
+        '<div class="r"><span>Seasonal share</span><em>'+((s[0]+s[1])>0?(100*s[1]/(s[0]+s[1])).toFixed(0):'0')+'%</em></div>'):'<div class="r"><span>Not enough clear Landsat views this year</span></div>');
+      var wr=wrap.getBoundingClientRect(),x=ev.clientX-wr.left,yy=ev.clientY-wr.top;
+      tip.style.left=Math.max(0,Math.min(wr.width-tip.offsetWidth,x+(x>wr.width/2?-tip.offsetWidth-12:12)))+'px';
+      tip.style.top=Math.max(0,yy-tip.offsetHeight-10)+'px';tip.style.opacity=1}
+    function hide(){tip.style.opacity=0;root.querySelectorAll('.xh').forEach(function(x){x.setAttribute('stroke-opacity','0')})}
+    root.querySelectorAll('.hit').forEach(function(r){var i=+r.dataset.i;r.addEventListener('mousemove',function(e){show(i,e)});r.addEventListener('mouseleave',hide);
+      r.addEventListener('touchstart',function(e){var t=e.touches[0];show(i,{clientX:t.clientX,clientY:t.clientY})},{passive:true})});
+  }
+  function trendTable(l){
+    var rows=[['perm','Permanent',C.perm],['seas','Seasonal',C.seas],['total','Total','#c8d3e6']],h='<table class="tt"><thead><tr><th></th><th>Trend</th><th>km²</th><th>p</th><th title="Mann–Kendall test with Sen’s slope">MK</th></tr></thead><tbody>';
+    rows.forEach(function(r){var t=l.tr[r[0]],agree=t.dmk===t.d;
+      h+='<tr><td><i style="background:'+r[2]+'"></i>'+r[1]+'</td><td class="v">'+sg(t.pct)+'%</td><td>'+skm(t.km)+'</td><td>'+(t.d?(t.p<0.001?'&lt;0.001':t.p.toFixed(3)):'<span class="ok">n.s.</span>')+'</td><td class="ok" title="Mann–Kendall test and Sen’s slope ('+sg(t.sen)+'% per decade)">'+(agree?'✓':'≠')+'</td></tr>'});
+    return h+'</tbody></table><div class="tnote">Per decade. Permanent: % of mean permanent area; seasonal and total: % of mean total area. n.s. = not significant. MK ✓ = the Mann–Kendall test with Sen’s slope agrees.</div>';
+  }
+  function tiles(l){
+    var t=[];
+    t.push(l.cp.sig?['Abrupt shift','~'+l.cp.y,sg(l.cp.chg,0)+'% in average total water ('+pv(l.cp.p)+')']:['Abrupt shift','None','No significant step change (Pettitt test)']);
+    t.push(['Seasonal share',l.share.toFixed(0)+'%',l.dec?l.dec.sh0.toFixed(0)+'% in 1984–93 → '+l.dec.sh1.toFixed(0)+'% in 2012–21':'of the lake’s water, on average']);
+    t.push(['Year-to-year swing',(100*l.cv).toFixed(0)+'%','variation of total water (coefficient of variation)']);
+    t.push(['Clear years',l.n+' of 38','years with Landsat views over ≥ 95% of the lake']);
+    t.push(['Record low',km(l.min[1])+' km²','total water in '+l.min[0]]);
+    t.push(['Record high',km(l.max[1])+' km²','total water in '+l.max[0]]);
+    return '<div class="tiles">'+t.map(function(x){return '<div class="tile"><small>'+x[0]+'</small><b>'+x[1]+'</b><span>'+x[2]+'</span></div>'}).join('')+'</div>';
+  }
+  function budget(l){
+    if(!l.dec)return '<div class="tnote">Not enough clear years in 1984–93 or 2012–21 to compare the two decades.</div>';
+    var d=l.dec,rows=[['Permanent',d.P1-d.P0,d.P0],['Seasonal',d.S1-d.S0,d.S0],['Total',(d.P1+d.S1)-(d.P0+d.S0),d.P0+d.S0]];
+    var mx=Math.max.apply(null,rows.map(function(r){return Math.abs(r[1])}))||1,h='<div class="bud">';
+    rows.forEach(function(r){var w=48*Math.abs(r[1])/mx,neg=r[1]<0,pc=r[2]>0.05*(d.P0+d.S0)?' ('+sg(100*r[1]/r[2],0)+'%)':'';
+      h+='<span>'+r[0]+'</span><div class="bt"><i style="'+(neg?'right:50%':'left:50%')+';width:'+w+'%;background:'+(neg?C.dec:C.inc)+'"></i></div><em>'+skm(r[1])+' km²'+pc+'</em>'});
+    return h+'</div><div class="tnote">Average of '+d.n0+' clear years in 1984–93 versus '+d.n1+' in 2012–21.</div>';
+  }
+  function context(l){
+    var arr=LAKES.map(function(x){return x.tr.perm.pct}).sort(function(a,b){return a-b}),rank=arr.indexOf(l.tr.perm.pct)+1,N=arr.length;
+    var W=380,H=64,Lm=8,R=8,lo=-30,hi=30,bins=30,bwid=(hi-lo)/bins,cnt=new Array(bins).fill(0);
+    arr.forEach(function(v){var i=Math.floor((Math.max(lo,Math.min(hi-1e-9,v))-lo)/bwid);cnt[i]++});
+    var mc=Math.max.apply(null,cnt),iw=W-Lm-R,bw=iw/bins,g='';
+    cnt.forEach(function(c,i){var h=c/mc*40,mid=lo+(i+.5)*bwid;g+='<rect x="'+(Lm+i*bw+1)+'" y="'+(46-h)+'" width="'+(bw-2)+'" height="'+h+'" rx="1.5" fill="'+(mid<0?'rgba(230,103,103,.55)':'rgba(57,135,229,.55)')+'"><title>'+c+' lakes between '+(lo+i*bwid)+'% and '+(lo+(i+1)*bwid)+'% per decade</title></rect>'});
+    var xv=Lm+(Math.max(lo,Math.min(hi,l.tr.perm.pct))-lo)/(hi-lo)*iw;
+    g+='<line x1="'+xv+'" x2="'+xv+'" y1="2" y2="48" stroke="'+C.ink+'" stroke-width="2"/><circle cx="'+xv+'" cy="2" r="3.5" fill="'+C.ink+'"/>';
+    g+='<text x="'+Lm+'" y="60">≤ −30%</text><text x="'+(Lm+iw/2)+'" y="60" text-anchor="middle">0</text><text x="'+(W-R)+'" y="60" text-anchor="end">≥ +30%</text>';
+    return '<div class="chart"><svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Permanent-water trends of all lakes, with this lake marked">'+g+'</svg></div>'+
+      '<div class="rankline">Permanent-water trend ranks <b>'+rank+' of '+N+'</b> (1 = fastest loss).</div>';
+  }
+  function facts(l){
+    function vol(v){if(v==null)return '–';return v>=1000?(v/1000).toFixed(v>=10000?0:1)+' km³':Math.round(v).toLocaleString('en')+' million m³'}
+    function rt(d){if(d==null||d<=0)return '–';return d>=730?(d/365).toFixed(d>=3650?0:1)+' years':Math.round(d)+' days'}
+    var f=[['Type',TYPE[l.type]||'–'],['Outline area',l.area_hl!=null?km(l.area_hl)+' km²':'–'],['Mean depth',l.depth!=null?l.depth+' m':'–'],['Volume',vol(l.vol)],
+      ['Residence time',rt(l.res)],['Elevation',l.elev!=null?Math.round(l.elev).toLocaleString('en')+' m':'–'],['Watershed',l.wshd!=null?Math.round(l.wshd).toLocaleString('en')+' km²':'–'],['Shoreline index',l.shore!=null?l.shore.toFixed(2):'–']];
+    return '<div class="facts">'+f.map(function(x){return '<div><span>'+x[0]+'</span><b>'+x[1]+'</b></div>'}).join('')+'</div><div class="tnote">From HydroLAKES. Shoreline index: 1 = a perfect circle; higher = a more irregular shore.</div>';
+  }
+  function kpi(lab,t){var col=t.d<0?C.dec:t.d>0?C.inc:C.neu;
+    return '<div class="kpi"><small>'+lab+'</small><b>'+(t.d?sg(t.pct)+'%':'<span class="ns">no trend</span>')+'</b><span><i style="background:'+col+'"></i>'+(t.d?'per decade':'p ≥ 0.05')+'</span></div>'}
+  function openLake(l){
+    state.open=l;var R=REG[l.reg],fc=FAM[R.f][1],el=document.getElementById('dosIn');
+    el.innerHTML='<div class="dtop"><div class="dtt"><div class="eyebrow">'+esc(l.cont)+' · '+(TYPE[l.type]||'Lake')+'</div><h3 title="'+esc(nm(l))+'">'+esc(nm(l))+'</h3></div><button class="dx" type="button" aria-label="Close profile">×</button></div>'+
+      '<div class="rline"><i style="background:'+fc+'"></i><div><b>'+R.n+'</b><span>'+R.d+'</span></div></div>'+
+      '<div class="kpis">'+kpi('Permanent',l.tr.perm)+kpi('Seasonal',l.tr.seas)+kpi('Total',l.tr.total)+'</div>'+
+      '<div class="chart cmain">'+mainChart(l)+'<div class="keys"><span><i style="background:'+C.perm+'"></i>Permanent</span><span><i style="background:'+C.seas+'"></i>Seasonal</span><span><i class="ln"></i>Trend</span><span class="u">km², 1984–2021</span></div><div class="ctip"></div></div>'+
+      '<button class="more" type="button" aria-expanded="false"><span>Full profile</span><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m2.5 4.5 3.5 3.5 3.5-3.5"/></svg></button>'+
+      '<div class="full" hidden><div class="seg tabs" role="tablist"><button class="on" data-t="sum" role="tab">Summary</button><button data-t="tr" role="tab">Trends</button><button data-t="sig" role="tab">Signals</button><button data-t="lake" role="tab">Lake</button></div>'+
+        '<div class="tp" data-p="sum"><p class="story">'+story(l)+'</p></div>'+
+        '<div class="tp" data-p="tr" hidden>'+trendTable(l)+'<h4>Seasonal share of the water</h4><div class="chart">'+shareChart(l)+'<div class="ctip"></div></div></div>'+
+        '<div class="tp" data-p="sig" hidden>'+tiles(l)+'<h4>1984–93 vs 2012–21</h4>'+budget(l)+'</div>'+
+        '<div class="tp" data-p="lake" hidden>'+facts(l)+'<h4>Among all '+LAKES.length+' lakes</h4>'+context(l)+
+          '<div class="coord">'+l.lat.toFixed(2)+'°, '+l.lon.toFixed(2)+'° · HydroLAKES '+l.id+'</div>'+
+          '<div class="dfoot">See its satellite images in my <a href="https://risarezaei.projects.earthengine.app/view/gsw-lake-explorer" target="_blank" rel="noopener">GSW Lake Explorer ↗</a></div></div>'+
+      '</div>';
+    var d=document.getElementById('dos');d.classList.add('open');d.classList.remove('expanded');d.setAttribute('aria-hidden','false');d.scrollTop=0;document.querySelector('.mapwrap').classList.add('dosopen');
+    el.querySelector('.dx').onclick=closeLake;
+    var mb=el.querySelector('.more'),full=el.querySelector('.full');
+    mb.onclick=function(){var open=full.hidden;full.hidden=!open;mb.setAttribute('aria-expanded',open);mb.firstChild.textContent=open?'Less':'Full profile';d.classList.toggle('expanded',open);
+      if(open)setTimeout(function(){d.scrollTo({top:mb.offsetTop-60,behavior:'smooth'})},30)};
+    el.querySelectorAll('.tabs button').forEach(function(b){b.onclick=function(){
+      el.querySelectorAll('.tabs button').forEach(function(x){x.classList.toggle('on',x===b)});
+      el.querySelectorAll('.tp').forEach(function(q){q.hidden=q.dataset.p!==b.dataset.t})}});
+    hookCharts(el,l);
+    var prev=state.prev;if(prev&&prev!==l)place(prev);state.prev=l;hl(l);
+  }
+  function closeLake(){var d=document.getElementById('dos');d.classList.remove('open');document.querySelector('.mapwrap').classList.remove('dosopen');d.setAttribute('aria-hidden','true');
+    var o=state.open;state.open=null;if(o)place(o)}
+
+  /* ---------- controls ---------- */
+  document.querySelectorAll('#views button').forEach(function(b){b.onclick=function(){
+    document.querySelectorAll('#views button').forEach(function(x){x.classList.toggle('on',x===b);x.setAttribute('aria-selected',x===b)});
+    state.v=b.dataset.v;state.reg=null;state.dec=null;refresh()}});
+  document.querySelectorAll('#ftype button').forEach(function(b){b.onclick=function(){
+    document.querySelectorAll('#ftype button').forEach(function(x){x.classList.toggle('on',x===b)});state.type=b.dataset.t;refresh()}});
+  var sel=document.getElementById('cont');
+  sel.onchange=function(){state.cont=sel.value;refresh();
+    var vis=LAKES.filter(visible);if(state.cont&&vis.length)map.fitBounds(L.latLngBounds(vis.map(function(l){return [l.lat,l.lon]})).pad(.1));else if(!state.cont)map.setView([30,10],2)};
+  addEventListener('keydown',function(e){if(e.key==='Escape'&&state.open)closeLake()});
+
+  fetch('assets/data/lake-dossier.json').then(function(r){return r.json()}).then(function(J){
+    LAKES=J.lakes;document.getElementById('nAll').textContent=LAKES.length;
+    var cs={};LAKES.forEach(function(l){cs[l.cont]=1});Object.keys(cs).sort().forEach(function(c){var o=document.createElement('option');o.value=o.textContent=c;sel.appendChild(o)});
+    initMap();refresh();
+    var q=/[?&]lake=(\d+)/.exec(location.search);if(q){var l=LAKES.filter(function(x){return x.id===+q[1]})[0];if(l)setTimeout(function(){focusLake(l)},300)}
+  });
+})();
+</script>
+<script src="assets/fx.js" data-fx="map" defer></script>
+</body>
+</html>
