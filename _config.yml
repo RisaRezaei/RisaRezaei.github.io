@@ -1,0 +1,31 @@
+# Files listed here stay in the repository but are not published on the website.
+exclude:
+  # standard entries, kept so that nothing else about the site changes
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - CNAME
+  # archived pages
+  - lake-trends-test.html
+  - lake-trends-test_1.html
+  - lake-trends-v3.html
+  - lake-trends-v4.html
+  - lake-trends-v6.html
+  - lake-trends-v7.html
+  - wetlands-test.html
+  - test.html
+  - preview.html
+  - preview-videos.html
+  # archived working files
+  - assets/data/gsw-lake-trends.csv
+  - assets/data/gsw-lake-trends_1.csv
+  - assets/data/gsw-lake-trends_2.csv
+  - assets/data/lake-dossier.json
+  - assets/data/lake-shapes.json
+  - assets/data/lake-trends.html
+  - assets/data/lake-trends-test.html
+  - assets/data/lake-trends-test_1.html
