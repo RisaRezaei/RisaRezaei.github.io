@@ -21,6 +21,7 @@ exclude:
   - preview.html
   - preview-videos.html
   - lake-trends-v8.html
+  - preview-contact.html
   # archived working files
   - assets/data/gsw-lake-trends.csv
   - assets/data/gsw-lake-trends_1.csv
