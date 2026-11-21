@@ -373,11 +373,16 @@ footer a{color:var(--teal);font-weight:700}
   .hero-nav,.hero-name,.hero-pill{display:none}
   .hero-top{top:86px}
 }
+@media (min-width:901px) and (max-width:1100px){
+  .nav ul{display:flex;gap:18px;margin-left:auto;margin-right:0}.nav ul a{font-size:11px}
+  .nav .pill{display:none}
+}
 @media (max-width:900px){
   .feat-art{grid-template-columns:1fr;gap:20px}.feat-art .cover{max-width:180px}
   .pub{grid-template-columns:48px 1fr;gap:16px;padding:20px}
   .feat-art>*,.pub>*{min-width:0}
   #dlabel{display:none}
+  .nav .pill{margin-left:auto}
 }
 @media (max-width:600px){
   .nav .pill{display:none}.nav .name{font-size:16px}
