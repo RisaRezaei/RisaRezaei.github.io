@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Parisa Abbasalizadehrezaei | Hydrology · Remote Sensing · Machine Learning</title>
+<meta name="description" content="Environmental engineer working at the interface of hydrology, satellite remote sensing and machine learning.">
+<link rel="icon" href="favicon.ico">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Parisa Abbasalizadehrezaei | Remote Sensing · Hydrology · Machine Learning">
+<meta property="og:image" content="https://risarezaei.github.io/og-image.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Inter:wght@400;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/orbit/orbit.css">
+</head>
+<body>
+<a class="skip" href="#about">Skip to content</a>
+<canvas id="stars" aria-hidden="true"></canvas>
+<canvas id="sat" aria-hidden="true"></canvas>
+
+<!-- sticky navigation (appears after the hero) -->
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="name" href="#top">PARISA ABBASALIZADEHREZAEI</a>
+    <ul>
+      <li><a href="#about">ABOUT</a></li><li><a href="#skills">SKILLS</a></li><li><a href="#projects">PROJECTS</a></li><li><a href="#code">CODE</a></li>
+      <li><a href="#publications">PUBLICATIONS</a></li><li><a href="#experience">EXPERIENCE</a></li><li><a href="#education">EDUCATION</a></li><li><a href="#contact">CONTACT</a></li>
+    </ul>
+    <a class="pill fill" href="https://www.linkedin.com/in/risarezaei" target="_blank" rel="noopener">LINKEDIN ↗</a>
+  </div>
+  <i class="prog" id="prog"></i>
+</header>
+
+<!-- 01 ORBIT -->
+<section class="hero" id="top" data-stage="ORBIT">
+  <canvas id="globe" aria-hidden="true"></canvas>
+  <div class="hero-top"><span id="scanline">SCAN · LANDSAT-9 · NDWI 0.42</span><span><a href="#lake-explorer">LAKE EXPLORER</a> &nbsp;|&nbsp; <a href="#lake-map">LAKE TRENDS</a></span></div>
+  <a class="hero-name" href="#top">PARISA ABBASALIZADEHREZAEI</a>
+  <ul class="hero-nav">
+    <li><a href="#about">ABOUT</a></li><li><a href="#skills">SKILLS</a></li><li><a href="#projects" style="color:var(--teal)">PROJECTS</a></li><li><a href="#code">CODE</a></li>
+    <li><a href="#publications">PUBLICATIONS</a></li><li><a href="#experience">EXPERIENCE</a></li><li><a href="#education">EDUCATION</a></li><li><a href="#contact">CONTACT</a></li>
+  </ul>
+  <a class="pill fill hero-pill" href="https://www.linkedin.com/in/risarezaei" target="_blank" rel="noopener">LINKEDIN ↗</a>
+  <div class="hero-copy">
+    <p class="typed" data-text="HYDROLOGY · REMOTE SENSING · MACHINE LEARNING" aria-label="Hydrology · Remote sensing · Machine learning"></p>
+    <h1><span class="clip"><span style="--d:.35s">WATER,</span></span><span class="clip"><span style="--d:.5s">SEEN FROM</span></span><span class="clip"><span style="--d:.65s">ORBIT</span></span></h1>
+    <p class="lead rv" style="--d:1s">Environmental engineer turning satellite data and water models into decisions for water management.</p>
+    <div class="ctas rv" style="--d:1.15s">
+      <a class="pill fill" href="#projects">VIEW PROJECTS</a>
+      <a class="pill tline" href="#lake-map"><span class="dot"></span> LIVE DEMO</a>
+      <a class="pill line" href="#code">CODE &amp; TUTORIALS</a>
+    </div>
+  </div>
+  <div class="hero-stage"><span class="segs"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>STAGE 01 · ORBIT</div>
+  <div class="hero-hud" id="hud">EO-SAT · nadir scan &nbsp; LAT 24.00 &nbsp;LON 38.00</div>
+</section>
+
+<main>
+<!-- 02 ABOUT -->
+<section class="sec" id="about" data-stage="ACQUISITION">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="bio">
+        <p class="eyebrow rv">02 — ABOUT</p>
+        <h2 class="big rv" style="--d:.1s">Water, satellites and data.</h2>
+        <p class="rv first" style="--d:.2s">I'm an environmental engineer (MSc, Sharif University of Technology) working at the interface of hydrology, satellite remote sensing and machine learning.</p>
+        <p class="rv" style="--d:.3s">I build Earth-observation workflows in Google Earth Engine and Python, model surface water and groundwater with WEAP, MODFLOW and MIKE, and turn model results into decision support for water management.</p>
+        <p class="rv" style="--d:.4s">My decision-support work for the Lake Urmia basin, carried out with the University of Delaware, is published in the Journal of Hydrology and was presented at AGU24. I also have hands-on experience in water-quality laboratory analysis and review regularly for Elsevier journals.</p>
+      </div>
+      <aside class="panel vitals rv" style="--d:.15s" aria-label="Key numbers">
+        <header>VITAL SIGNS <span>04 READINGS</span></header>
+        <div class="vrow"><i>01</i><b class="cnt" data-to="45" data-orcid="reviews">45</b><span data-orcid="reviews-label">Peer reviews for Elsevier journals</span></div>
+        <div class="vrow"><i>02</i><b class="cnt t" data-to="31" data-pre="+" data-suf="%">+31%</b><span>Environmental water supply in optimized allocation scenarios</span></div>
+        <div class="vrow"><i>03</i><b class="cnt" data-to="17.71" data-dec="2" data-suf="/20">17.71/20</b><span>MSc GPA, Sharif University</span></div>
+        <div class="vrow"><i>04</i><b>AGU24</b><span>Conference presentation, Washington, D.C.</span></div>
+      </aside>
+    </div>
+    <div class="track" id="track"><span class="lab" id="tracklab">GROUND TRACK · EARTH FROM SPACE</span></div>
+    <div class="yt-head rv"><span class="kick">EARTH FROM SPACE · MY YOUTUBE CHANNEL</span><a class="pill line sm" href="https://www.youtube.com/@ParisaAbbasalizadehrezaei" target="_blank" rel="noopener">VISIT THE CHANNEL ↗</a></div>
+    <div class="ytgrid">
+      <article class="ytc rv" style="--d:.0s"><button class="ytc-frame" type="button" data-yt="RGWDGXYPWnY" data-t="How much water did your lake lose?" aria-label="Play video: How much water did your lake lose?"><img src="assets/yt/RGWDGXYPWnY-640.jpg" alt="" loading="lazy" decoding="async"><span class="ytc-play" aria-hidden="true"></span><span class="ytc-new">NEW</span><span class="ytc-len">2:22</span></button><div class="ytc-meta"><b>How much water did your lake lose?</b><span>Any lake, one click · GSW Lake Explorer</span></div></article>
+      <article class="ytc rv" style="--d:.15s"><button class="ytc-frame" type="button" data-yt="bDhEnSg61W8" data-t="Three days of rain — Iran’s floods and a record El Niño" aria-label="Play video: Three days of rain — Iran’s floods and a record El Niño"><img src="assets/yt/bDhEnSg61W8-640.jpg" alt="" loading="lazy" decoding="async"><span class="ytc-play" aria-hidden="true"></span><span class="ytc-len">2:17</span></button><div class="ytc-meta"><b>Three days of rain — Iran’s floods and a record El Niño</b><span>Floods across Iran, 6–8 November 2026</span></div></article>
+      <article class="ytc rv" style="--d:.3s"><button class="ytc-frame" type="button" data-yt="rBgaC2yz1hw" data-t="A wetland being dug out — 15 years of satellite images" aria-label="Play video: A wetland being dug out — 15 years of satellite images"><img src="assets/yt/rBgaC2yz1hw-640.jpg" alt="" loading="lazy" decoding="async"><span class="ytc-play" aria-hidden="true"></span><span class="ytc-len">1:03</span></button><div class="ytc-meta"><b>A wetland being dug out — 15 years of satellite images</b><span>Kiakalayeh wetland, Langarud</span></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- 03 SKILLS -->
+<section class="sec" id="skills" data-stage="SPECTRAL BANDS">
+  <div class="wrap">
+    <p class="eyebrow rv">03 — SKILLS</p>
+    <h2 class="big rv" style="--d:.1s">Tools and methods.</h2>
+    <div class="skills-grid">
+      <div>
+        <p class="const-meta rv" style="--d:.2s">6 BRANCHES · 39 NODES · SELECTED: <span id="selname">REMOTE SENSING</span></p>
+        <canvas id="const" aria-label="Skill constellation" role="img"></canvas>
+      </div>
+      <aside class="panel insp rv" style="--d:.3s" aria-label="Skills by group">
+        <header>NODE INSPECTOR <span>39 / 39</span></header>
+        <button class="grp on" data-b="0" type="button"><h3><canvas class="ico" data-g="sat"></canvas>REMOTE SENSING<em>SELECTED</em></h3><div class="chips"><span class="chip">Google Earth Engine (JS &amp; Python)</span><span class="chip">Landsat</span><span class="chip">Sentinel-2</span><span class="chip">Spectral &amp; water indices</span><span class="chip">Land-cover classification</span><span class="chip">Change detection</span><span class="chip">Accuracy assessment</span><span class="chip">ENVI</span></div></button>
+        <button class="grp" data-b="1" type="button"><h3><canvas class="ico" data-g="code"></canvas>MACHINE LEARNING &amp; DATA<em>SELECTED</em></h3><div class="chips"><span class="chip">Python</span><span class="chip">pandas</span><span class="chip">NumPy</span><span class="chip">SciPy</span><span class="chip">scikit-learn</span><span class="chip">Matplotlib</span><span class="chip">Random Forest</span><span class="chip">Gradient Boosting</span><span class="chip">K-means</span><span class="chip">Time-series analysis</span><span class="chip basic">R · basic</span></div></button>
+        <button class="grp" data-b="2" type="button"><h3><canvas class="ico" data-g="drop"></canvas>HYDROLOGY &amp; GROUNDWATER<em>SELECTED</em></h3><div class="chips"><span class="chip">WEAP</span><span class="chip">MODFLOW</span><span class="chip">MIKE</span><span class="chip">Water balance</span><span class="chip">Scenario analysis</span><span class="chip">Multi-objective optimization</span></div></button>
+        <button class="grp" data-b="3" type="button"><h3><canvas class="ico" data-g="layers"></canvas>GIS &amp; DATA MANAGEMENT<em>SELECTED</em></h3><div class="chips"><span class="chip">ArcGIS / ArcGIS Pro</span><span class="chip">QGIS</span><span class="chip">Map production</span><span class="chip">Reproducible workflows</span><span class="chip">Git / GitHub</span><span class="chip basic">HPC · basic</span></div></button>
+        <button class="grp" data-b="4" type="button"><h3><canvas class="ico" data-g="flask"></canvas>WATER QUALITY<em>SELECTED</em></h3><div class="chips"><span class="chip">Nutrients</span><span class="chip">BOD / COD</span><span class="chip">Alkalinity</span><span class="chip">Hardness</span><span class="chip">Coliforms</span></div></button>
+        <button class="grp" data-b="5" type="button"><h3><canvas class="ico" data-g="chat"></canvas>LANGUAGES<em>SELECTED</em></h3><div class="chips"><span class="chip">English · fluent (TOEFL iBT 90)</span><span class="chip">Persian · native</span><span class="chip basic">German · basic</span></div></button>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- 04 PROJECTS -->
+<section class="sec" id="projects" data-stage="CHANGE DETECTION">
+  <div class="wrap">
+    <p class="eyebrow rv">04 — PROJECTS</p>
+    <h2 class="big rv" style="--d:.1s">Missions, live and completed.</h2>
+    <p class="sec-lead rv" style="--d:.2s">Research and engineering projects across water resources and Earth observation, each linked to the open-source code that reproduces its methods.</p>
+    <div class="live">
+      <article class="panel lcard rv" id="lake-map">
+        <div class="viz"><span class="badge-live"><span class="dot"></span>LIVE</span>
+          <iframe src="lake-trends.html?embed=1" title="Global lake area trend map" loading="lazy"></iframe></div>
+        <p class="kick">LIVE DEMO · EARTH OBSERVATION</p>
+        <h3>Global Lake Area Trends, 1984–2021</h3>
+        <p>Yearly permanent water area of 563 lakes from JRC Global Surface Water (Landsat). Colour shows each lake's long-term trend; click a point for its yearly curve.</p>
+        <a class="pill line sm" href="lake-trends.html">OPEN FULL SCREEN →</a>
+      </article>
+      <article class="panel lcard rv" style="--d:.15s" id="lake-explorer">
+        <div class="viz" id="lensbox"><span class="badge-live"><span class="dot"></span>LIVE</span>
+          <canvas id="lens" aria-hidden="true"></canvas>
+          <div class="lens-info"><b>LAKE RAZAZAH · IRAQ</b><div class="lbl">PERMANENT WATER</div>
+            <div class="dec"><span>1984–1993</span><span class="bar"><i></i></span></div>
+            <div class="dec"><span>2012–2021</span><span class="bar"><i class="t" id="decbar"></i></span></div>
+            <div class="q" id="lensq"><b>≈ −¾</b><span>of its permanent water</span></div></div>
+          <button class="pill teal sm run" type="button" id="runapp">▶ RUN THE LIVE APP</button></div>
+        <p class="kick">LIVE DEMO · EARTH ENGINE APP</p>
+        <h3>GSW Lake Explorer: Lake Razazah, 1984–2021</h3>
+        <p>A public Earth Engine app: yearly Global Surface Water animation, area chart and decade comparison. Click any other lake on the map, or search a name, to explore it.</p>
+        <a class="pill line sm" href="https://risarezaei.projects.earthengine.app/view/gsw-lake-explorer" target="_blank" rel="noopener">OPEN FULL SCREEN ↗</a>
+      </article>
+    </div>
+    <div class="rp-head rv"><h3>Research projects</h3><span>9 PROJECTS</span></div>
+    <div class="tabs rv" role="toolbar" aria-label="Filter projects"><button class="on" data-f="all">ALL</button><button data-f="eo">EARTH OBSERVATION</button><button data-f="water">WATER RESOURCES</button><button data-f="gw">GROUNDWATER</button><button data-f="hydro">HYDRODYNAMICS</button><button data-f="ww">WASTEWATER</button></div>
+    <div class="pgrid" id="pgrid">
+      <article class="panel pcard feat" data-cat="water"><div><canvas data-s="flow"></canvas><span class="bdg">J. HYDROLOGY 2026</span></div><div><p class="k">WATER RESOURCES · DECISION SUPPORT</p><h4>Decision Support System for the Lake Urmia Basin</h4><p class="s">Univ. of Delaware (remote) · 2023–2024</p><div class="chips"><span class="chip">WEAP</span><span class="chip">Optimization</span><span class="chip">AHP</span></div><div class="lnk"><a href="https://doi.org/10.1016/j.jhydrol.2025.134679" target="_blank" rel="noopener">Paper ↗</a><a href="tool.html?r=gee-basin-hydroclimate">Code: Basin Hydroclimate Time Series →</a></div></div><a class="go" href="https://doi.org/10.1016/j.jhydrol.2025.134679" target="_blank" rel="noopener" aria-label="Open paper">↗</a></article>
+      <article class="panel pcard" data-cat="eo"><div><canvas data-s="mosaic"></canvas></div><div><p class="k">EARTH OBSERVATION · MACHINE LEARNING</p><h4>Wetlands Monitoring System</h4><p class="s">Sharif · funded grant · 2021–2023</p><div class="chips"><span class="chip">GEE</span><span class="chip">Sentinel-2</span><span class="chip">Random Forest</span></div><div class="lnk"><a href="tool.html?r=gee-wetland-water-rf">Code: Wetland Water Mapping →</a><a href="tool.html?r=gee-landsat-timelapse">Code: Landsat Timelapse →</a></div></div><a class="go" href="tool.html?r=gee-wetland-water-rf" aria-label="Open related code">↗</a></article>
+      <article class="panel pcard" data-cat="eo"><div><canvas data-s="bands"></canvas></div><div><p class="k">REMOTE SENSING · MSc THESIS</p><h4>Satellite-Based Surface Water Assessment</h4><p class="s">Sharif University of Technology</p><div class="chips"><span class="chip">GEE</span><span class="chip">K-means</span><span class="chip">Spectral indices</span></div><div class="lnk"><a href="tool.html?r=gee-wetland-water-rf">Code: Wetland Water Mapping →</a><a href="tool.html?r=gee-water-resources-course">Course: EE for Water Resources →</a></div></div><a class="go" href="tool.html?r=gee-wetland-water-rf" aria-label="Open related code">↗</a></article>
+      <article class="panel pcard" data-cat="gw"><div><canvas data-s="section"></canvas></div><div><p class="k">GROUNDWATER</p><h4>Dam Leakage &amp; Aquifer Response</h4><p class="s">MSc project</p><div class="chips"><span class="chip">MODFLOW</span><span class="chip">Python</span></div><div class="lnk"><a href="tool.html?r=gee-elevation-cross-section">Code: Elevation Along a Cross-Section →</a></div></div><a class="go" href="tool.html?r=gee-elevation-cross-section" aria-label="Open related code">↗</a></article>
+      <article class="panel pcard" data-cat="water"><div><canvas data-s="balance"></canvas></div><div><p class="k">HYDROLOGY</p><h4>Fallat-e-Markazi Sub-Basin Water Balance</h4><p class="s">MSc project</p><div class="chips"><span class="chip">ArcGIS</span><span class="chip">Time series</span><span class="chip">Salinity</span></div><div class="lnk"><a href="tool.html?r=gee-basin-hydroclimate">Code: Basin Hydroclimate Time Series →</a><a href="tool.html?r=raster-point-sampler">Code: Raster Values at Points →</a></div></div><a class="go" href="tool.html?r=gee-basin-hydroclimate" aria-label="Open related code">↗</a></article>
+      <article class="panel pcard" data-cat="ww"><div><canvas data-s="tanks"></canvas><span class="bdg">PHOTO TOUR</span></div><div><p class="k">WASTEWATER · FIELD VISIT</p><h4>Industrial Wastewater Treatment Design &amp; Zamzam Plant Visit</h4><p class="s">Sharif · Summer 2021</p><div class="chips"><span class="chip">Activated sludge</span><span class="chip">SV30</span></div><div class="lnk"><a href="zamzam.html">Annotated photo tour &amp; SV30 simulator →</a></div></div><a class="go" href="zamzam.html" aria-label="Open photo tour">↗</a></article>
+      <article class="panel pcard" data-cat="hydro"><div><canvas data-s="slick"></canvas></div><div><p class="k">HYDRODYNAMICS</p><h4>Oil-Slick Transport in the Karkheh Reservoir</h4><p class="s">MSc project · MIKE hydrodynamics</p><div class="chips"><span class="chip">MIKE</span><span class="chip">Transport modelling</span></div></div></article>
+      <article class="panel pcard" data-cat="eo"><div><canvas data-s="watershed"></canvas></div><div><p class="k">REMOTE SENSING &amp; GIS</p><h4>Land Cover &amp; Watershed Mapping</h4><p class="s">MSc project</p><div class="chips"><span class="chip">ENVI</span><span class="chip">ArcGIS</span><span class="chip">Classification</span></div><div class="lnk"><a href="tool.html?r=gee-cropland-dynamics">Code: Global Cropland Dynamics →</a></div></div><a class="go" href="tool.html?r=gee-cropland-dynamics" aria-label="Open related code">↗</a></article>
+      <article class="panel pcard" data-cat="gw"><div><canvas data-s="wells"></canvas><span class="bdg">CASE STUDY</span></div><div><p class="k">GROUNDWATER · CASE STUDY</p><h4>Brine Well Siting</h4><p class="s">Fictional site · Python</p><div class="chips"><span class="chip">Theis</span><span class="chip">Particle tracking</span><span class="chip">Ogata–Banks</span></div><div class="lnk"><a href="groundwater.html">Case study →</a><a href="https://github.com/RisaRezaei/wellfield" target="_blank" rel="noopener">Code ↗</a></div></div><a class="go" href="groundwater.html" aria-label="Open case study">↗</a></article>
+    </div>
+  </div>
+</section>
+
+<!-- 05 CODE -->
+<section class="sec" id="code" data-stage="PROCESSING">
+  <div class="wrap">
+    <p class="eyebrow rv">05 — CODE</p>
+    <h2 class="big rv" style="--d:.1s">Open-source tools &amp; tutorials.</h2>
+    <p class="sec-lead rv" style="--d:.2s">Everything here is my own code, public on GitHub under the MIT licence. Each tool has a tutorial page with its demo output, the method and a step-by-step walkthrough of the source.</p>
+    <div class="stats rv" style="--d:.25s">
+      <div class="stat"><b class="cnt" data-to="12" id="gh-repos">12</b><span>public repositories</span></div>
+      <div class="stat"><b class="cnt" data-to="11">11</b><span>Earth Engine tools &amp; course</span></div>
+      <div class="stat"><b class="cnt" data-to="2">2</b><span>Python command-line tools</span></div>
+      <div class="stat"><b class="cnt" data-to="2446">2,446</b><span>lines of documented code</span></div>
+      <a class="pill line" href="https://github.com/RisaRezaei" target="_blank" rel="noopener">GITHUB.COM/RISAREZAEI ↗</a>
+    </div>
+    <div class="layers rv" style="--d:.3s" role="toolbar" aria-label="Filter tools"><button class="on" data-f="all">ALL 13</button><button data-f="water">WATER</button><button data-f="air">AIR QUALITY</button><button data-f="climate">CLIMATE</button><button data-f="land">LAND &amp; TERRAIN</button><button data-f="ml">MACHINE LEARNING</button><button data-f="teaching">TEACHING</button><button data-f="python">PYTHON</button><span class="live1"><span class="dot"></span>1 LIVE APP</span></div>
+    <table class="manifest" id="manifest">
+      <thead><tr><th class="n">#</th><th>TOOL</th><th>TYPE</th><th>DATA</th><th>STEPS</th><th>LINKS</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <div class="peek" id="peek"><img alt=""></div>
+</section>
+
+<!-- 06 PUBLICATIONS -->
+<section class="sec" id="publications" data-stage="VALIDATION">
+  <div class="wrap">
+    <p class="eyebrow rv">06 — PUBLICATIONS &amp; PEER REVIEW</p>
+    <h2 class="big rv" style="--d:.1s">Selected outputs.</h2>
+    <div class="pub-grid">
+      <div class="pubs">
+        <article class="panel feat-art rv">
+          <div class="cover"><canvas data-cover></canvas><b>JOURNAL OF<br>HYDROLOGY</b><strong>665</strong><small>2026 · 134679</small></div>
+          <div><div class="top"><span class="kick">JOURNAL ARTICLE · 2026</span><span class="tag">FEATURED</span></div>
+            <h3>Scenario-driven decision support system for assessing water balance to support agricultural and ecosystem sustainability</h3>
+            <p class="au">Meydani, A., <b>Abbasalizadehrezaei, P.</b>, Javadian, M., Khodaei, H., Tajrishy, M., Levia, D.F.</p>
+            <p class="jr"><em>Journal of Hydrology</em>, 665, 134679</p>
+            <a class="pill tline sm" href="https://doi.org/10.1016/j.jhydrol.2025.134679" target="_blank" rel="noopener">DOI:10.1016/J.JHYDROL.2025.134679 →</a></div>
+        </article>
+        <article class="panel pub rv" style="--d:.1s"><span class="ic"><canvas class="ico" data-g="mic" style="width:30px;height:30px"></canvas></span><div><span class="kick">CONFERENCE · 2024</span>
+          <h3>An integrated decision support system for balancing agricultural and environmental water use in the Urmia Lake Basin</h3>
+          <p class="au"><b>Abbasalizadehrezaei, P.</b>, Meydani, A., Khodaei, H., Tajrishy, M., Levia, D.F.<br><span style="color:var(--ink)">AGU24 Annual Meeting, Washington, D.C.</span></p></div></article>
+        <article class="panel pub sw rv" style="--d:.2s"><span class="ic"><canvas class="ico" data-g="code" data-c="#60a5fa" style="width:30px;height:30px"></canvas></span><div><span class="kick">SOFTWARE · 2026 · ZENODO</span>
+          <h3>Twelve open-source tools for Earth-observation, water and climate data</h3>
+          <p class="au"><b>Abbasalizadehrezaei, P.</b> · Version 1.0.0 · MIT licence · one DOI per tool</p>
+          <div class="dois" id="dois"></div></div></article>
+      </div>
+      <aside class="panel peer rv" style="--d:.15s">
+        <span class="kick">PEER REVIEW · 12/2024 – PRESENT</span>
+        <div class="big"><b class="cnt" data-to="45" data-orcid="reviews">45</b><div><strong>reviews</strong><span data-orcid="reviews-for">for Elsevier journals</span></div></div>
+        <p class="ach-h">ACHIEVEMENTS (4)</p>
+        <div id="achv">
+          <div class="ach" data-issn="0301-4797"><span class="ab">JEM</span><div><h4>Journal of Environmental Management</h4><small><span class="n">35</span> reviews</small><div class="bar"><i style="--w:77.8%"></i></div></div><span class="r"><span class="n">35</span>/<span class="t">45</span></span></div>
+          <div class="ach" data-issn="0378-3774"><span class="ab">AWM</span><div><h4>Agricultural Water Management</h4><small><span class="n">8</span> reviews</small><div class="bar"><i style="--w:17.8%"></i></div></div><span class="r"><span class="n">8</span>/<span class="t">45</span></span></div>
+          <div class="ach" data-issn="0022-1694"><span class="ab">JH</span><div><h4>Journal of Hydrology</h4><small><span class="n">2</span> reviews</small><div class="bar"><i style="--w:4.4%"></i></div></div><span class="r"><span class="n">2</span>/<span class="t">45</span></span></div>
+          <div class="ach"><span class="ab">★</span><div><h4>Elsevier reviewer recognition</h4><small>JEM · AWM · J. Hydrology</small></div><span class="u">UNLOCKED ✓</span></div>
+        </div>
+        <a class="orcid" href="https://orcid.org/0009-0009-5708-7673" target="_blank" rel="noopener">Counts update automatically from ORCID ↗</a>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- 07 EXPERIENCE -->
+<section class="sec" id="experience" data-stage="DECISION SUPPORT">
+  <div class="wrap">
+    <p class="eyebrow rv">07 — EXPERIENCE</p>
+    <h2 class="big rv" style="--d:.1s">Research and teaching.</h2>
+    <div class="panel tl rv" style="--d:.15s" id="timeline">
+      <div class="tl-head"><span></span><div class="years"><span style="left:0">2021</span><span style="left:16.667%">2022</span><span style="left:33.333%">2023</span><span style="left:50%">2024</span><span style="left:66.667%">2025</span><span style="left:83.333%">2026</span></div></div>
+      <div class="lane"><div class="who"><b>RESEARCH ASSISTANT</b><span>Sharif · wetlands monitoring grant</span></div><div class="axis"><i class="bar2" data-s="2021.25" data-e="2023.25"></i></div></div>
+      <div class="lane"><div class="who"><b>TEACHING ASSISTANT</b><span>Sharif · water environment lab</span></div><div class="axis"><i class="bar2" data-s="2023.08" data-e="2023.25"></i></div></div>
+      <div class="lane"><div class="who"><b>RESEARCH COLLABORATOR</b><span>Univ. of Delaware (remote)</span></div><div class="axis"><i class="bar2 b" data-s="2023.67" data-e="2024.92"></i></div></div>
+      <div class="lane out"><div class="who"><b>OUTPUTS</b><span>Conference · journal</span></div><div class="axis"><i class="ms" data-t="2024.95"></i><span class="ms-l" data-t="2024.95" data-side="-1">AGU24 · WASHINGTON, D.C.</span><i class="ms" data-t="2026.0"></i><span class="ms-l" data-t="2026.0" data-side="1">J. HYDROLOGY · VOL. 665</span></div></div>
+    </div>
+    <div class="missions">
+      <article class="mission cham rv"><span class="kick">MISSION 01 · 04/2021 – 04/2023</span><h3>Research Assistant</h3><div class="org">Sharif University of Technology</div><div class="note">Development of a Wetlands Monitoring System (3-year funded grant)</div>
+        <ul><li>Built multi-year satellite monitoring workflows (Landsat, Sentinel-2) for surface water and land cover in Google Earth Engine and Python.</li><li>Applied Random Forest and K-means for classification and change detection, including accuracy assessment.</li></ul></article>
+      <article class="mission cham rv" style="--d:.15s"><span class="kick">MISSION 02 · 02/2023 – 04/2023</span><h3>Teaching Assistant</h3><div class="org">Water Environment Analysis Laboratory, Sharif</div>
+        <ul><li>Guided students through water-quality and hydrochemical experiments and assessed their lab reports.</li></ul></article>
+      <article class="mission cham blue rv" style="--d:.3s"><span class="kick">MISSION 03 · 09/2023 – 12/2024</span><h3>Research Collaborator</h3><div class="org">University of Delaware, USA (remote)</div><div class="note">Prof. Delphis F. Levia · Prof. Massoud Tajrishy</div>
+        <ul><li>Co-developed a forecast-informed decision support system for real-time water allocation in the Lake Urmia basin, coupling a daily WEAP water-balance model with inflow forecasts.</li><li>Applied multi-objective evolutionary optimization and AHP to compare allocation scenarios: +31% environmental water supply, +26% agricultural profit.</li><li>Published in the Journal of Hydrology and presented at AGU24.</li></ul></article>
+    </div>
+  </div>
+</section>
+
+<!-- 08 EDUCATION -->
+<section class="sec" id="education" data-stage="GROUND TRUTH">
+  <div class="wrap">
+    <p class="eyebrow rv">08 — EDUCATION</p>
+    <h2 class="big rv" style="--d:.1s">Degrees, distinctions and training.</h2>
+    <div class="deg">
+      <article class="panel dcard on rv"><div class="orb"><canvas data-orb="0"></canvas><small>LEVEL 02</small></div><div>
+        <span class="kick">MSc · 09/2020 – 04/2023</span><h3>Environmental Engineering</h3><div class="inst">Sharif University of Technology, Tehran</div>
+        <div class="gpa"><i>GPA</i><b class="cnt" data-to="17.71" data-dec="2" data-suf=" / 20">17.71 / 20</b><span class="bar"><s style="--w:88.5%"></s></span></div>
+        <p class="th">Thesis: satellite-based assessment of surface water using Random Forest classification, K-means clustering and spectral indices in Google Earth Engine.</p></div></article>
+      <article class="panel dcard b2 rv" style="--d:.15s"><div class="orb"><canvas data-orb="1"></canvas><small>LEVEL 01</small></div><div>
+        <span class="kick">BSc · 09/2016 – 07/2020</span><h3>Civil Engineering</h3><div class="inst">Kharazmi University, Tehran</div>
+        <div class="gpa done"><b>COMPLETED</b><span class="bar"><s style="--w:100%"></s></span></div></div></article>
+    </div>
+    <p class="sub-h rv">DISTINCTIONS</p>
+    <div class="dist">
+      <article class="panel rv"><span class="hex" style="--d:.2s"><span><canvas class="ico" data-g="star" style="width:26px;height:26px"></canvas></span></span><div><h4>Winning grant team</h4><p>Member of the winning team for the 3-year grant “Development of a Wetlands Monitoring System”, Sharif.</p></div></article>
+      <article class="panel rv" style="--d:.15s"><span class="hex" style="--d:.35s"><span><canvas class="ico" data-g="cap" style="width:26px;height:26px"></canvas></span></span><div><h4>Ranked 1st in three MSc courses</h4><p>Groundwater Contamination · Advanced Hydrology · Water Environment Analysis Laboratory</p></div></article>
+      <article class="panel rv" style="--d:.3s"><span class="hex" style="--d:.5s"><span><canvas class="ico" data-g="check" style="width:26px;height:26px"></canvas></span></span><div><h4>Elsevier reviewer recognition</h4><p>J. Environmental Management · Agricultural Water Management · J. Hydrology</p></div></article>
+    </div>
+    <p class="sub-h rv">TRAINING</p>
+    <div class="train">
+      <div class="panel rv"><canvas class="ico" data-g="sat" style="width:22px;height:22px"></canvas><b>Remote Sensing for Water Accounting Plus (WA+)</b><span>IHE Delft · 2021</span></div>
+      <div class="panel rv" style="--d:.15s"><canvas class="ico" data-g="sat" style="width:22px;height:22px"></canvas><b>Remote sensing with Google Earth Engine</b><span>UNESCO Chair workshop · 2020</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 CONTACT -->
+<section class="contact" id="contact" data-stage="DOWNLINK">
+  <canvas id="cglobe" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <p class="eyebrow rv">09 — CONTACT</p>
+    <h2><span class="clip"><span>CHANNEL</span></span><span class="clip"><span style="--d:.15s">OPEN<i class="cursor" aria-hidden="true"></i></span></span></h2>
+    <p class="lead rv" style="--d:.3s">Open to research, data and engineering roles and collaborations across Europe.</p>
+    <a class="pill teal rv" style="--d:.45s" href="https://www.linkedin.com/in/risarezaei" target="_blank" rel="noopener">MESSAGE ME ON LINKEDIN ↗</a>
+    <div class="tiles">
+      <a class="tile p rv" style="--d:.5s" href="https://www.linkedin.com/in/risarezaei" target="_blank" rel="noopener"><i>in</i><div><b>LinkedIn</b><span>Professional profile</span></div></a>
+      <a class="tile rv" style="--d:.6s" href="https://orcid.org/0009-0009-5708-7673" target="_blank" rel="noopener"><i>iD</i><div><b>ORCID</b><span>Publications and peer reviews</span></div></a>
+      <a class="tile rv" style="--d:.7s" href="https://github.com/RisaRezaei" target="_blank" rel="noopener"><i>&lt;/&gt;</i><div><b>GitHub</b><span>Open-source code and tools</span></div></a>
+      <a class="tile rv" style="--d:.8s" href="https://www.youtube.com/@ParisaAbbasalizadehrezaei" target="_blank" rel="noopener"><i>▶</i><div><b>YouTube</b><span>Earth-from-space videos</span></div></a>
+    </div>
+  </div>
+  <span class="downlink" id="dlabel">DOWNLINK · CHANNEL OPEN</span>
+  <footer><div class="wrap"><span>© <span id="yr">2026</span> Parisa Abbasalizadehrezaei</span><a href="#top">BACK TO ORBIT ↑</a></div></footer>
+</section>
+</main>
+
+<div class="ytm" aria-hidden="true" role="dialog" aria-label="Video player"><div class="ytm-box"><button class="ytm-x" type="button" aria-label="Close video">×</button><div class="ytm-v"></div><div class="ytm-cap"><b></b><a target="_blank" rel="noopener">Watch on YouTube ↗</a></div></div></div>
+<script src="assets/orbit/orbit.js"></script>
+</body>
+</html>
