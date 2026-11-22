@@ -133,7 +133,7 @@ ccv.addEventListener('click',function(e){var r=ccv.getBoundingClientRect(),x=e.c
 var lcv=$('#lens'),lensT0=-1,lensP=0,lensOff=false;
 function blob(c,cx,cy,r,s,n,amp,sx,sy){var sv=seed;seed=s;var K=[];for(var i=0;i<5;i++)K.push([rnd()*amp,rnd()*6.28]);seed=sv;c.beginPath();for(var j=0;j<=n;j++){var a=j/n*6.283,rr=1;K.forEach(function(q,qi){rr+=q[0]*Math.sin((qi+2)*a+q[1])});var X=cx+r*rr*Math.cos(a)*sx,Y=cy+r*rr*Math.sin(a)*sy;j?c.lineTo(X,Y):c.moveTo(X,Y)}c.closePath()}
 function noiseF(x,y){return .5+.25*Math.sin(x*.09+y*.05)+.18*Math.sin(x*.21-y*.17+1.3)+.12*Math.sin(x*.5+y*.43+2.1)}
-function drawLens(){if(lensOff)return;var f=fit(lcv),c=f.c,cx=f.w*.255,cy=f.h*.5,r=f.h*.34;c.clearRect(0,0,f.w,f.h);
+function drawLens(){if(lensOff||!lcv)return;var f=fit(lcv),c=f.c,cx=f.w*.255,cy=f.h*.5,r=f.h*.34;c.clearRect(0,0,f.w,f.h);
   c.save();c.beginPath();c.arc(cx,cy,r,0,7);c.clip();seed=5;for(var i=-r;i<r;i+=5)for(var j=-r;j<r;j+=5){var v=noiseF(cx+i,cy+j)*.6+rnd()*.4,L=12+v*26;c.fillStyle='rgb('+(L*.75|0)+','+(L*.95|0)+','+(L*1.25|0)+')';c.fillRect(cx+i,cy+j,5.5,5.5)}
   blob(c,cx+4,cy,r*.62,17,140,.13,1.25,.95);c.setLineDash([6,5]);c.strokeStyle='rgba(231,237,247,.7)';c.lineWidth=1.6;c.stroke();c.setLineDash([]);
   blob(c,cx+4-r*.16*lensP,cy+r*.1*lensP,r*(.62-.32*lensP),17,140,.13,1.25,.95);c.fillStyle='rgba(79,209,197,.78)';c.shadowColor=TEAL;c.shadowBlur=18;c.fill();c.shadowBlur=0;
@@ -141,7 +141,10 @@ function drawLens(){if(lensOff)return;var f=fit(lcv),c=f.c,cx=f.w*.255,cy=f.h*.5
   c.strokeStyle='rgba(79,209,197,.6)';c.lineWidth=1.5;c.beginPath();c.arc(cx,cy,r,0,7);c.stroke();c.strokeStyle='rgba(79,209,197,.25)';c.beginPath();c.arc(cx,cy,r+10,0,7);c.stroke();
   for(var k=0;k<72;k++){var a=k/72*6.283,l=k%6===0?10:4;c.strokeStyle='rgba(79,209,197,.45)';c.beginPath();c.moveTo(cx+(r+10)*Math.cos(a),cy+(r+10)*Math.sin(a));c.lineTo(cx+(r+10+l)*Math.cos(a),cy+(r+10+l)*Math.sin(a));c.stroke()}
   $('#decbar').style.width=(100*(1-.75*lensP))+'%';$('#lensq').classList.toggle('in',lensP>.97)}
-$('#runapp').addEventListener('click',function(){lensOff=true;var box=$('#lensbox');box.innerHTML='<iframe src="https://risarezaei.projects.earthengine.app/view/gsw-lake-explorer#lake=146;" title="GSW Lake Explorer: Lake Razazah surface water 1984–2021" allow="fullscreen"></iframe>'});
+$('#runapp').addEventListener('click',function(){lensOff=true;this.hidden=true;var box=$('#lensbox');box.innerHTML='<iframe src="https://risarezaei.projects.earthengine.app/view/gsw-lake-explorer" title="GSW Lake Explorer" allow="fullscreen"></iframe>'});
+/* lake video: plays only while on screen, stays still for reduced motion */
+(function(){var v=$('#lakevid');if(!v)return;if(reduce){v.removeAttribute('autoplay');v.pause();v.controls=true;return}
+  new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){var p=v.play();if(p&&p.catch)p.catch(function(){})}else v.pause()})},{threshold:.15}).observe(v)})();
 
 /* ---------------- project schematics ---------------- */
 function schem(cv){var f=fit(cv),c=f.c,w=f.w,h=f.h,S=w/150,kind=cv.dataset.s;seed=kind.length*7+3;function m(v){return v*S}var fnt='500 '+Math.round(10*S)+'px Inter,sans-serif';
@@ -219,7 +222,7 @@ function layout(){if(mobile())return;var vh=innerHeight,H=pg(hero),g=heroGeom(H.
   L.orb=orbGeom({cx:H.x+g.cx,cy:H.y+g.cy,R:g.R});
   var tr=pg($('#track'));L.track={x0:Math.min(innerWidth-30,tr.x+tr.w+20),x1:tr.x+10,y:tr.y+tr.h*.42};
   var cc=pg(ccv),G=constGeom(cc.w,cc.h);L.sk={cx:cc.x+G.cx,cy:cc.y+G.cy,r:86*G.k};
-  var lb=pg($('#lensbox'));L.lens={x:lb.x+lb.w*.255,y:lb.y+lb.h*.5,r:lb.h*.34,sy:lb.y-34};
+  var lb=pg($('#lensbox'));L.lens={x:lb.x+lb.w*.3125,y:lb.y+lb.h*.5,r:lb.h*.4,sy:lb.y-34};
   var pv=$$('.pcard').filter(function(p){return !p.classList.contains('hide')});var gg=pg($('#pgrid'));L.grid={x0:gg.x+gg.w+30,x1:gg.x-30,y:gg.y-22,top:gg.y,bot:gg.y+gg.h,cards:pv.map(function(p){var q=pg(p);return [p,q.x+q.w/2]})};
   var rows=$$('#manifest tr.row').filter(function(r){return !r.classList.contains('hide')}),mt=pg($('#manifest'));L.tab={x:mt.x-34,y0:mt.y+40,y1:mt.y+mt.h-24,rows:rows.map(function(r){return [r,pg(r).y]})};
   var b45=pg($('.peer .big b'));L.p45={cx:b45.x+b45.w/2,cy:b45.y+b45.h/2,rx:Math.max(70,b45.w*.75),ry:58};
