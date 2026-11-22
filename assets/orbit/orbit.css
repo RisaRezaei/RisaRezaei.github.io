@@ -349,6 +349,158 @@ footer a{color:var(--teal);font-weight:700}
 /* stage label at each section boundary (drawn by the satellite layer) */
 [data-stage]{scroll-margin-top:60px}
 
+/* ---------- detail pass (Nov 2026) ----------
+   No small spaced capital labels, no numbered section labels, no corner brackets, no rounded boxes.
+   Section titles: one giant word cut off by the page edge (after Marble Imaging).
+   Content: flat colour blocks with square corners and no borders (after Varda).
+   Buttons: square, with a line on the left and bottom only (after Stamen). */
+:root{--blk:#0b1726;--blk2:#0e2132;--blk3:#0f2a3d}
+.sec{overflow-x:clip}
+.sec-word{position:relative;font:300 clamp(104px,14.5vw,270px)/.8 "Chakra Petch",sans-serif;text-transform:uppercase;letter-spacing:-.025em;color:rgba(150,220,232,.11);white-space:nowrap;margin:0 0 -.22em calc(-1 * var(--pad) - .05em);pointer-events:none;user-select:none;will-change:transform}
+h2.big{position:relative;margin-top:0}
+.skip{border-radius:0}
+/* buttons */
+.pill{height:auto;padding:13px 18px 12px;border:0;border-left:2px solid var(--teal);border-bottom:2px solid var(--teal);border-radius:0;background:transparent;color:var(--ink);font:600 15px/1 Inter,sans-serif;letter-spacing:0;transition:background .25s,color .25s,border-color .25s}
+.pill:hover{background:rgba(79,209,197,.12);color:var(--ink)}
+.pill.fill{background:transparent;color:var(--ink)}
+.pill.fill:hover{transform:none;box-shadow:none;background:rgba(79,209,197,.12)}
+.pill.teal{background:var(--teal);color:#04121a;border-color:#bff7f1}
+.pill.teal:hover{background:#7fe3d9}
+.pill.sm{height:auto;padding:11px 15px 10px;font-size:14px}
+.nav .pill{height:auto;padding:10px 15px 9px;font-size:14px}
+/* navigation and hero */
+.nav .name{font:600 19px/1 "Chakra Petch",sans-serif}
+.nav ul a{font:500 15px/1 Inter,sans-serif}
+.hero-name{font:600 23px/1 "Chakra Petch",sans-serif}
+.hero-nav li a{font:500 17px/34px Inter,sans-serif}
+.hero .lead{margin-top:30px}
+/* about */
+.about-grid .bio p.first{margin-top:28px;font-size:20px;line-height:1.55}
+.vitals{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px}
+.vrow{display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:26px;min-height:184px;padding:26px 26px 24px;background:var(--blk);border:0}
+.vrow:nth-child(2),.vrow:nth-child(3){background:var(--blk2)}
+.vrow b{font:700 48px/1 "Chakra Petch",sans-serif}
+.vrow:nth-child(2) b{color:var(--teal)}
+.vrow span{font-size:15px;line-height:1.4;color:var(--sub)}
+.yt-head h3{margin:0;font:600 28px/1.15 "Chakra Petch",sans-serif}
+.ytc-frame{border-radius:0;border:0}
+.ytc-len{border-radius:0;font:600 13px/1 Inter,sans-serif}
+.ytc-meta span{font:400 14px/1.4 Inter,sans-serif}
+.ytm-v{border-radius:0}
+/* skills */
+.insp{padding:0;background:none;border:0}
+.grp{border-radius:0;padding:18px 18px 20px;border-top:1px solid var(--line2)}
+.grp:last-child{border-bottom:1px solid var(--line2)}
+.grp::before{top:0;bottom:0;border-radius:0}
+.grp.on{background:var(--blk)}
+.grp h3{margin:0 0 8px;font:600 18px/1.2 Inter,sans-serif}
+.grp .sk{margin:0;font-size:14.5px;line-height:1.55;color:var(--sub)}
+/* projects */
+.live{gap:2px}
+.lcard{padding:0 0 30px;background:var(--blk)}
+.lcard+.lcard{background:var(--blk2)}
+.viz{border-radius:0;border:0}
+.lcard h3{margin:26px 26px 0}
+.lcard p{margin:10px 26px 22px}
+.lcard .pill{margin-left:26px}
+.lens-info{font:400 14px/1 Inter,sans-serif}
+.lens-info b{font:600 17px/1 Inter,sans-serif}
+.lens-info .lbl{font-size:14px}
+.dec .bar,.dec .bar i{border-radius:0}
+.tabs{gap:34px}
+.tabs button{font:500 15px/1 Inter,sans-serif;letter-spacing:0}
+.pgrid{gap:2px}
+.pcard{background:var(--blk);border:0;border-radius:0;padding:20px 20px 22px}
+.pcard:nth-child(even){background:var(--blk2)}
+.pcard.feat{background:var(--blk3)}
+.pcard:hover{background:#12304a;border:0}
+.pcard canvas{border-radius:0}
+.pcard h4{margin:4px 30px 10px 0;font-size:20px}
+.pcard .s{font:400 14px/1.4 Inter,sans-serif;color:var(--muted)}
+.pcard .lnk{font:500 14px/1.4 Inter,sans-serif;margin-top:16px}
+/* code */
+.layers{height:auto;padding:0;gap:34px;background:none;border:0;border-bottom:1px solid var(--line2);border-radius:0}
+.layers button{font:500 15px/1 Inter,sans-serif;padding:14px 0 16px}
+.manifest{margin-top:8px}
+.manifest thead{display:none}
+.manifest th:nth-child(4),.manifest td:nth-child(4),.manifest th:nth-child(5),.manifest td:nth-child(5){display:none}
+.manifest td{height:56px;font:400 14px/1.3 Inter,sans-serif}
+.manifest .n{font:500 14px/1 Inter,sans-serif}
+.manifest .ty{font-weight:500}
+.manifest .lk a{font-weight:500}
+.peek{border-radius:0;border:0}
+/* publications */
+.pub-grid{gap:2px}
+.pubs{gap:2px}
+.feat-art{background:var(--blk3);border:0;padding:28px}
+.pub{background:var(--blk);border:0;padding:28px}
+.pub.sw{background:var(--blk2)}
+.cover{border-radius:0}
+.cover b{font:600 15px/1.25 "Chakra Petch",sans-serif}
+.cover small{font:400 12px/1 Inter,sans-serif}
+.feat-art h3{margin-top:0}
+.pub h3{margin-top:4px}
+.pub .ic{border-radius:0}
+.dois{gap:4px 14px}
+.dois a{width:auto;height:auto;border:0;border-radius:0;background:none;display:inline;font:600 15px/1.6 Inter,sans-serif;color:var(--blue)}
+.dois a:hover{background:none;transform:none;text-decoration:underline}
+.peer{background:var(--blk);border:0;padding:32px 30px}
+.peer .big{margin-top:0}
+.peer .since{display:block;font-size:14px;color:var(--muted);margin-top:2px}
+#achv{margin-top:26px;border-top:1px solid var(--line2)}
+.ach{grid-template-columns:1fr auto}
+.ach small{font:400 13px/1.4 Inter,sans-serif}
+.ach .bar,.ach .bar i{border-radius:0}
+.ach .r{font:500 13px/1 Inter,sans-serif}
+.orcid{font:500 14px/1 Inter,sans-serif}
+/* experience */
+.tl{background:var(--blk);border:0;border-radius:0}
+.years span{font:500 13px/1 Inter,sans-serif}
+.lane .who b{font:600 15px/1.3 Inter,sans-serif}
+.lane.out .who b{color:var(--sub)}
+.ms-l{font:600 13px/1 Inter,sans-serif}
+.missions{gap:2px}
+.mission{padding:32px 28px 28px;background:var(--blk);clip-path:none}
+.mission:nth-child(2){background:var(--blk2)}
+.mission::before{display:none}
+.mission h3{margin-top:0}
+.mission .when{margin:6px 0 0;font-size:14px;color:var(--muted)}
+/* education */
+.deg{gap:2px}
+.dcard{background:var(--blk);border:0;border-radius:0}
+.dcard.b2{background:var(--blk2)}
+.dcard h3{margin-top:4px}
+.dcard .when{margin:6px 0 0;font-size:14px;color:var(--muted)}
+.gpa i{font:500 13px/1 Inter,sans-serif}
+.gpa .bar,.gpa .bar s{border-radius:0}
+.sub-h{margin:64px 0 22px;font:600 28px/1.1 "Chakra Petch",sans-serif;color:var(--ink)}
+.dist{gap:2px}
+.dist article{display:block;padding:30px 28px;background:var(--blk)}
+.dist article:nth-child(2){background:var(--blk2)}
+.dist h4{font:600 21px/1.25 "Chakra Petch",sans-serif}
+.dist p{margin-top:10px;font-size:14.5px}
+.train{gap:2px}
+.train div{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:6px;height:auto;padding:24px 28px;border-radius:0;background:var(--blk)}
+.train div+div{background:var(--blk2)}
+.train span{margin-left:0;font:400 14px/1.3 Inter,sans-serif}
+/* contact */
+.contact h2{margin-top:0}
+.contact .pill.teal{height:auto;padding:17px 24px 16px;font-size:17px}
+.contact .pill.teal::after{display:none}
+.tiles{gap:2px}
+.tile{flex-direction:column;justify-content:space-between;align-items:flex-start;gap:40px;min-height:176px;padding:22px 24px 24px;background:var(--blk);border:0;border-radius:0;transition:background .3s}
+.tile:hover{transform:none;background:#12304a}
+.tile.p{background:var(--teal);color:#04121a}
+.tile.p span{color:#063a38}
+.tile:nth-child(2){background:#10284a}
+.tile:nth-child(3){background:var(--blk2)}
+.tile b{font:600 32px/1 "Chakra Petch",sans-serif}
+.tile span{font-size:14px}
+.tile::after{right:22px;top:18px;font-size:20px;color:inherit}
+footer .wrap{font:400 14px/1 Inter,sans-serif}
+footer a{font-weight:600}
+@media (max-width:600px){.vitals{grid-template-columns:1fr}.vrow{min-height:0;gap:14px}.sec-word{margin-bottom:-.12em}}
+
 /* ---------- responsive ---------- */
 @media (max-width:1280px){.nav ul{gap:20px}.about-grid{gap:40px}.vrow{grid-template-columns:34px 200px 1fr}.skills-grid{grid-template-columns:1fr 400px}.pub-grid{grid-template-columns:1fr 440px}}
 @media (max-width:1100px){.nav ul{display:none}.pgrid,.ytgrid,.missions,.dist{grid-template-columns:1fr 1fr}.live{grid-template-columns:1fr}.tiles{grid-template-columns:1fr 1fr}.hero-nav{display:none}.hero-copy{left:40px}.deg{grid-template-columns:1fr}}
