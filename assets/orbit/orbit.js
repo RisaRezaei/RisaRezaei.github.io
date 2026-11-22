@@ -344,7 +344,7 @@ function loop(){var t=now();frameWords();
   requestAnimationFrame(loop)}
 
 /* ---------------- live data: ORCID & GitHub ---------------- */
-(function(){var API='https://pub.orcid.org/v3.0/0009-0009-5708-7673/',ADD={'0378-3774':1};
+(function(){var API='https://pub.orcid.org/v3.0/0009-0009-5708-7673/',ADD={'0378-3774':2};
   fetch(API+'peer-reviews',{headers:{Accept:'application/json'}}).then(function(r){if(!r.ok)throw r.status;return r.json()}).then(function(d){var rows={},orgs={},total=0;
     (d.group||[]).forEach(function(g){var id=(((g['external-ids']||{})['external-id']||[]).map(function(e){return e['external-id-value']})[0]||'').replace(/^issn:/i,''),n=(g['peer-review-group']||[]).length;
       (g['peer-review-group']||[]).forEach(function(x){(x['peer-review-summary']||[]).forEach(function(s){var o=s['convening-organization'];if(o&&o.name)orgs[o.name.replace(/,?\s*(Inc|Ltd|B\.?V|GmbH|LLC)\.?$/i,'')]=1})});if(n){total+=n;rows[id]=(rows[id]||0)+n}});
