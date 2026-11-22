@@ -88,9 +88,40 @@ var heroLon=38;
 function drawHero(t){var f=fit(gcv),c=f.c,g=heroGeom(f.w,f.h),o=orbGeom(g);c.clearRect(0,0,f.w,f.h);
   heroLon=38-(reduce?0:3.4*t);
   c.save();c.translate(o.cx,o.cy);c.rotate(o.rot);c.setLineDash([5,9]);c.lineDashOffset=-t*18;c.strokeStyle='rgba(96,165,250,'+(.4*clamp((t-.2)/1))+')';c.lineWidth=1.2;c.beginPath();c.ellipse(0,0,o.rx,o.ry,0,0,7);c.stroke();c.restore();
-  globe(c,f.w,f.h,g.cx,g.cy,g.R,{lon0:heroLon,arcs:true,lakes:true,arcP:reduce?1:clamp((t-.4)/2.2),labA:reduce?1:clamp((t-1.4)/.8)},t)
+  globe(c,f.w,f.h,g.cx,g.cy,g.R,{lon0:heroLon,dim:WIND?.95:1,arcs:!WIND,lakes:!WIND,arcP:reduce?1:clamp((t-.4)/2.2),labA:reduce?1:clamp((t-1.4)/.8)},t);
+  drawWind(c,f.w,f.h,g.cx,g.cy,g.R,24,heroLon)
   /* in the hero phase the satellite lives on this canvas, so it passes behind the headline and buttons */
   if(K.length&&!mobile()&&sy<K[1].s&&hist.length){var hp=pg(hero);c.save();c.translate(-hp.x,-hp.y);drawTrail(c);var h0=hist[0];if(h0[2]>.01)satIcon(c,h0[0],h0[1],13,h0[2]);c.restore()}}
+/* ---------------- wind flow on the hero globe ----------------
+   wind.png holds an illustrative wind field (R = eastward, G = northward, 1 degree grid), not observed data.
+   Until it loads the globe keeps its lake markers. */
+var WIND=null,WRAW='assets/orbit/';
+(function(){var bust='?v=1';
+  fetch(WRAW+'wind.json'+bust).then(function(r){if(!r.ok)throw r.status;return r.json()}).then(function(m){var im=new Image();im.crossOrigin='anonymous';
+    im.onload=function(){var cv=document.createElement('canvas');cv.width=m.w;cv.height=m.h;var cx=cv.getContext('2d');cx.drawImage(im,0,0);var d=cx.getImageData(0,0,m.w,m.h).data,n=m.w*m.h,u=new Float32Array(n),v=new Float32Array(n);
+      for(var i=0;i<n;i++){u[i]=d[4*i]/255*2*m.lim-m.lim;v[i]=d[4*i+1]/255*2*m.lim-m.lim}WIND={m:m,u:u,v:v}};im.src=WRAW+'wind.png'+bust}).catch(function(){})})();
+function windAt(la,lo){var m=WIND.m,x=(((lo-m.lon_left)%360)+360)%360/m.dlon,y=(m.lat_top-la)/m.dlat;if(y<0)y=0;if(y>m.h-1.001)y=m.h-1.001;
+  var x0=Math.floor(x)%m.w,y0=Math.floor(y),x1=(x0+1)%m.w,fx=x-Math.floor(x),fy=y-y0,a=y0*m.w,b=a+m.w,U=WIND.u,V=WIND.v;
+  return [(U[a+x0]*(1-fx)+U[a+x1]*fx)*(1-fy)+(U[b+x0]*(1-fx)+U[b+x1]*fx)*fy,(V[a+x0]*(1-fx)+V[a+x1]*fx)*(1-fy)+(V[b+x0]*(1-fx)+V[b+x1]*fx)*fy]}
+var PT=[],wtr=document.createElement('canvas'),WCOL=['rgba(64,120,214,.8)','rgba(80,168,222,.9)','rgba(79,209,197,.95)','rgba(228,255,251,1)'];
+function seedP(p,la0,lo0){for(var k=0;k<24;k++){var z=Math.random()*2-1,la=Math.asin(z)/D,lo=Math.random()*360-180;if(P3(la,lo,la0,lo0)[2]>.08){p.la=la;p.lo=lo;p.age=Math.random()*90|0;p.max=70+Math.random()*80|0;return}}p.age=1e9}
+var wDone=false;
+/* streaks float a little above the surface (faster wind = higher), fade towards the limb and cast a faint shadow, for a slight 3D feel */
+function drawWind(c,w,h,cx,cy,R,la0,lo0){if(!WIND)return;var Rc=R*1.06;
+  if(reduce&&wDone&&wtr.width===Math.round(w*DPR)){c.save();c.beginPath();c.arc(cx,cy,Rc,0,7);c.clip();c.drawImage(wtr,0,0,w,h);c.restore();return}wDone=true;
+  var N=mobile()?1500:4500;while(PT.length<N){var p0={};seedP(p0,la0,lo0);PT.push(p0)}
+  var Wd=Math.round(w*DPR),Hd=Math.round(h*DPR);if(wtr.width!==Wd||wtr.height!==Hd){wtr.width=Wd;wtr.height=Hd}var t=wtr.getContext('2d');t.setTransform(DPR,0,0,DPR,0,0);
+  t.globalCompositeOperation='destination-in';t.fillStyle='rgba(0,0,0,'+(reduce?0:.9)+')';t.fillRect(0,0,w,h);t.globalCompositeOperation='source-over';
+  var paths=[],shadow=[],steps=reduce?14:1,so=Math.max(1.2,R/300);for(var q0=0;q0<12;q0++)paths.push([]);
+  for(var i=0;i<PT.length;i++){var p=PT[i];for(var st=0;st<steps;st++){if(p.age++>p.max){seedP(p,la0,lo0);break}var A=P3(p.la,p.lo,la0,lo0);if(A[2]<.04){seedP(p,la0,lo0);break}
+      var uv=windAt(p.la,p.lo),sp=Math.hypot(uv[0],uv[1]),cl=Math.max(.2,Math.cos(p.la*D));p.lo+=uv[0]*.016/cl;p.la+=uv[1]*.016;if(p.la>88||p.la<-88){seedP(p,la0,lo0);break}
+      var B=P3(p.la,p.lo,la0,lo0),hR=R*(1.012+.032*Math.min(sp,20)/20),z=(A[2]+B[2])/2,db=z<.35?0:z<.7?1:2;
+      shadow.push(cx+A[0]*R+so,cy+A[1]*R+so,cx+B[0]*R+so,cy+B[1]*R+so);
+      paths[(sp<3?0:sp<6?1:sp<10?2:3)*3+db].push(cx+A[0]*hR,cy+A[1]*hR,cx+B[0]*hR,cy+B[1]*hR)}}
+  var lw=Math.max(1,R/400);t.lineCap='round';
+  t.strokeStyle='rgba(0,4,10,.32)';t.lineWidth=lw*1.3;t.beginPath();for(var m=0;m<shadow.length;m+=4){t.moveTo(shadow[m],shadow[m+1]);t.lineTo(shadow[m+2],shadow[m+3])}t.stroke();
+  for(var j=0;j<12;j++){var q=paths[j];if(!q.length)continue;var dbin=j%3;t.globalAlpha=[.42,.72,1][dbin];t.lineWidth=lw*[.75,1,1.3][dbin];t.strokeStyle=WCOL[(j/3)|0];t.beginPath();for(var m2=0;m2<q.length;m2+=4){t.moveTo(q[m2],q[m2+1]);t.lineTo(q[m2+2],q[m2+3])}t.stroke()}
+  t.globalAlpha=1;c.save();c.beginPath();c.arc(cx,cy,Rc,0,7);c.clip();c.drawImage(wtr,0,0,w,h);c.restore()}
 function drawTrail(c){for(var h=1;h<hist.length;h++){var a2=(1-h/hist.length)*Math.min(hist[h][2],hist[h-1][2]);if(Math.hypot(hist[h][0]-hist[h-1][0],hist[h][1]-hist[h-1][1])>120)continue;c.strokeStyle='rgba(79,209,197,'+(.55*a2)+')';c.lineWidth=3*a2+.4;c.beginPath();c.moveTo(hist[h-1][0],hist[h-1][1]);c.lineTo(hist[h][0],hist[h][1]);c.stroke()}}
 /* typed eyebrow, scan date, HUD */
 (function(){var el=$('.hero .typed');if(!el)return;var txt=el.dataset.text,i=0;if(reduce){el.textContent=txt;return}setTimeout(function step(){el.textContent=txt.slice(0,++i);if(i<txt.length)setTimeout(step,16)},300)})();
