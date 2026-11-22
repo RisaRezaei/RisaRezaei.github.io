@@ -562,3 +562,5 @@ footer a{font-weight:600}
   .ms-l{display:none}
 }
 @media (prefers-reduced-motion:reduce){.rv,.pcard,.manifest tr.row,.clip>span{opacity:1!important;transform:none!important;transition:none!important}.cursor,.badge-live .dot,.contact .pill.teal::after{animation:none}}
+/* phones: the globe starts below the name and photo, the headline below the globe */
+@media (max-width:900px){.hero-copy{padding-top:calc(122px + 46vh + 34px)}}

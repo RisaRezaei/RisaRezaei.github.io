@@ -81,7 +81,8 @@ function stars(){var cv=$('#stars'),f=fit(cv),c=f.c;seed=11;c.clearRect(0,0,f.w,
 
 /* ---------------- hero ---------------- */
 var hero=$('#top'),gcv=$('#globe');
-function heroGeom(w,h){if(mobile())return {cx:w*.5,cy:h*.27,R:Math.min(w*.55,h*.25)};var R=Math.min(w*.35,h*.62);return {cx:w*.806,cy:h*.61,R:R}}
+function heroGeom(w,h){if(mobile()){var Rm=Math.min(w*.5,h*.23);return {cx:w*.5,cy:122+Rm,R:Rm}}   /* phones: globe sits below the name, not under it */
+  var R=Math.min(w*.35,h*.62);return {cx:w*.806,cy:h*.61,R:R}}
 function orbGeom(g){return {cx:g.cx,cy:g.cy,rx:g.R*1.25,ry:g.R*.366,rot:-.35}}
 function orbPt(o,a){var c=Math.cos(o.rot),s=Math.sin(o.rot),x=o.rx*Math.cos(a),y=o.ry*Math.sin(a);return [o.cx+x*c-y*s,o.cy+x*s+y*c]}
 var heroLon=38;
