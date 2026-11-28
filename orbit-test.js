@@ -508,7 +508,33 @@ fetch('https://api.github.com/users/RisaRezaei').then(function(r){return r.ok?r.
 (function(){var m=$('.ytm'),v=$('.ytm-v',m),cap=$('.ytm-cap b',m),lk=$('.ytm-cap a',m),last=null;
   function open(b){last=b;var id=b.dataset.yt,t=b.dataset.t;v.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>';v.firstChild.title=t;cap.textContent=t;lk.href='https://www.youtube.com/watch?v='+id;m.classList.add('on');m.setAttribute('aria-hidden','false');$('.ytm-x',m).focus()}
   function close(){m.classList.remove('on');m.setAttribute('aria-hidden','true');setTimeout(function(){v.innerHTML=''},260);if(last)last.focus()}
-  $$('.ytc-frame').forEach(function(b){b.addEventListener('click',function(){open(b)})});m.addEventListener('click',function(e){if(e.target===m||e.target.closest('.ytm-x'))close()});addEventListener('keydown',function(e){if(e.key==='Escape'&&m.classList.contains('on'))close()})})();
+  document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.ytc-frame');if(b)open(b)});m.addEventListener('click',function(e){if(e.target===m||e.target.closest('.ytm-x'))close()});addEventListener('keydown',function(e){if(e.key==='Escape'&&m.classList.contains('on'))close()})})();
+
+/* ---------------- videos: the newest uploads from the YouTube channel ----------------
+   A GitHub Action (.github/workflows/youtube-videos.yml) checks the channel every 30 minutes and keeps
+   assets/yt/videos.json at the 10 newest videos. The page reads that file straight from the repository, so a
+   new upload shows up without waiting for the site to be rebuilt; the cards written in the page are the fallback.
+   Videos uploaded in the last 14 days carry a "New" tag. */
+(function(){var grid=$('.ytgrid'),nav=$('.yt-nav');if(!grid)return;var RAW='https://raw.githubusercontent.com/RisaRezaei/RisaRezaei.github.io/main/';
+  function esc(x){return String(x==null?'':x).replace(/[&<>"']/g,function(c){return '&#'+c.charCodeAt(0)+';'})}
+  function mmss(n){n=Math.round(+n||0);return n>0?Math.floor(n/60)+':'+('0'+n%60).slice(-2):''}
+  function gap(){return parseFloat(getComputedStyle(grid).columnGap)||0}
+  function step(){var c=grid.firstElementChild;return c?c.getBoundingClientRect().width+gap():grid.clientWidth}
+  function arrows(){if(!nav)return;var max=grid.scrollWidth-grid.clientWidth;nav.hidden=max<4;nav.children[0].disabled=grid.scrollLeft<4;nav.children[1].disabled=grid.scrollLeft>max-4}
+  function show(d){var vs=d&&d.videos;if(!vs||!vs.length)return;vs=vs.slice(0,10);var now=Date.now();
+    grid.innerHTML=vs.map(function(v,i){var t=esc(v.title),fresh=now-Date.parse(v.published)<14*864e5,len=mmss(v.len);
+      return '<article class="ytc rv" style="--d:'+(i%3*.15).toFixed(2)+'s"><button class="ytc-frame" type="button" data-yt="'+esc(v.id)+'" data-t="'+t+'" aria-label="Play video: '+t+'">'+
+        '<img src="assets/yt/'+esc(v.id)+'-640.jpg" alt="" loading="lazy" decoding="async"><span class="ytc-play" aria-hidden="true"></span>'+
+        (fresh?'<span class="ytc-new">New</span>':'')+(len?'<span class="ytc-len">'+len+'</span>':'')+'</button>'+
+        '<div class="ytc-meta"><b>'+t+'</b>'+(v.sub?'<span>'+esc(v.sub)+'</span>':'')+'</div></article>'}).join('');
+    /* a thumbnail the site hasn't published yet comes from the repository, or else from YouTube */
+    $$('img',grid).forEach(function(im){var id=im.parentNode.dataset.yt,k=0;im.addEventListener('error',function(){k++;if(k===1)im.src=RAW+'assets/yt/'+id+'-640.jpg';else if(k===2)im.src='https://i.ytimg.com/vi/'+id+'/hqdefault.jpg'})});
+    $$('.ytc',grid).forEach(function(c){io.observe(c)});grid.scrollLeft=0;arrows()}
+  if(nav){nav.children[0].addEventListener('click',function(){grid.scrollBy({left:-step(),behavior:'smooth'})});nav.children[1].addEventListener('click',function(){grid.scrollBy({left:step(),behavior:'smooth'})})}
+  grid.addEventListener('scroll',arrows,{passive:true});addEventListener('resize',arrows);arrows();
+  var b=Math.floor(Date.now()/3e5);   /* changes every 5 minutes, so a fresh list is fetched at most that often */
+  fetch(RAW+'assets/yt/videos.json?v='+b).then(function(r){if(!r.ok)throw r.status;return r.json()})
+    .catch(function(){return fetch('assets/yt/videos.json?v='+b).then(function(r){return r.ok?r.json():null})}).then(show).catch(function(){})})();
 
 /* ---------------- boot ---------------- */
 function refresh(){stars();$$('.pcard canvas').forEach(schem);$$('canvas[data-cover]').forEach(cover);layout()}
