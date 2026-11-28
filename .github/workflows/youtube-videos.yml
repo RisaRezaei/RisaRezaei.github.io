@@ -49,20 +49,21 @@ jobs:
           OUT = 'assets/yt/videos.json'
           MAX = 10
           NS = {'a': 'http://www.w3.org/2005/Atom', 'yt': 'http://www.youtube.com/xml/schemas/2015', 'm': 'http://search.yahoo.com/mrss/'}
-          # card title and line written by hand; any other video uses its YouTube title (the part before " | " as the
-          # title, the next part as the line, or else the first sentence of its description)
+          # card title, line and length (seconds) written by hand; any other video uses its YouTube title (the part
+          # before " | " as the title, the next part as the line, or else the first sentence of its description)
           NOTES = {
-              'RGWDGXYPWnY': ['How much water did your lake lose?', 'Any lake, one click, with GSW Lake Explorer'],
-              'bDhEnSg61W8': ['Three days of rain — Iran’s floods and a record El Niño', 'Floods across Iran, 6–8 November 2026'],
-              'rBgaC2yz1hw': ['A wetland being dug out — 15 years of satellite images', 'Kiakalayeh wetland, Langarud'],
+              'RGWDGXYPWnY': ['How much water did your lake lose?', 'Any lake, one click, with GSW Lake Explorer', 142],
+              'bDhEnSg61W8': ['Three days of rain — Iran’s floods and a record El Niño', 'Floods across Iran, 6–8 November 2026', 137],
+              'rBgaC2yz1hw': ['A wetland being dug out — 15 years of satellite images', 'Kiakalayeh wetland, Langarud', 63],
           }
+          UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36'
           PERSIAN = re.compile('[؀-ۿ]')
 
 
-          def get(url):
-              req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (compatible; risarezaei.github.io video list)',
-                                                         'Accept-Language': 'en-US,en;q=0.8'})
-              with urllib.request.urlopen(req, timeout=30) as r:
+          def get(url, data=None, headers=None):
+              h = {'User-Agent': UA, 'Accept-Language': 'en-US,en;q=0.8', 'Cookie': 'CONSENT=YES+cb; SOCS=CAI'}
+              h.update(headers or {})
+              with urllib.request.urlopen(urllib.request.Request(url, data=data, headers=h), timeout=30) as r:
                   return r.read()
 
 
@@ -78,14 +79,27 @@ jobs:
 
 
           def length(vid):
-              """Video length in seconds, read from its YouTube page (None if YouTube doesn't give it)."""
+              """Video length in seconds: from its YouTube page, or else from YouTube's player data (None if neither gives it)."""
               try:
                   html = get('https://www.youtube.com/watch?v=' + vid).decode('utf-8', 'replace')
+                  m = re.search(r'"lengthSeconds":"(\d+)"', html)
+                  if m:
+                      return int(m.group(1))
+                  m = re.search(r'itemprop="duration" content="PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?"', html)
+                  if m and any(m.groups()):
+                      return sum(int(x or 0) * k for x, k in zip(m.groups(), (3600, 60, 1)))
               except Exception as e:
-                  print('  no length for', vid, '-', e)
-                  return None
-              m = re.search(r'"lengthSeconds":"(\d+)"', html)
-              return int(m.group(1)) if m else None
+                  print('  watch page not readable for', vid, '-', e)
+              try:
+                  body = json.dumps({'videoId': vid, 'context': {'client': {'clientName': 'WEB', 'clientVersion': '2.20250101.00.00', 'hl': 'en'}}}).encode()
+                  j = json.loads(get('https://www.youtube.com/youtubei/v1/player?prettyPrint=false', body, {'Content-Type': 'application/json'}))
+                  n = int((j.get('videoDetails') or {}).get('lengthSeconds') or 0)
+                  if n:
+                      return n
+              except Exception as e:
+                  print('  player data not readable for', vid, '-', e)
+              print('  no length for', vid)
+              return None
 
 
           def thumb(vid):
@@ -113,6 +127,14 @@ jobs:
               return False
 
 
+          def recent(published, days=7):
+              try:
+                  t = datetime.datetime.fromisoformat(published.replace('Z', '+00:00'))
+              except ValueError:
+                  return False
+              return datetime.datetime.now(datetime.timezone.utc) - t < datetime.timedelta(days=days)
+
+
           def main():
               args = sys.argv[1:]
               offline = '--offline' in args
@@ -135,11 +157,16 @@ jobs:
                       continue
                   title = e.findtext('a:title', '', NS).strip()
                   desc = e.findtext('m:group/m:description', '', NS) or ''
-                  head, sub = NOTES.get(vid) or card_text(title, desc)
-                  ln = known.get(vid, {}).get('len') or (None if offline else length(vid))
+                  note = NOTES.get(vid)
+                  head, sub = note[:2] if note else card_text(title, desc)
+                  pub = e.findtext('a:published', '', NS).strip()
+                  # the length is looked up while a video is less than a week old; after that it stays as it is
+                  ln = (note[2] if note else None) or known.get(vid, {}).get('len')
+                  if not ln and not offline and recent(pub):
+                      ln = length(vid)
                   if not offline:
                       thumb(vid)
-                  vids.append({'id': vid, 'title': head, 'sub': sub, 'published': e.findtext('a:published', '', NS).strip(), 'len': ln})
+                  vids.append({'id': vid, 'title': head, 'sub': sub, 'published': pub, 'len': ln})
               vids.sort(key=lambda v: v['published'], reverse=True)
               vids = vids[:MAX]
               if not vids:
