@@ -1,0 +1,48 @@
+name: YouTube videos on the homepage
+
+# Every 30 minutes: read the YouTube channel's public feed and keep assets/yt/videos.json at the 10 newest
+# videos, with a thumbnail for each. The homepage reads that file, so a new upload shows up on its own.
+on:
+  schedule:
+    - cron: '7,37 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: youtube-videos
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install the image library for thumbnails
+        run: pip install --quiet pillow
+
+      - name: Update the video list
+        run: python3 .github/scripts/youtube_videos.py
+
+      - name: Save the changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/yt
+          if git diff --cached --quiet; then echo "No change"; exit 0; fi
+          git commit -m "Videos: update the list from the YouTube channel"
+          git pull --rebase --quiet origin main
+          git push origin HEAD:main
+          echo "PUSHED=1" >> "$GITHUB_ENV"
+
+      # commits made by this job don't rebuild the website by themselves, so ask for a rebuild
+      - name: Rebuild the website
+        if: env.PUSHED == '1'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X POST "repos/${{ github.repository }}/pages/builds"
