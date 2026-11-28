@@ -22,6 +22,10 @@ exclude:
   - preview-videos.html
   - lake-trends-v8.html
   - preview-contact.html
+  - index-test.html
+  - orbit-test.js
+  - youtube-videos.yml
+  - youtube_videos.py
   # archived working files
   - assets/data/gsw-lake-trends.csv
   - assets/data/gsw-lake-trends_1.csv

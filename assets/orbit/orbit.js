@@ -14,7 +14,11 @@ function ease(p){return p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2}
 function lerp(a,b,t){return a+(b-a)*t}
 var T0=performance.now();function now(){return (performance.now()-T0)/1000}
 function mobile(){return innerWidth<=900}
-function fit(cv){var r=cv.getBoundingClientRect();var w=Math.max(1,Math.round(r.width*DPR)),h=Math.max(1,Math.round(r.height*DPR));if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h}var c=cv.getContext('2d');c.setTransform(DPR,0,0,DPR,0,0);return {c:c,w:r.width,h:r.height}}
+/* a canvas's size is read once and again only after it changes, not every frame (reading layout every frame is slow, above all in Firefox) */
+var RO=window.ResizeObserver?new ResizeObserver(function(es){es.forEach(function(e){e.target._r=null})}):null;
+function fit(cv){var r=cv._r;if(!r){var b=cv.getBoundingClientRect();r={width:b.width,height:b.height};if(RO){cv._r=r;if(!cv._ro){cv._ro=1;RO.observe(cv)}}}
+  var k=cv._dpr||DPR,w=Math.max(1,Math.round(r.width*k)),h=Math.max(1,Math.round(r.height*k));if(cv.width!==w||cv.height!==h){cv.width=w;cv.height=h}var c=cv._c||(cv._c=cv.getContext('2d'));c.setTransform(k,0,0,k,0,0);cv._k=k;return {c:c,w:r.width,h:r.height}}
+var SC=true,lastSY=-1,DIRTY=true,lastSC=0;   /* SC: the page scrolled or its layout changed (or 0.3 s passed) since the last check */
 var seed=7;function rnd(){seed=(seed*16807)%2147483647;return (seed-1)/2147483646}
 function inView(el,m){var r=el.getBoundingClientRect();m=m||0;return r.bottom>-m&&r.top<innerHeight+m}
 
@@ -56,14 +60,34 @@ function v3(a){var f=a[0]*D,l=a[1]*D;return [Math.cos(f)*Math.cos(l),Math.cos(f)
 function arcPts(a,b,n){var A=v3(a),B=v3(b),om=Math.acos(clamp(A[0]*B[0]+A[1]*B[1]+A[2]*B[2],-1,1)),h=.05+.22*om,out=[];
   for(var i=0;i<=n;i++){var f=i/n,s1=Math.sin((1-f)*om)/Math.sin(om),s2=Math.sin(f*om)/Math.sin(om),v=[A[0]*s1+B[0]*s2,A[1]*s1+B[1]*s2,A[2]*s1+B[2]*s2],nn=Math.hypot(v[0],v[1],v[2]);out.push([Math.asin(v[2]/nn)/D,Math.atan2(v[1],v[0])/D,1+h*Math.sin(Math.PI*f)])}return out}
 var ARCS=[['LAKE URMIA','CASPIAN SEA'],['LAKE URMIA','ARAL SEA'],['LAKE URMIA','LAKE RAZAZAH'],['LAKE URMIA','LAKE CHAD']].map(function(p){return arcPts(LAKES[p[0]],LAKES[p[1]],60)});
-var ACOL={};function acol(dim,q){var k=dim+'_'+q;return ACOL[k]||(ACOL[k]='rgba(210,240,245,'+((0.15+0.85*q/20)*dim).toFixed(3)+')')}
-function globe(c,W,H,cx,cy,R,o,t){var la0=o.lat0==null?24:o.lat0,lo0=o.lon0==null?38:o.lon0,dim=o.dim||1;
+/* glow, sphere and rim: they never move, so they are drawn once into a buffer (again only after a resize) and copied each frame */
+function baseDraw(c,cx,cy,R){
   var g=c.createRadialGradient(cx,cy,R*.92,cx,cy,R*1.22);g.addColorStop(0,'rgba(79,209,197,0)');g.addColorStop(.28,'rgba(79,209,197,.28)');g.addColorStop(1,'rgba(96,165,250,0)');c.fillStyle=g;c.beginPath();c.arc(cx,cy,R*1.22,0,7);c.fill();
   g=c.createRadialGradient(cx-R*.35,cy-R*.4,R*.1,cx,cy,R);g.addColorStop(0,'#0b1a2b');g.addColorStop(1,'#02050a');c.fillStyle=g;c.beginPath();c.arc(cx,cy,R,0,7);c.fill();
   c.save();c.beginPath();c.arc(cx,cy,R,0,7);c.clip();g=c.createLinearGradient(cx-R,cy-R,cx+R*.3,cy+R);g.addColorStop(0,'#5ff2e3');g.addColorStop(.55,'#2f8cff');g.addColorStop(1,'#1747c9');
   var ga=c.globalAlpha;for(var k=0;k<26;k++){c.strokeStyle=g;c.globalAlpha=ga*(0.05+0.03*(26-k)/26);c.lineWidth=2+k*1.6*Math.max(.25,R/560);c.beginPath();c.arc(cx,cy,R,0,7);c.stroke()}c.restore();
   c.strokeStyle=g;c.lineWidth=2.2;c.shadowColor=TEAL;c.shadowBlur=24;c.beginPath();c.arc(cx,cy,R,0,7);c.stroke();c.shadowBlur=0;
-  if(LAND){var ds=Math.max(1.1,R/380);for(var i=0;i<LAND.length;i+=2){var p=P3(LAND[i],LAND[i+1],la0,lo0);if(p[2]<=0)continue;var py=cy+p[1]*R;if(py<-4||py>H+4)continue;var px=cx+p[0]*R;if(px<-4||px>W+4)continue;c.fillStyle=acol(dim,Math.round(p[2]*20));c.fillRect(px,py,ds,ds)}}
+}
+function globeBase(c,cx,cy,R){var m=c.getTransform?c.getTransform():null,k=c.canvas._k||DPR;
+  if(!m||m.b||m.c||m.e||m.f||Math.abs(m.a-k)>1e-9||Math.abs(m.d-k)>1e-9){baseDraw(c,cx,cy,R);return}
+  var ga=c.globalAlpha,ext=Math.max(R*1.22,R+30)+2,X0=Math.max(0,Math.floor((cx-ext)*k)),Y0=Math.max(0,Math.floor((cy-ext)*k)),
+      X1=Math.min(c.canvas.width,Math.ceil((cx+ext)*k)),Y1=Math.min(c.canvas.height,Math.ceil((cy+ext)*k));if(X1<=X0||Y1<=Y0)return;
+  var key=[cx,cy,R,ga,k,X0,Y0,X1,Y1].join(),B=c.canvas._gb;
+  if(!B||B.key!==key){var bc=B?B.cv:document.createElement('canvas');bc.width=X1-X0;bc.height=Y1-Y0;var x=bc.getContext('2d');x.setTransform(k,0,0,k,-X0*1,-Y0*1);x.globalAlpha=ga;baseDraw(x,cx,cy,R);c.canvas._gb=B={key:key,cv:bc}}
+  c.save();c.setTransform(1,0,0,1,0,0);c.globalAlpha=1;c.drawImage(B.cv,X0,Y0);c.restore()}
+var ACOL={};function acol(dim,q){var k=dim+'_'+q;return ACOL[k]||(ACOL[k]='rgba(210,240,245,'+((0.15+0.85*q/20)*dim).toFixed(3)+')')}
+/* land dots: positions from sines and cosines worked out once, and one fill per brightness level instead of one per dot */
+var LT=null,LB=[];
+function landDots(c,W,H,cx,cy,R,la0,lo0,dim,ds){var n=LAND.length>>1,i,q;
+  if(!LT||LT.n!==n){LT=new Float64Array(n*4);LT.n=n;for(i=0;i<n;i++){var f=LAND[2*i]*D,l=LAND[2*i+1]*D;LT[4*i]=Math.cos(f);LT[4*i+1]=Math.sin(f);LT[4*i+2]=Math.cos(l);LT[4*i+3]=Math.sin(l)}}
+  var f0=la0*D,c0=Math.cos(f0),s0=Math.sin(f0),l0=lo0*D,cl0=Math.cos(l0),sl0=Math.sin(l0);
+  for(q=0;q<21;q++)(LB[q]||(LB[q]=[])).length=0;
+  for(i=0;i<n;i++){var j=4*i,cf=LT[j],sf=LT[j+1],cl=LT[j+2]*cl0+LT[j+3]*sl0,z=s0*sf+c0*cf*cl;if(z<=0)continue;
+    var py=cy-(c0*sf-s0*cf*cl)*R;if(py<-4||py>H+4)continue;var px=cx+cf*(LT[j+3]*cl0-LT[j+2]*sl0)*R;if(px<-4||px>W+4)continue;LB[Math.round(z*20)].push(px,py)}
+  for(q=0;q<21;q++){var A=LB[q];if(!A.length)continue;c.fillStyle=acol(dim,q);c.beginPath();for(var m=0;m<A.length;m+=2)c.rect(A[m],A[m+1],ds,ds);c.fill()}}
+function globe(c,W,H,cx,cy,R,o,t){var la0=o.lat0==null?24:o.lat0,lo0=o.lon0==null?38:o.lon0,dim=o.dim||1;
+  globeBase(c,cx,cy,R);
+  if(LAND)landDots(c,W,H,cx,cy,R,la0,lo0,dim,Math.max(1.1,R/380));
   if(o.arcs){var AP=o.arcP==null?1:o.arcP;ARCS.forEach(function(Ar,ai){var pi=clamp(AP*1.6-ai*.2);if(pi<=0)return;var n=Math.floor(pi*Ar.length);c.strokeStyle='rgba(79,209,197,.9)';c.lineWidth=Math.max(1.4,R/320);c.shadowColor=TEAL;c.shadowBlur=10;c.beginPath();var st=false;
     for(var q=0;q<n;q++){var a=Ar[q],pp=P3(a[0],a[1],la0,lo0);if(pp[2]<-.12){st=false;continue}var X=cx+pp[0]*R*a[2],Y=cy+pp[1]*R*a[2];st?c.lineTo(X,Y):c.moveTo(X,Y);st=true}c.stroke();c.shadowBlur=0;
     if(pi>=1){var f=(t*.42+ai*.27)%1,a2=Ar[Math.floor(f*(Ar.length-1))],p2=P3(a2[0],a2[1],la0,lo0);if(p2[2]>-.1){c.fillStyle='#e8fffb';c.shadowColor=TEAL;c.shadowBlur=16;c.beginPath();c.arc(cx+p2[0]*R*a2[2],cy+p2[1]*R*a2[2],Math.max(2.2,R/200),0,7);c.fill();c.shadowBlur=0}}})}
@@ -89,13 +113,20 @@ var heroLon=38;
 function drawHero(t){var f=fit(gcv),c=f.c,g=heroGeom(f.w,f.h),o=orbGeom(g);c.clearRect(0,0,f.w,f.h);
   heroLon=38-(reduce?0:3.4*t);
   c.save();c.translate(o.cx,o.cy);c.rotate(o.rot);c.setLineDash([5,9]);c.lineDashOffset=-t*18;c.strokeStyle='rgba(96,165,250,'+(.4*clamp((t-.2)/1))+')';c.lineWidth=1.2;c.beginPath();c.ellipse(0,0,o.rx,o.ry,0,0,7);c.stroke();c.restore();
-  globe(c,f.w,f.h,g.cx,g.cy,g.R,{lon0:heroLon,dim:WIND?.95:1,arcs:!WIND,lakes:!WIND,arcP:reduce?1:clamp((t-.4)/2.2),labA:reduce?1:clamp((t-1.4)/.8)},t);
+  var sat=K.length&&!mobile()&&sy<K[1].s&&hist.length;
+  if(GLH&&GLH.lost()){GLH.cv.remove();GLH.fg.remove();GLH=null}
+  if(GLH){globeBase(c,g.cx,g.cy,g.R);GLH.frame(f.w,f.h,g.cx,g.cy,g.R,heroLon);
+    /* the satellite is drawn on a canvas above the streaks, so it still passes in front of them and behind the headline */
+    var ff=fit(GLH.fg),fc=ff.c;if(GLH.fg._on){fc.clearRect(0,0,ff.w,ff.h);GLH.fg._on=false}
+    if(sat){var hp0=pg(hero);fc.save();fc.translate(-hp0.x,-hp0.y);drawTrail(fc);var s0=hist[0];if(s0[2]>.01)satIcon(fc,s0[0],s0[1],13,s0[2]);fc.restore();GLH.fg._on=true}
+    return}
+  globe(c,f.w,f.h,g.cx,g.cy,g.R,{lon0:heroLon,dim:.95},t);
   drawWind(c,f.w,f.h,g.cx,g.cy,g.R,24,heroLon)
   /* in the hero phase the satellite lives on this canvas, so it passes behind the headline and buttons */
-  if(K.length&&!mobile()&&sy<K[1].s&&hist.length){var hp=pg(hero);c.save();c.translate(-hp.x,-hp.y);drawTrail(c);var h0=hist[0];if(h0[2]>.01)satIcon(c,h0[0],h0[1],13,h0[2]);c.restore()}}
+  if(sat){var hp=pg(hero);c.save();c.translate(-hp.x,-hp.y);drawTrail(c);var h0=hist[0];if(h0[2]>.01)satIcon(c,h0[0],h0[1],13,h0[2]);c.restore()}}
 /* ---------------- wind flow on the hero globe ----------------
    wind.png holds an illustrative wind field (R = eastward, G = northward, 1 degree grid), not observed data.
-   Until it loads the globe keeps its lake markers. */
+   Until it loads the globe shows only its land dots. */
 var WIND=null,WRAW='assets/orbit/';
 (function(){var bust='?v=1';
   fetch(WRAW+'wind.json'+bust).then(function(r){if(!r.ok)throw r.status;return r.json()}).then(function(m){var im=new Image();im.crossOrigin='anonymous';
@@ -108,21 +139,127 @@ var PT=[],wtr=document.createElement('canvas'),WCOL=['rgba(64,120,214,.8)','rgba
 function seedP(p,la0,lo0){for(var k=0;k<24;k++){var z=Math.random()*2-1,la=Math.asin(z)/D,lo=Math.random()*360-180;if(P3(la,lo,la0,lo0)[2]>.08){p.la=la;p.lo=lo;p.age=Math.random()*90|0;p.max=70+Math.random()*80|0;return}}p.age=1e9}
 var wDone=false;
 /* streaks float a little above the surface (faster wind = higher), fade towards the limb and cast a faint shadow, for a slight 3D feel */
-function drawWind(c,w,h,cx,cy,R,la0,lo0){if(!WIND)return;var Rc=R*1.06;
-  if(reduce&&wDone&&wtr.width===Math.round(w*DPR)){c.save();c.beginPath();c.arc(cx,cy,Rc,0,7);c.clip();c.drawImage(wtr,0,0,w,h);c.restore();return}wDone=true;
-  var N=mobile()?1500:4500;while(PT.length<N){var p0={};seedP(p0,la0,lo0);PT.push(p0)}
-  var Wd=Math.round(w*DPR),Hd=Math.round(h*DPR);if(wtr.width!==Wd||wtr.height!==Hd){wtr.width=Wd;wtr.height=Hd}var t=wtr.getContext('2d');t.setTransform(DPR,0,0,DPR,0,0);
-  t.globalCompositeOperation='destination-in';t.fillStyle='rgba(0,0,0,'+(reduce?0:.9)+')';t.fillRect(0,0,w,h);t.globalCompositeOperation='source-over';
-  var paths=[],shadow=[],steps=reduce?14:1,so=Math.max(1.2,R/300);for(var q0=0;q0<12;q0++)paths.push([]);
+/* one step of the wind: moves the streak particles and collects this frame's segments in CSS px.
+   WS = faint shadow segments; WP[12] = streaks by speed (4 colours) x depth (3 brightness levels) */
+var WS=[],WP=[],QW=1;for(var q0=0;q0<12;q0++)WP.push([]);
+var WCOLN=[[64,120,214,.8],[80,168,222,.9],[79,209,197,.95],[228,255,251,1]],WGA=[.42,.72,1],WLW=[.75,1,1.3];
+function windSim(cx,cy,R,la0,lo0){
+  var N=Math.round((mobile()?1500:4500)*QW),grow=0;if(PT.length>N)PT.length=N;while(PT.length<N&&grow++<(reduce?1e9:500)){var p0={};seedP(p0,la0,lo0);PT.push(p0)}
+  WS.length=0;for(var j=0;j<12;j++)WP[j].length=0;var steps=reduce?14:1,so=Math.max(1.2,R/300);
   for(var i=0;i<PT.length;i++){var p=PT[i];for(var st=0;st<steps;st++){if(p.age++>p.max){seedP(p,la0,lo0);break}var A=P3(p.la,p.lo,la0,lo0);if(A[2]<.04){seedP(p,la0,lo0);break}
       var uv=windAt(p.la,p.lo),sp=Math.hypot(uv[0],uv[1]),cl=Math.max(.2,Math.cos(p.la*D));p.lo+=uv[0]*.016/cl;p.la+=uv[1]*.016;if(p.la>88||p.la<-88){seedP(p,la0,lo0);break}
       var B=P3(p.la,p.lo,la0,lo0),hR=R*(1.012+.032*Math.min(sp,20)/20),z=(A[2]+B[2])/2,db=z<.35?0:z<.7?1:2;
-      shadow.push(cx+A[0]*R+so,cy+A[1]*R+so,cx+B[0]*R+so,cy+B[1]*R+so);
-      paths[(sp<3?0:sp<6?1:sp<10?2:3)*3+db].push(cx+A[0]*hR,cy+A[1]*hR,cx+B[0]*hR,cy+B[1]*hR)}}
-  var lw=Math.max(1,R/400);t.lineCap='round';
-  t.strokeStyle='rgba(0,4,10,.32)';t.lineWidth=lw*1.3;t.beginPath();for(var m=0;m<shadow.length;m+=4){t.moveTo(shadow[m],shadow[m+1]);t.lineTo(shadow[m+2],shadow[m+3])}t.stroke();
-  for(var j=0;j<12;j++){var q=paths[j];if(!q.length)continue;var dbin=j%3;t.globalAlpha=[.42,.72,1][dbin];t.lineWidth=lw*[.75,1,1.3][dbin];t.strokeStyle=WCOL[(j/3)|0];t.beginPath();for(var m2=0;m2<q.length;m2+=4){t.moveTo(q[m2],q[m2+1]);t.lineTo(q[m2+2],q[m2+3])}t.stroke()}
-  t.globalAlpha=1;c.save();c.beginPath();c.arc(cx,cy,Rc,0,7);c.clip();c.drawImage(wtr,0,0,w,h);c.restore()}
+      WS.push(cx+A[0]*R+so,cy+A[1]*R+so,cx+B[0]*R+so,cy+B[1]*R+so);
+      WP[(sp<3?0:sp<6?1:sp<10?2:3)*3+db].push(cx+A[0]*hR,cy+A[1]*hR,cx+B[0]*hR,cy+B[1]*hR)}}}
+/* the part of the canvas the streaks can reach: the globe's square, cut to the canvas, in device pixels */
+function windBox(w,h,cx,cy,R,k){var e=R*1.06+3;return [Math.max(0,Math.floor((cx-e)*k)),Math.max(0,Math.floor((cy-e)*k)),Math.min(Math.round(w*k),Math.ceil((cx+e)*k)),Math.min(Math.round(h*k),Math.ceil((cy+e)*k))]}
+
+/* 2D drawing of the streaks, for browsers without WebGL2 */
+var WB='',WG=null;
+function drawWind(c,w,h,cx,cy,R,la0,lo0){if(!WIND)return;var k=c.canvas._k||DPR,bx=windBox(w,h,cx,cy,R,k),X0=bx[0],Y0=bx[1],X1=bx[2],Y1=bx[3];
+  if(X1<=X0||Y1<=Y0)return;var key=bx.concat(k).join();
+  /* streaks stay within 1.05 R (shadows within R + 3 px), so no round clip is needed when the trail is copied in */
+  function put(){c.drawImage(wtr,X0/k,Y0/k,(X1-X0)/k,(Y1-Y0)/k)}
+  if(reduce&&wDone&&WB===key){put();return}wDone=true;
+  if(WB!==key){var old=null;if(WB&&WG&&wtr.width&&wtr.height){old=document.createElement('canvas');old.width=wtr.width;old.height=wtr.height;old.getContext('2d').drawImage(wtr,0,0)}
+    WB=key;wtr.width=X1-X0;wtr.height=Y1-Y0;
+    /* after a resize the streaks already drawn are carried over onto the globe's new place and size, so nothing starts over */
+    if(old){var q=wtr.getContext('2d'),sc=R/WG[2];q.setTransform(k,0,0,k,-X0,-Y0);q.translate(cx,cy);q.scale(sc,sc);q.translate(-WG[0],-WG[1]);q.drawImage(old,WG[3]/WG[5],WG[4]/WG[5],old.width/WG[5],old.height/WG[5]);q.setTransform(1,0,0,1,0,0)}}
+  WG=[cx,cy,R,X0,Y0,k];var t=wtr.getContext('2d');
+  t.setTransform(1,0,0,1,0,0);t.globalCompositeOperation='destination-in';t.fillStyle='rgba(0,0,0,'+(reduce?0:.9)+')';t.fillRect(0,0,wtr.width,wtr.height);t.globalCompositeOperation='source-over';t.setTransform(k,0,0,k,-X0,-Y0);
+  windSim(cx,cy,R,la0,lo0);var shadow=WS,paths=WP;
+  var lw=Math.max(1,R/400);
+  t.lineCap='square';t.strokeStyle='rgba(0,4,10,.32)';t.lineWidth=lw*1.3;t.beginPath();for(var m=0;m<shadow.length;m+=4){t.moveTo(shadow[m],shadow[m+1]);t.lineTo(shadow[m+2],shadow[m+3])}t.stroke();t.lineCap='round';
+  for(var j=0;j<12;j++){var q=paths[j];if(!q.length)continue;var dbin=j%3;t.globalAlpha=WGA[dbin];t.lineWidth=lw*WLW[dbin];t.strokeStyle=WCOL[(j/3)|0];t.beginPath();for(var m2=0;m2<q.length;m2+=4){t.moveTo(q[m2],q[m2+1]);t.lineTo(q[m2+2],q[m2+3])}t.stroke()}
+  t.globalAlpha=1;put()}
+
+/* ---------------- hero globe on the graphics card ----------------
+   The land dots and the wind streaks of the hero globe are drawn with WebGL2 on a canvas laid just above
+   #globe (glow, sphere and rim stay on #globe; the satellite is drawn on a canvas above both). Thousands of
+   tiny dots and streaks per frame are what kept the hero slow in Firefox; the graphics card draws them in a
+   fraction of a millisecond. Without WebGL2 the hero keeps drawing everything on #globe. */
+var GLH=(function(){
+  if(!window.WebGL2RenderingContext||!gcv)return null;
+  try{
+    var cv=document.createElement('canvas');cv.setAttribute('aria-hidden','true');cv.style.cssText='position:absolute;inset:0;width:100%;height:100%;pointer-events:none';
+    /* only with a real graphics card: where WebGL would run in software (no usable GPU), the 2D drawing is faster */
+    var gl=cv.getContext('webgl2',{alpha:true,premultipliedAlpha:true,antialias:false,depth:false,stencil:false,failIfMajorPerformanceCaveat:true});if(!gl)return null;
+    var ri=gl.getExtension('WEBGL_debug_renderer_info');if(/swiftshader|llvmpipe|softpipe|software|basic render/i.test(gl.getParameter(gl.RENDERER)+' '+(ri?gl.getParameter(ri.UNMASKED_RENDERER_WEBGL):'')))return null;
+    var V='#version 300 es\n',F='#version 300 es\nprecision highp float;\n';
+    function prog(vs,fs){function sh(t,src){var o=gl.createShader(t);gl.shaderSource(o,src);gl.compileShader(o);if(!gl.getShaderParameter(o,gl.COMPILE_STATUS))throw new Error(gl.getShaderInfoLog(o));return o}
+      var p=gl.createProgram();gl.attachShader(p,sh(gl.VERTEX_SHADER,V+vs));gl.attachShader(p,sh(gl.FRAGMENT_SHADER,F+fs));gl.linkProgram(p);if(!gl.getProgramParameter(p,gl.LINK_STATUS))throw new Error(gl.getProgramInfoLog(p));
+      var u={},n=gl.getProgramParameter(p,gl.ACTIVE_UNIFORMS);for(var i=0;i<n;i++){var a=gl.getActiveUniform(p,i);u[a.name]=gl.getUniformLocation(p,a.name)}return {p:p,u:u}}
+    /* land dots: positions worked out on the graphics card from each dot's sines and cosines; each dot is a small
+       square with the same edge smoothing as the 2D canvas gives a fractional-pixel rectangle */
+    var PD=prog(
+      'layout(location=0) in vec4 a_t;uniform vec4 u_rot;uniform vec3 u_g;uniform vec2 u_res;uniform float u_ds,u_dim;out vec2 v_o;out float v_a;'+
+      'void main(){float cl=a_t.z*u_rot.z+a_t.w*u_rot.w,sl=a_t.w*u_rot.z-a_t.z*u_rot.w,z=u_rot.y*a_t.y+u_rot.x*a_t.x*cl;'+
+      'if(z<=0.0){gl_Position=vec4(2.0,2.0,2.0,1.0);gl_PointSize=1.0;v_o=vec2(0.0);v_a=0.0;return;}'+
+      'vec2 p=vec2(u_g.x+a_t.x*sl*u_g.z,u_g.y-(u_rot.x*a_t.y-u_rot.y*a_t.x*cl)*u_g.z);v_o=p;v_a=(0.15+0.85*floor(z*20.0+0.5)/20.0)*u_dim;'+
+      'vec2 c=p+0.5*u_ds;gl_Position=vec4(c.x/u_res.x*2.0-1.0,1.0-c.y/u_res.y*2.0,0.0,1.0);gl_PointSize=ceil(u_ds)+2.0;}',
+      'in vec2 v_o;in float v_a;uniform float u_ds;out vec4 o;'+
+      'void main(){float sz=ceil(u_ds)+2.0;vec2 p=v_o+0.5*u_ds-0.5*sz+gl_PointCoord*sz;vec2 w=max(min(p+0.5,v_o+u_ds)-max(p-0.5,v_o),0.0);float a=v_a*w.x*w.y;'+
+      'if(a<=0.0)discard;o=vec4(vec3(210.0,240.0,245.0)/255.0*a,a);}');
+    /* streak segments: one small quad each, shaded as a stroke with round (or square) ends and smooth edges */
+    var PS=prog(
+      'layout(location=0) in vec2 a_k;layout(location=1) in vec4 a_s;layout(location=2) in vec2 a_w;layout(location=3) in vec4 a_c;uniform vec2 u_res;'+
+      'out vec2 v_p;flat out vec4 v_s;flat out vec2 v_w;flat out vec4 v_c;'+
+      'void main(){vec2 A=a_s.xy,B=a_s.zw,d=B-A;float L=length(d);vec2 u=L>1e-4?d/L:vec2(1.0,0.0),n=vec2(-u.y,u.x);float e=a_w.x+1.0;'+
+      'vec2 p=(a_k.x<0.0?A:B)+u*a_k.x*e+n*a_k.y*e;v_p=p;v_s=a_s;v_w=a_w;v_c=a_c;gl_Position=vec4(p.x/u_res.x*2.0-1.0,1.0-p.y/u_res.y*2.0,0.0,1.0);}',
+      'in vec2 v_p;flat in vec4 v_s;flat in vec2 v_w;flat in vec4 v_c;out vec4 o;'+
+      'void main(){vec2 A=v_s.xy,B=v_s.zw,d=B-A;float L=length(d);vec2 u=L>1e-4?d/L:vec2(1.0,0.0),n=vec2(-u.y,u.x),q=v_p-A;float t=dot(q,u),s=abs(dot(q,n)),cov;'+
+      'if(v_w.y<0.5){float tc=clamp(t,0.0,L);cov=clamp(v_w.x+0.5-length(vec2(t-tc,s)),0.0,1.0);}'+
+      'else{cov=clamp(v_w.x+0.5-s,0.0,1.0)*clamp(min(t+v_w.x,L+v_w.x-t)+0.5,0.0,1.0);}'+
+      'if(cov<=0.0)discard;o=v_c*cov;}');
+    /* a textured rectangle: fading the trail, carrying it over after a resize, and putting it on screen */
+    var PQ=prog(
+      'layout(location=0) in vec2 a_k;uniform vec4 u_r;uniform vec2 u_res;out vec2 v_uv;'+
+      'void main(){vec2 s=(a_k+1.0)*0.5;vec2 p=u_r.xy+vec2(s.x,1.0-s.y)*u_r.zw;v_uv=s;gl_Position=vec4(p.x/u_res.x*2.0-1.0,1.0-p.y/u_res.y*2.0,0.0,1.0);}',
+      'in vec2 v_uv;uniform sampler2D u_t;uniform float u_f;out vec4 o;void main(){o=texture(u_t,v_uv)*u_f;}');
+    var quad=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,quad);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+    var vq=gl.createVertexArray();gl.bindVertexArray(vq);gl.enableVertexAttribArray(0);gl.vertexAttribPointer(0,2,gl.FLOAT,false,0,0);
+    var vs=gl.createVertexArray(),ib=gl.createBuffer();gl.bindVertexArray(vs);gl.bindBuffer(gl.ARRAY_BUFFER,quad);gl.enableVertexAttribArray(0);gl.vertexAttribPointer(0,2,gl.FLOAT,false,0,0);
+    gl.bindBuffer(gl.ARRAY_BUFFER,ib);[[1,4,0],[2,2,16],[3,4,24]].forEach(function(a){gl.enableVertexAttribArray(a[0]);gl.vertexAttribPointer(a[0],a[1],gl.FLOAT,false,40,a[2]);gl.vertexAttribDivisor(a[0],1)});
+    var vd=gl.createVertexArray(),db=gl.createBuffer(),nd=0;gl.bindVertexArray(vd);gl.bindBuffer(gl.ARRAY_BUFFER,db);gl.enableVertexAttribArray(0);gl.vertexAttribPointer(0,4,gl.FLOAT,false,0,0);
+    gl.bindVertexArray(null);gl.disable(gl.DEPTH_TEST);gl.blendFunc(gl.ONE,gl.ONE_MINUS_SRC_ALPHA);
+    var T=null,A=0,key='',G=null,wdone=false,buf=new Float32Array(0),lost=false;
+    cv.addEventListener('webglcontextlost',function(e){e.preventDefault();lost=true});
+    function tex(w,h){var t=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,t);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA8,w,h,0,gl.RGBA,gl.UNSIGNED_BYTE,null);
+      gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.NEAREST);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.NEAREST);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+      var f=gl.createFramebuffer();gl.bindFramebuffer(gl.FRAMEBUFFER,f);gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.TEXTURE_2D,t,0);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);return {t:t,f:f}}
+    function rect(src,r,w,h,f){gl.useProgram(PQ.p);gl.bindVertexArray(vq);gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,src);gl.uniform1i(PQ.u.u_t,0);gl.uniform1f(PQ.u.u_f,f);gl.uniform4f(PQ.u.u_r,r[0],r[1],r[2],r[3]);gl.uniform2f(PQ.u.u_res,w,h);gl.drawArrays(gl.TRIANGLE_STRIP,0,4)}
+    function frame(w,h,cx,cy,R,lo0){var k=gcv._k||DPR,W=Math.max(1,Math.round(w*k)),H=Math.max(1,Math.round(h*k));if(cv.width!==W||cv.height!==H){cv.width=W;cv.height=H}
+      if(WIND){var bx=windBox(w,h,cx,cy,R,k),X0=bx[0],Y0=bx[1],TW=bx[2]-X0,TH=bx[3]-Y0;
+        if(TW>0&&TH>0){var ky=bx.concat(k).join();
+          if(ky!==key){var nt=[tex(TW,TH),tex(TW,TH)];
+            /* after a resize the streaks already drawn are carried over onto the globe's new place and size */
+            if(T&&G){var sc=R/G[2];gl.bindTexture(gl.TEXTURE_2D,T[A].t);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
+              gl.bindFramebuffer(gl.FRAMEBUFFER,nt[0].f);gl.viewport(0,0,TW,TH);gl.disable(gl.BLEND);
+              rect(T[A].t,[(cx+sc*(G[3]/G[5]-G[0]))*k-X0,(cy+sc*(G[4]/G[5]-G[1]))*k-Y0,G[6]/G[5]*sc*k,G[7]/G[5]*sc*k],TW,TH,1);
+              T.forEach(function(o){gl.deleteTexture(o.t);gl.deleteFramebuffer(o.f)})}
+            T=nt;A=0;key=ky;wdone=false}
+          G=[cx,cy,R,X0,Y0,k,TW,TH];
+          if(!(reduce&&wdone)){wdone=true;windSim(cx/1,cy/1,R,24,lo0);
+            var lw=Math.max(1,R/400)*k,n=WS.length/4,j,m,o=0;for(j=0;j<12;j++)n+=WP[j].length/4;if(buf.length<n*10)buf=new Float32Array(Math.ceil(n*1.3)*10);
+            function put(a,hw,cap,c){for(var i=0;i<a.length;i+=4){buf[o]=a[i]*k-X0;buf[o+1]=a[i+1]*k-Y0;buf[o+2]=a[i+2]*k-X0;buf[o+3]=a[i+3]*k-Y0;buf[o+4]=hw;buf[o+5]=cap;buf[o+6]=c[0];buf[o+7]=c[1];buf[o+8]=c[2];buf[o+9]=c[3];o+=10}}
+            put(WS,lw*1.3/2,1,[0,4/255*.32,10/255*.32,.32]);
+            for(j=0;j<12;j++){if(!WP[j].length)continue;var cc=WCOLN[(j/3)|0],al=cc[3]*WGA[j%3];put(WP[j],lw*WLW[j%3]/2,0,[cc[0]/255*al,cc[1]/255*al,cc[2]/255*al,al])}
+            /* fade the old trail into the other buffer, then draw this frame's segments on top */
+            var B=1-A;gl.bindFramebuffer(gl.FRAMEBUFFER,T[B].f);gl.viewport(0,0,TW,TH);gl.disable(gl.BLEND);rect(T[A].t,[0,0,TW,TH],TW,TH,reduce?0:.9);
+            if(o){gl.enable(gl.BLEND);gl.useProgram(PS.p);gl.uniform2f(PS.u.u_res,TW,TH);gl.bindVertexArray(vs);gl.bindBuffer(gl.ARRAY_BUFFER,ib);gl.bufferData(gl.ARRAY_BUFFER,buf.subarray(0,o),gl.STREAM_DRAW);gl.drawArraysInstanced(gl.TRIANGLE_STRIP,0,4,o/10)}
+            A=B}}}
+      gl.bindFramebuffer(gl.FRAMEBUFFER,null);gl.viewport(0,0,W,H);gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);gl.enable(gl.BLEND);
+      if(LAND){if(!nd){var L2=LAND.length>>1,tr=new Float32Array(L2*4);for(var i=0;i<L2;i++){var f2=LAND[2*i]*D,l2=LAND[2*i+1]*D;tr[4*i]=Math.cos(f2);tr[4*i+1]=Math.sin(f2);tr[4*i+2]=Math.cos(l2);tr[4*i+3]=Math.sin(l2)}
+          gl.bindBuffer(gl.ARRAY_BUFFER,db);gl.bufferData(gl.ARRAY_BUFFER,tr,gl.STATIC_DRAW);nd=L2}
+        var f0=24*D,l0=lo0*D;gl.useProgram(PD.p);gl.uniform4f(PD.u.u_rot,Math.cos(f0),Math.sin(f0),Math.cos(l0),Math.sin(l0));gl.uniform3f(PD.u.u_g,cx*k,cy*k,R*k);gl.uniform2f(PD.u.u_res,W,H);
+        gl.uniform1f(PD.u.u_ds,Math.max(1.1,R/380)*k);gl.uniform1f(PD.u.u_dim,.95);gl.bindVertexArray(vd);gl.drawArrays(gl.POINTS,0,nd)}
+      if(WIND&&T)rect(T[A].t,[G[3],G[4],G[6],G[7]],W,H,1);
+      gl.bindVertexArray(null)}
+    gcv.parentNode.insertBefore(cv,gcv.nextSibling);
+    var fg=document.createElement('canvas');fg.setAttribute('aria-hidden','true');fg.style.cssText=cv.style.cssText;cv.parentNode.insertBefore(fg,cv.nextSibling);
+    return {frame:frame,fg:fg,cv:cv,lost:function(){return lost||gl.isContextLost()}};
+  }catch(e){return null}})();
+
 function drawTrail(c){for(var h=1;h<hist.length;h++){var a2=(1-h/hist.length)*Math.min(hist[h][2],hist[h-1][2]);if(Math.hypot(hist[h][0]-hist[h-1][0],hist[h][1]-hist[h-1][1])>120)continue;c.strokeStyle='rgba(79,209,197,'+(.55*a2)+')';c.lineWidth=3*a2+.4;c.beginPath();c.moveTo(hist[h-1][0],hist[h-1][1]);c.lineTo(hist[h][0],hist[h][1]);c.stroke()}}
 /* typed eyebrow, scan date, HUD */
 (function(){var el=$('.hero .typed');if(!el)return;var txt=el.dataset.text,i=0;if(reduce){el.textContent=txt;return}setTimeout(function step(){el.textContent=txt.slice(0,++i);if(i<txt.length)setTimeout(step,16)},300)})();
@@ -250,7 +387,7 @@ function drawContact(t){var f=fit(cg),c=f.c,g=cgeom(f.w,f.h);c.clearRect(0,0,f.w
 /* ---------------- satellite layer (scroll-linked) ---------------- */
 var scv=$('#sat'),L={},K=[],sy=scrollY,hist=[],trackS=[0,0],gridS=[0,0],tabS=[0,0],lensS=[0,0],tlS=[0,0],contS=0,lensArrive=-1;
 function pg(el){var r=el.getBoundingClientRect();return {x:r.left,y:r.top+scrollY,w:r.width,h:r.height}}
-function layout(){if(mobile())return;var vh=innerHeight,H=pg(hero),g=heroGeom(H.w,H.h),max=document.documentElement.scrollHeight-vh;
+function layout(){DIRTY=true;if(mobile())return;var vh=innerHeight,H=pg(hero),g=heroGeom(H.w,H.h),max=document.documentElement.scrollHeight-vh;
   L.orb=orbGeom({cx:H.x+g.cx,cy:H.y+g.cy,R:g.R});
   var tr=pg($('#track'));L.track={x0:Math.min(innerWidth-30,tr.x+tr.w+20),x1:tr.x+10,y:tr.y+tr.h*.42};
   var cc=pg(ccv),G=constGeom(cc.w,cc.h);L.sk={cx:cc.x+G.cx,cy:cc.y+G.cy,r:86*G.k};
@@ -292,9 +429,11 @@ function satAt(s,t){if(!K.length)return null;for(var i=0;i<K.length-1;i++){if(s<
       return [m*m*A[0]+2*m*e*mx+e*e*B[0],m*m*A[1]+2*m*e*my+e*e*B[1],al]}}return kpos(K[K.length-1],t)}
 var heroNav=$('.hero-nav'),navEl=$('#nav'),prog=$('#prog'),links=$$('.nav ul a'),secs=$$('main section,.contact');
 function frameSat(t){var vh=innerHeight;sy+=(scrollY-sy)*(reduce?1:.14);if(Math.abs(scrollY-sy)<.3)sy=scrollY;
-  /* nav */var max=document.documentElement.scrollHeight-vh;navEl.classList.toggle('show',scrollY>hero.offsetHeight*.7||(!mobile()&&getComputedStyle(heroNav).display==='none'));prog.style.width=(100*clamp(scrollY/max))+'%';
-  var mid=scrollY+vh*.45,act=null;secs.forEach(function(s){var r=s.getBoundingClientRect();if(r.top+scrollY<=mid)act=s.id});links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+act)});
-  if(mobile()){$$('.pcard,#manifest tr.row').forEach(function(e){e.classList.add('in')});L.tl&&0;$$('.bar2').forEach(function(b){b.style.setProperty('--s',1);b.style.setProperty('--e',1)});$$('.ms,.ms-l').forEach(function(m){m.style.setProperty('--m',1)});if(lensArrive<0&&inView($('#lensbox')))lensArrive=t;lensP=clamp((t-lensArrive-.4)/2.6);return}
+  /* nav: only after a scroll or a layout change, all reads first and then the writes */
+  if(SC){var max=document.documentElement.scrollHeight-vh,show=scrollY>hero.offsetHeight*.7||(!mobile()&&getComputedStyle(heroNav).display==='none'),mid=scrollY+vh*.45,act=null;
+    secs.forEach(function(s){var r=s.getBoundingClientRect();if(r.top+scrollY<=mid)act=s.id});
+    navEl.classList.toggle('show',show);var pw=(100*clamp(scrollY/max))+'%';if(prog._w!==pw){prog._w=pw;prog.style.width=pw}links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+act)})}
+  if(mobile()){if(SC){$$('.pcard,#manifest tr.row').forEach(function(e){e.classList.add('in')});$$('.bar2').forEach(function(b){b.style.setProperty('--s',1);b.style.setProperty('--e',1)});$$('.ms,.ms-l').forEach(function(m){m.style.setProperty('--m',1)});if(lensArrive<0&&inView($('#lensbox')))lensArrive=t}lensP=clamp((t-lensArrive-.4)/2.6);return}
   var f=fit(scv),c=f.c;c.clearRect(0,0,f.w,f.h);if(!K.length)return;var s=sy,P=satAt(s,t);
   c.save();c.translate(0,-sy);
   /* section boundary scan lines */
@@ -334,8 +473,15 @@ var vio=new IntersectionObserver(function(es){es.forEach(function(e){var t=e.tar
 [ccv,cg,$('#lensbox'),$('.deg')].forEach(function(el){vio.observe(el)});
 var lastHud=0,words=$$('.sec-word');
 /* giant section words drift sideways with the scroll */
-function frameWords(){if(reduce)return;var vh=innerHeight;words.forEach(function(w){var r=w.getBoundingClientRect();if(r.bottom<-300||r.top>vh+300)return;w.style.transform='translateX('+((r.top-vh*.5)*.18).toFixed(1)+'px)'})}
-function loop(){var t=now();frameWords();
+function frameWords(){if(reduce||!SC)return;var vh=innerHeight,rs=words.map(function(w){return w.getBoundingClientRect()});
+  words.forEach(function(w,i){var r=rs[i];if(r.bottom<-300||r.top>vh+300)return;var v='translateX('+((r.top-vh*.5)*.18).toFixed(1)+'px)';if(w._tx!==v){w._tx=v;w.style.transform=v}})}
+/* if this computer still can't keep the hero smooth, draw fewer wind streaks, then use a lower canvas resolution */
+var QL=0,QT=[],QP=0;
+function quality(){var n=performance.now();if(reduce||!visible.hero||document.hidden||n-T0<1500){QP=0;QT.length=0;return}
+  if(QP){var d=n-QP;if(d<250)QT.push(d)}QP=n;var sum=QT.reduce(function(a,b){return a+b},0);if(sum<1200||QT.length<8)return;
+  var m=sum/QT.length;QT.length=0;if(m<24||QL>=2)return;QL++;
+  QW=QL===1?.6:.45}
+function loop(){var t=now();SC=scrollY!==lastSY||DIRTY||t-lastSC>.3;if(SC)lastSC=t;lastSY=scrollY;DIRTY=false;quality();frameWords();
   if(visible.hero){drawHero(t);if(t-lastHud>.2){lastHud=t;var lon=((-heroLon%360)+540)%360-180;var hud=$('#hud');if(hud)hud.innerHTML='EO-SAT · nadir scan &nbsp; LAT 24.00 &nbsp;LON '+(-lon).toFixed(2)}}
   if(visible.const)drawConst(t-(constT<0?t:constT));
   if(visible.lens)drawLens();
@@ -343,6 +489,9 @@ function loop(){var t=now();frameWords();
   if(visible.cg)drawContact(t);
   frameSat(t);
   requestAnimationFrame(loop)}
+
+/* the lake map is a whole page of its own: it loads only when it comes near the screen, so it doesn't stall the globe at start */
+$$('iframe[data-src]').forEach(function(f){if(!window.IntersectionObserver){f.src=f.dataset.src;return}var io2=new IntersectionObserver(function(es){if(es[0].isIntersecting){f.src=f.dataset.src;io2.disconnect()}},{rootMargin:'900px 0px'});io2.observe(f)});
 
 /* ---------------- live data: ORCID & GitHub ---------------- */
 (function(){var API='https://pub.orcid.org/v3.0/0009-0009-5708-7673/',ADD={'0378-3774':2};
@@ -359,7 +508,35 @@ fetch('https://api.github.com/users/RisaRezaei').then(function(r){return r.ok?r.
 (function(){var m=$('.ytm'),v=$('.ytm-v',m),cap=$('.ytm-cap b',m),lk=$('.ytm-cap a',m),last=null;
   function open(b){last=b;var id=b.dataset.yt,t=b.dataset.t;v.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>';v.firstChild.title=t;cap.textContent=t;lk.href='https://www.youtube.com/watch?v='+id;m.classList.add('on');m.setAttribute('aria-hidden','false');$('.ytm-x',m).focus()}
   function close(){m.classList.remove('on');m.setAttribute('aria-hidden','true');setTimeout(function(){v.innerHTML=''},260);if(last)last.focus()}
-  $$('.ytc-frame').forEach(function(b){b.addEventListener('click',function(){open(b)})});m.addEventListener('click',function(e){if(e.target===m||e.target.closest('.ytm-x'))close()});addEventListener('keydown',function(e){if(e.key==='Escape'&&m.classList.contains('on'))close()})})();
+  document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.ytc-frame');if(b)open(b)});m.addEventListener('click',function(e){if(e.target===m||e.target.closest('.ytm-x'))close()});addEventListener('keydown',function(e){if(e.key==='Escape'&&m.classList.contains('on'))close()})})();
+
+/* ---------------- videos: the newest uploads from the YouTube channel ----------------
+   A GitHub Action (.github/workflows/youtube-videos.yml) checks the channel every 30 minutes and keeps
+   assets/yt/videos.json at the 10 newest videos. The page reads that file straight from the repository, so a
+   new upload shows up without waiting for the site to be rebuilt; the cards written in the page are the fallback.
+   Videos uploaded in the last 14 days carry a "New" tag. */
+(function(){var grid=$('.ytgrid'),nav=$('.yt-nav');if(!grid)return;var RAW='https://raw.githubusercontent.com/RisaRezaei/RisaRezaei.github.io/main/';
+  function esc(x){return String(x==null?'':x).replace(/[&<>"']/g,function(c){return '&#'+c.charCodeAt(0)+';'})}
+  function mmss(n){n=Math.round(+n||0);return n>0?Math.floor(n/60)+':'+('0'+n%60).slice(-2):''}
+  function gap(){return parseFloat(getComputedStyle(grid).columnGap)||0}
+  function step(){var c=grid.firstElementChild;return c?c.getBoundingClientRect().width+gap():grid.clientWidth}
+  function arrows(){if(!nav)return;var max=grid.scrollWidth-grid.clientWidth;nav.hidden=max<4;nav.children[0].disabled=grid.scrollLeft<4;nav.children[1].disabled=grid.scrollLeft>max-4}
+  function show(d){var vs=d&&d.videos;if(!vs||!vs.length)return;vs=vs.slice(0,10);var now=Date.now(),had={};
+    /* lengths already written in the page are kept for videos whose length the list doesn't have (yet) */
+    $$('.ytc-frame',grid).forEach(function(b){var l=$('.ytc-len',b);if(l)had[b.dataset.yt]=l.textContent});
+    grid.innerHTML=vs.map(function(v,i){var t=esc(v.title),fresh=now-Date.parse(v.published)<14*864e5,len=mmss(v.len)||had[v.id]||'';
+      return '<article class="ytc rv" style="--d:'+(i%3*.15).toFixed(2)+'s"><button class="ytc-frame" type="button" data-yt="'+esc(v.id)+'" data-t="'+t+'" aria-label="Play video: '+t+'">'+
+        '<img src="assets/yt/'+esc(v.id)+'-640.jpg" alt="" loading="lazy" decoding="async"><span class="ytc-play" aria-hidden="true"></span>'+
+        (fresh?'<span class="ytc-new">New</span>':'')+(len?'<span class="ytc-len">'+len+'</span>':'')+'</button>'+
+        '<div class="ytc-meta"><b>'+t+'</b>'+(v.sub?'<span>'+esc(v.sub)+'</span>':'')+'</div></article>'}).join('');
+    /* a thumbnail the site hasn't published yet comes from the repository, or else from YouTube */
+    $$('img',grid).forEach(function(im){var id=im.parentNode.dataset.yt,k=0;im.addEventListener('error',function(){k++;if(k===1)im.src=RAW+'assets/yt/'+id+'-640.jpg';else if(k===2)im.src='https://i.ytimg.com/vi/'+id+'/hqdefault.jpg'})});
+    $$('.ytc',grid).forEach(function(c){io.observe(c)});grid.scrollLeft=0;arrows()}
+  if(nav){nav.children[0].addEventListener('click',function(){grid.scrollBy({left:-step(),behavior:'smooth'})});nav.children[1].addEventListener('click',function(){grid.scrollBy({left:step(),behavior:'smooth'})})}
+  grid.addEventListener('scroll',arrows,{passive:true});addEventListener('resize',arrows);arrows();
+  var b=Math.floor(Date.now()/3e5);   /* changes every 5 minutes, so a fresh list is fetched at most that often */
+  fetch(RAW+'assets/yt/videos.json?v='+b).then(function(r){if(!r.ok)throw r.status;return r.json()})
+    .catch(function(){return fetch('assets/yt/videos.json?v='+b).then(function(r){return r.ok?r.json():null})}).then(show).catch(function(){})})();
 
 /* ---------------- boot ---------------- */
 function refresh(){stars();$$('.pcard canvas').forEach(schem);$$('canvas[data-cover]').forEach(cover);layout()}
