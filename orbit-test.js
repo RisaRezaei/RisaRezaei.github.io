@@ -113,13 +113,13 @@ var heroLon=38;
 function drawHero(t){var f=fit(gcv),c=f.c,g=heroGeom(f.w,f.h),o=orbGeom(g);c.clearRect(0,0,f.w,f.h);
   heroLon=38-(reduce?0:3.4*t);
   c.save();c.translate(o.cx,o.cy);c.rotate(o.rot);c.setLineDash([5,9]);c.lineDashOffset=-t*18;c.strokeStyle='rgba(96,165,250,'+(.4*clamp((t-.2)/1))+')';c.lineWidth=1.2;c.beginPath();c.ellipse(0,0,o.rx,o.ry,0,0,7);c.stroke();c.restore();
-  globe(c,f.w,f.h,g.cx,g.cy,g.R,{lon0:heroLon,dim:WIND?.95:1,arcs:!WIND,lakes:!WIND,arcP:reduce?1:clamp((t-.4)/2.2),labA:reduce?1:clamp((t-1.4)/.8)},t);
+  globe(c,f.w,f.h,g.cx,g.cy,g.R,{lon0:heroLon,dim:.95},t);
   drawWind(c,f.w,f.h,g.cx,g.cy,g.R,24,heroLon)
   /* in the hero phase the satellite lives on this canvas, so it passes behind the headline and buttons */
   if(K.length&&!mobile()&&sy<K[1].s&&hist.length){var hp=pg(hero);c.save();c.translate(-hp.x,-hp.y);drawTrail(c);var h0=hist[0];if(h0[2]>.01)satIcon(c,h0[0],h0[1],13,h0[2]);c.restore()}}
 /* ---------------- wind flow on the hero globe ----------------
    wind.png holds an illustrative wind field (R = eastward, G = northward, 1 degree grid), not observed data.
-   Until it loads the globe keeps its lake markers. */
+   Until it loads the globe shows only its land dots. */
 var WIND=null,WRAW='assets/orbit/';
 (function(){var bust='?v=1';
   fetch(WRAW+'wind.json'+bust).then(function(r){if(!r.ok)throw r.status;return r.json()}).then(function(m){var im=new Image();im.crossOrigin='anonymous';
